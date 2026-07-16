@@ -1,0 +1,104 @@
+{
+  "exercise_id": "seated_knee_extension",
+  "exercise_name": "Seated Knee Extension",
+  "category": "lower_limb_rehabilitation",
+  "body_region": [
+    "knee",
+    "thigh",
+    "lower_leg"
+  ],
+  "purpose": [
+    "Represent controlled knee-extension movement for dashboard explanations",
+    "Support repetition and posture analysis",
+    "Describe observable movement phases without prescribing treatment"
+  ],
+  "starting_position": [
+    "Sit in a stable chair with the back supported when appropriate",
+    "Keep the thigh supported and the trunk steady",
+    "Begin with the knee flexed and the foot in a comfortable resting position",
+    "Follow the range and duration configured by the care team"
+  ],
+  "movement_phases": [
+    {
+      "phase": "rest",
+      "description": "The leg remains near the starting position before movement begins."
+    },
+    {
+      "phase": "lift",
+      "description": "The lower leg moves forward and upward as the knee extends."
+    },
+    {
+      "phase": "hold",
+      "description": "The target position is maintained for the configured duration, when a hold is part of the care plan."
+    },
+    {
+      "phase": "lower",
+      "description": "The lower leg returns gradually to the starting position."
+    }
+  ],
+  "observable_metrics": [
+    "knee_angle",
+    "shin_lift_angle",
+    "lift_duration",
+    "hold_duration",
+    "lower_duration",
+    "angular_velocity",
+    "jerk_score",
+    "left_right_symmetry",
+    "trunk_lean",
+    "thigh_stability"
+  ],
+  "common_execution_errors": [
+    {
+      "error": "insufficient_extension",
+      "observable_signals": [
+        "reduced knee angle",
+        "reduced shin lift angle"
+      ],
+      "safe_explanation": "The lower leg may not have reached the configured target position."
+    },
+    {
+      "error": "movement_too_fast_or_abrupt",
+      "observable_signals": [
+        "high angular velocity",
+        "short lift duration",
+        "high jerk score"
+      ],
+      "safe_explanation": "The movement may have been performed faster or less smoothly than expected."
+    },
+    {
+      "error": "short_hold",
+      "observable_signals": [
+        "hold duration below configured target"
+      ],
+      "safe_explanation": "The raised position was not maintained for the configured duration."
+    },
+    {
+      "error": "trunk_or_hip_compensation",
+      "observable_signals": [
+        "increased trunk lean",
+        "thigh movement",
+        "hip lift from chair"
+      ],
+      "safe_explanation": "The upper body or thigh may have moved to compensate during the exercise."
+    }
+  ],
+  "patient_friendly_guidance": [
+    "Sit upright and keep the thigh steady.",
+    "Raise the lower leg smoothly.",
+    "Use only the range and hold time assigned by the care team.",
+    "Lower the leg slowly and with control."
+  ],
+  "safety_notes": [
+    "This guide is educational and does not prescribe a patient-specific range of motion.",
+    "Stop and seek appropriate help for severe pain, sudden weakness, dizziness, a fall, or loss of balance.",
+    "Target angles, repetitions, resistance, and hold times must come from the care plan or clinician."
+  ],
+  "evidence_sources": [
+    "wlu_rehabilitation_posture",
+    "knee_rehabilitation_exercises_wearables",
+    "intelligent_knee_sleeves",
+    "knee_range_of_motion"
+  ],
+  "clinical_review_status": "pending"
+}

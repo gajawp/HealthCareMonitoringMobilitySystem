@@ -1,0 +1,132 @@
+[
+  {
+    "source_id": "addbiomechanics",
+    "title": "AddBiomechanics Dataset: Capturing the Physics of Human Motion at Scale",
+    "url": "https://addbiomechanics.org/download_data.html",
+    "source_type": "biomechanics_dataset",
+    "use_for": [
+      "joint kinematics",
+      "joint kinetics",
+      "ground-reaction forces",
+      "movement-model research"
+    ],
+    "do_not_use_for": [
+      "patient-specific treatment",
+      "automatic clinical thresholds"
+    ],
+    "license": "CC BY 4.0",
+    "trust_level": "research_dataset",
+    "notes": "Contains standardized musculoskeletal models and large-scale movement data."
+  },
+  {
+    "source_id": "intelligent_knee_sleeves",
+    "title": "Intelligent Knee Sleeves: A Real-time Multimodal Dataset for 3D Lower Body Motion Estimation Using Smart Textile",
+    "url": "https://arxiv.org/abs/2311.12829",
+    "source_type": "peer_reviewed_dataset_paper",
+    "use_for": [
+      "wearable sensing",
+      "lower-body pose estimation",
+      "joint-angle estimation research"
+    ],
+    "do_not_use_for": [
+      "diagnosis",
+      "treatment prescription"
+    ],
+    "license": "verify repository license before redistribution",
+    "trust_level": "peer_reviewed_research"
+  },
+  {
+    "source_id": "wlu_rehabilitation_posture",
+    "title": "WLU Rehabilitation Posture",
+    "url": "https://www.kaggle.com/datasets/sulaimanmuhammed/wlu-rehabilitation-posture",
+    "source_type": "rehabilitation_video_dataset",
+    "use_for": [
+      "correct-versus-incorrect posture research",
+      "knee extension",
+      "sit-to-stand",
+      "pose estimation"
+    ],
+    "do_not_use_for": [
+      "patient-specific diagnosis",
+      "clinical target generation"
+    ],
+    "license": "MIT",
+    "trust_level": "research_dataset"
+  },
+  {
+    "source_id": "ui_prmd",
+    "title": "University of Idaho Physical Rehabilitation Movement Data",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5773117/",
+    "source_type": "rehabilitation_motion_dataset",
+    "use_for": [
+      "exercise descriptions",
+      "joint positions",
+      "joint angles",
+      "repetition analysis",
+      "movement consistency research"
+    ],
+    "do_not_use_for": [
+      "injury-specific clinical recommendations",
+      "patient-specific thresholds"
+    ],
+    "license": "Open Data Commons PDDL 1.0 for dataset; article is open access",
+    "trust_level": "peer_reviewed_research"
+  },
+  {
+    "source_id": "knee_rehabilitation_exercises_wearables",
+    "title": "A Knee Rehabilitation Exercises Dataset for Postural Assessment using Wearable Devices",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11992047/",
+    "source_type": "peer_reviewed_rehabilitation_dataset",
+    "use_for": [
+      "knee extension execution categories",
+      "squat execution categories",
+      "wearable postural assessment"
+    ],
+    "do_not_use_for": [
+      "direct treatment recommendation",
+      "unreviewed patient-specific feedback"
+    ],
+    "license": "verify dataset repository terms before redistribution",
+    "trust_level": "peer_reviewed_research"
+  },
+  {
+    "source_id": "knee_range_of_motion",
+    "title": "Knee Range of Motion",
+    "url": "https://www.kaggle.com/datasets/billskarm/knee-range-of-motion",
+    "source_type": "wearable_sensor_dataset",
+    "use_for": [
+      "angle-classification experiments",
+      "sensor-based range-of-motion research"
+    ],
+    "do_not_use_for": [
+      "clinical target generation",
+      "patient-specific safe-angle decisions"
+    ],
+    "dataset_angle_labels_degrees": [
+      20,
+      45,
+      60,
+      90,
+      120
+    ],
+    "license": "Unknown",
+    "trust_level": "experimental_dataset"
+  },
+  {
+    "source_id": "requested_knee_rehabilitation_sensor_dataset",
+    "title": "Requested Kaggle Knee Rehabilitation Sensor Dataset",
+    "url": "https://www.kaggle.com/datasets/programmer3/knee-rehabilitation-sensor-dataset",
+    "source_type": "unverified_dataset_link",
+    "use_for": [
+      "pending manual inspection"
+    ],
+    "do_not_use_for": [
+      "production retrieval",
+      "clinical claims",
+      "redistribution"
+    ],
+    "license": "unverified",
+    "trust_level": "unverified",
+    "notes": "The supplied URL could not be reliably verified. Inspect the downloaded data card, provenance, and license before use."
+  }
+]

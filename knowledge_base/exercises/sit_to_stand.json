@@ -1,0 +1,104 @@
+{
+  "exercise_id": "sit_to_stand",
+  "exercise_name": "Sit to Stand",
+  "category": "lower_limb_rehabilitation",
+  "body_region": [
+    "hip",
+    "knee",
+    "ankle",
+    "trunk"
+  ],
+  "purpose": [
+    "Represent the transition between sitting and standing",
+    "Support posture, balance, and repetition analysis",
+    "Describe observable movement features for chatbot explanations"
+  ],
+  "starting_position": [
+    "Sit on a stable chair using the setup specified by the care team",
+    "Place the feet in a stable position",
+    "Keep the trunk controlled before initiating the movement"
+  ],
+  "movement_phases": [
+    {
+      "phase": "preparation",
+      "description": "The user prepares to rise while maintaining a stable seated position."
+    },
+    {
+      "phase": "forward_transfer",
+      "description": "The trunk moves forward to shift body weight over the feet."
+    },
+    {
+      "phase": "rise",
+      "description": "The hips and knees extend as the body rises from the chair."
+    },
+    {
+      "phase": "standing",
+      "description": "The user reaches a stable upright position."
+    },
+    {
+      "phase": "descent",
+      "description": "The hips and knees flex as the user returns to the chair with control."
+    }
+  ],
+  "observable_metrics": [
+    "knee_angle",
+    "hip_angle",
+    "trunk_lean",
+    "duration",
+    "angular_velocity",
+    "jerk_score",
+    "left_right_symmetry",
+    "foot_pressure",
+    "balance"
+  ],
+  "common_execution_errors": [
+    {
+      "error": "knee_misalignment",
+      "observable_signals": [
+        "knees moving inward or outward relative to feet"
+      ],
+      "safe_explanation": "The knees may not have remained aligned with the feet during the movement."
+    },
+    {
+      "error": "excessive_trunk_compensation",
+      "observable_signals": [
+        "large trunk lean",
+        "rapid trunk motion"
+      ],
+      "safe_explanation": "The upper body may have moved more than expected to assist the transition."
+    },
+    {
+      "error": "asymmetric_weight_transfer",
+      "observable_signals": [
+        "uneven left-right pressure",
+        "uneven joint motion"
+      ],
+      "safe_explanation": "More weight may have been placed on one side than the other."
+    },
+    {
+      "error": "uncontrolled_descent",
+      "observable_signals": [
+        "high descent velocity",
+        "high jerk score",
+        "short descent duration"
+      ],
+      "safe_explanation": "The return to the chair may have been faster or less controlled than expected."
+    }
+  ],
+  "patient_friendly_guidance": [
+    "Use the chair and foot placement assigned by the care team.",
+    "Shift forward in a controlled way before standing.",
+    "Keep the knees aligned with the feet.",
+    "Return to the chair slowly and with control."
+  ],
+  "safety_notes": [
+    "Use support or supervision when required by the care plan.",
+    "Do not perform the exercise if the environment is unstable or unsafe.",
+    "Stop and seek help after a fall, severe pain, sudden weakness, dizziness, or loss of balance."
+  ],
+  "evidence_sources": [
+    "wlu_rehabilitation_posture",
+    "ui_prmd"
+  ],
+  "clinical_review_status": "pending"
+}

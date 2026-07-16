@@ -1,0 +1,76 @@
+[
+  {
+    "sensor_id": "imu",
+    "display_name": "Inertial Measurement Unit",
+    "measures": [
+      "linear acceleration",
+      "angular velocity"
+    ],
+    "components": [
+      "accelerometer",
+      "gyroscope"
+    ],
+    "description": "A wearable sensor used to estimate motion and orientation changes.",
+    "limitations": [
+      "sensor drift",
+      "placement sensitivity",
+      "calibration dependency"
+    ]
+  },
+  {
+    "sensor_id": "fsr",
+    "display_name": "Force-Sensing Resistor",
+    "measures": [
+      "relative pressure or force"
+    ],
+    "description": "A pressure-sensitive element that changes electrical resistance when force is applied.",
+    "limitations": [
+      "nonlinear response",
+      "placement sensitivity",
+      "requires calibration"
+    ]
+  },
+  {
+    "sensor_id": "tof",
+    "display_name": "Time-of-Flight Distance Sensor",
+    "measures": [
+      "distance"
+    ],
+    "description": "A sensor that estimates distance using the travel time of emitted light.",
+    "limitations": [
+      "out-of-range readings",
+      "surface reflectivity",
+      "field-of-view effects"
+    ]
+  },
+  {
+    "sensor_id": "pose_estimation",
+    "display_name": "Camera Pose Estimation",
+    "measures": [
+      "joint keypoint coordinates",
+      "derived joint angles"
+    ],
+    "description": "A computer-vision method that estimates body joint locations from images or video.",
+    "limitations": [
+      "occlusion",
+      "camera angle",
+      "lighting",
+      "keypoint confidence"
+    ]
+  },
+  {
+    "sensor_id": "motion_capture",
+    "display_name": "Optical Motion Capture",
+    "measures": [
+      "marker positions",
+      "joint kinematics"
+    ],
+    "description": "A laboratory system that tracks markers to estimate body motion.",
+    "limitations": [
+      "laboratory setup",
+      "marker placement",
+      "occlusion",
+      "cost"
+    ]
+  }
+]

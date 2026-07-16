@@ -1,0 +1,86 @@
+{
+  "exercise_id": "side_lunge",
+  "exercise_name": "Side Lunge",
+  "category": "lower_limb_rehabilitation",
+  "body_region": [
+    "hip",
+    "knee",
+    "ankle",
+    "trunk"
+  ],
+  "purpose": [
+    "Represent controlled lateral stepping and lowering",
+    "Support alignment, symmetry, and balance analysis"
+  ],
+  "starting_position": [
+    "Stand using the stance specified by the care team",
+    "Keep the trunk controlled",
+    "Use support when required"
+  ],
+  "movement_phases": [
+    {
+      "phase": "lateral_step",
+      "description": "One foot steps to the side."
+    },
+    {
+      "phase": "lower",
+      "description": "The body lowers toward the stepping side as the hip and knee flex."
+    },
+    {
+      "phase": "push_return",
+      "description": "The user pushes through the stepping leg and returns to the starting position."
+    }
+  ],
+  "observable_metrics": [
+    "step_width",
+    "knee_angle",
+    "hip_angle",
+    "trunk_lean",
+    "knee_alignment",
+    "foot_orientation",
+    "duration",
+    "angular_velocity",
+    "jerk_score",
+    "symmetry"
+  ],
+  "common_execution_errors": [
+    {
+      "error": "knee_misalignment",
+      "observable_signals": [
+        "knee moving inward or away from foot alignment"
+      ],
+      "safe_explanation": "The knee may not have remained aligned with the foot."
+    },
+    {
+      "error": "excessive_trunk_lean",
+      "observable_signals": [
+        "large lateral or forward trunk angle"
+      ],
+      "safe_explanation": "The trunk may have leaned more than expected during the movement."
+    },
+    {
+      "error": "limited_lateral_control",
+      "observable_signals": [
+        "abrupt step",
+        "high jerk score",
+        "unstable return"
+      ],
+      "safe_explanation": "The side step or return may have been less controlled than expected."
+    }
+  ],
+  "patient_friendly_guidance": [
+    "Use only the step width and depth assigned by the care team.",
+    "Keep the knee aligned with the foot.",
+    "Keep the trunk controlled.",
+    "Return to the starting position smoothly."
+  ],
+  "safety_notes": [
+    "Use required support or supervision.",
+    "The chatbot must not prescribe step width, depth, or repetition count.",
+    "Stop for severe pain, sudden weakness, dizziness, or loss of balance."
+  ],
+  "evidence_sources": [
+    "ui_prmd"
+  ],
+  "clinical_review_status": "pending"
+}

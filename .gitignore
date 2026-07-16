@@ -1,0 +1,27 @@
+# Secrets
+.env
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Private AWS IoT credentials
+certs/
+*.pem
+*.key
+*.crt
+
+# Generated/runtime files
+reports/assets/*
+*.log
+*.zip

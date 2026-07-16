@@ -1,0 +1,94 @@
+{
+  "exercise_id": "deep_squat",
+  "exercise_name": "Deep Squat",
+  "category": "lower_limb_rehabilitation",
+  "body_region": [
+    "hip",
+    "knee",
+    "ankle",
+    "trunk"
+  ],
+  "purpose": [
+    "Represent a squat movement for posture and consistency analysis",
+    "Support explanations of alignment and controlled descent",
+    "Provide research-grounded movement descriptors"
+  ],
+  "starting_position": [
+    "Stand using the stance specified by the care team",
+    "Keep the feet stable on the floor",
+    "Begin with an upright, controlled trunk position"
+  ],
+  "movement_phases": [
+    {
+      "phase": "descent",
+      "description": "The hips and knees flex as the body moves downward."
+    },
+    {
+      "phase": "bottom_position",
+      "description": "The lowest configured position is reached while alignment is maintained."
+    },
+    {
+      "phase": "ascent",
+      "description": "The hips and knees extend as the body returns to standing."
+    }
+  ],
+  "observable_metrics": [
+    "knee_angle",
+    "hip_angle",
+    "ankle_angle",
+    "trunk_lean",
+    "knee_alignment",
+    "heel_contact",
+    "duration",
+    "angular_velocity",
+    "jerk_score",
+    "symmetry"
+  ],
+  "common_execution_errors": [
+    {
+      "error": "knee_valgus_or_misalignment",
+      "observable_signals": [
+        "knees moving inward",
+        "knees not aligned over feet"
+      ],
+      "safe_explanation": "The knees may not have remained aligned with the feet."
+    },
+    {
+      "error": "excessive_trunk_flexion",
+      "observable_signals": [
+        "large forward trunk angle"
+      ],
+      "safe_explanation": "The trunk may have leaned forward more than expected."
+    },
+    {
+      "error": "limited_depth",
+      "observable_signals": [
+        "reduced knee or hip flexion relative to configured target"
+      ],
+      "safe_explanation": "The movement may not have reached the configured target depth."
+    },
+    {
+      "error": "heel_lift",
+      "observable_signals": [
+        "loss of heel contact",
+        "pressure shift toward forefoot"
+      ],
+      "safe_explanation": "The heels may not have remained in stable contact with the floor."
+    }
+  ],
+  "patient_friendly_guidance": [
+    "Use only the depth assigned by the care team.",
+    "Keep the feet stable and the knees aligned with the feet.",
+    "Keep the trunk controlled.",
+    "Move down and up smoothly."
+  ],
+  "safety_notes": [
+    "This record does not define a safe squat depth for a specific patient.",
+    "Use assistance or supervision when required.",
+    "Stop for severe pain, sudden weakness, dizziness, or loss of balance."
+  ],
+  "evidence_sources": [
+    "ui_prmd"
+  ],
+  "clinical_review_status": "pending"
+}

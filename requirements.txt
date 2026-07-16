@@ -1,0 +1,11 @@
+streamlit
+pandas
+numpy
+plotly
+boto3
+awsiotsdk
+matplotlib
+fpdf
+openai
+python-dotenv
+pytest

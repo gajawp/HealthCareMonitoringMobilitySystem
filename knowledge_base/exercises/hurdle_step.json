@@ -1,0 +1,96 @@
+{
+  "exercise_id": "hurdle_step",
+  "exercise_name": "Hurdle Step",
+  "category": "lower_limb_rehabilitation",
+  "body_region": [
+    "hip",
+    "knee",
+    "ankle",
+    "trunk"
+  ],
+  "purpose": [
+    "Represent a stepping movement involving single-leg support",
+    "Support balance and lower-limb alignment analysis"
+  ],
+  "starting_position": [
+    "Stand in the setup specified by the care team",
+    "Use support when required",
+    "Maintain a stable trunk before stepping"
+  ],
+  "movement_phases": [
+    {
+      "phase": "weight_shift",
+      "description": "Body weight shifts onto the supporting leg."
+    },
+    {
+      "phase": "step_over",
+      "description": "The moving leg lifts and passes over the obstacle."
+    },
+    {
+      "phase": "placement",
+      "description": "The foot is placed while balance is maintained."
+    },
+    {
+      "phase": "return",
+      "description": "The user returns to the starting position with control."
+    }
+  ],
+  "observable_metrics": [
+    "hip_angle",
+    "knee_angle",
+    "ankle_angle",
+    "trunk_lean",
+    "pelvic_stability",
+    "support_leg_alignment",
+    "foot_clearance",
+    "duration",
+    "symmetry",
+    "balance"
+  ],
+  "common_execution_errors": [
+    {
+      "error": "support_leg_misalignment",
+      "observable_signals": [
+        "hip, knee, or ankle moving out of vertical alignment"
+      ],
+      "safe_explanation": "The supporting leg may not have remained aligned during the step."
+    },
+    {
+      "error": "trunk_sway",
+      "observable_signals": [
+        "large lateral trunk movement"
+      ],
+      "safe_explanation": "The trunk may have moved sideways to compensate for balance."
+    },
+    {
+      "error": "insufficient_clearance",
+      "observable_signals": [
+        "low foot clearance relative to obstacle"
+      ],
+      "safe_explanation": "The moving foot may not have cleared the obstacle by the configured margin."
+    },
+    {
+      "error": "loss_of_balance",
+      "observable_signals": [
+        "rapid corrective movements",
+        "unexpected foot placement"
+      ],
+      "safe_explanation": "The movement may have required an unexpected balance correction."
+    }
+  ],
+  "patient_friendly_guidance": [
+    "Use support when assigned.",
+    "Move slowly and keep the supporting leg stable.",
+    "Lift the stepping foot only as high as required.",
+    "Return to the starting position with control."
+  ],
+  "safety_notes": [
+    "The obstacle height and support requirements must come from the care plan.",
+    "This exercise may create a fall risk and should not be attempted without required supervision.",
+    "Stop after a near-fall, fall, severe pain, or sudden weakness."
+  ],
+  "evidence_sources": [
+    "ui_prmd"
+  ],
+  "clinical_review_status": "pending"
+}

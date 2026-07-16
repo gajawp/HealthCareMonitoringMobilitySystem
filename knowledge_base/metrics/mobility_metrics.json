@@ -1,0 +1,74 @@
+[
+  {
+    "metric_id": "knee_angle",
+    "display_name": "Knee Angle",
+    "unit": "degrees",
+    "description": "An angular representation of knee flexion or extension based on the system's joint model.",
+    "patient_explanation": "This describes how much the knee is bent or extended.",
+    "clinical_threshold": null,
+    "threshold_source": "care_plan_required"
+  },
+  {
+    "metric_id": "shin_lift_angle",
+    "display_name": "Shin Lift Angle",
+    "unit": "degrees",
+    "description": "The elevation of the lower leg relative to a reference orientation.",
+    "patient_explanation": "This shows how far the lower leg was raised.",
+    "clinical_threshold": null,
+    "threshold_source": "care_plan_required"
+  },
+  {
+    "metric_id": "lift_duration",
+    "display_name": "Lift Duration",
+    "unit": "seconds",
+    "description": "The measured time between movement onset and the target or peak lift phase.",
+    "patient_explanation": "This shows how long it took to raise the leg.",
+    "clinical_threshold": null,
+    "threshold_source": "care_plan_required"
+  },
+  {
+    "metric_id": "hold_duration",
+    "display_name": "Hold Duration",
+    "unit": "seconds",
+    "description": "The time the exercise position remained within the system's configured hold condition.",
+    "patient_explanation": "This shows how long the position was held.",
+    "clinical_threshold": null,
+    "threshold_source": "care_plan_required"
+  },
+  {
+    "metric_id": "angular_velocity",
+    "display_name": "Angular Velocity",
+    "unit": "degrees_per_second",
+    "description": "The rate of change of limb orientation.",
+    "patient_explanation": "This describes how quickly the limb moved.",
+    "clinical_threshold": null,
+    "threshold_source": "system_calibration_or_care_plan_required"
+  },
+  {
+    "metric_id": "jerk_score",
+    "display_name": "Movement Smoothness Indicator",
+    "unit": "implementation_defined",
+    "description": "A derived measure related to abrupt changes in acceleration or movement.",
+    "patient_explanation": "A larger value may mean the movement was less smooth, depending on system calibration.",
+    "clinical_threshold": null,
+    "threshold_source": "system_calibration_required"
+  },
+  {
+    "metric_id": "tof_symmetry",
+    "display_name": "Movement Symmetry",
+    "unit": "implementation_defined",
+    "description": "A system-specific comparison of left-side and right-side movement behavior.",
+    "patient_explanation": "This compares movement between the two sides.",
+    "clinical_threshold": null,
+    "threshold_source": "system_calibration_required"
+  },
+  {
+    "metric_id": "trunk_lean",
+    "display_name": "Trunk Lean",
+    "unit": "degrees",
+    "description": "The angle of the trunk relative to a reference vertical direction.",
+    "patient_explanation": "This shows how far the upper body leaned.",
+    "clinical_threshold": null,
+    "threshold_source": "exercise_specific_review_required"
+  }
+]

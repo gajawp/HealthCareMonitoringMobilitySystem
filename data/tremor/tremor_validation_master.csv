@@ -1,0 +1,73 @@
+person_id,test_name,timestamp,channel,condition,dominant_freq_hz,dominant_amp,band_power,sampling_hz,retries,notes
+person_1,test_one,2026-03-25T17:38:58Z,0,tremor,5.0,45.148207,13502.111724,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_one,2026-03-25T17:38:58Z,1,tremor,5.2,51.332741,18738.206681,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_one,2026-03-25T17:38:58Z,2,tremor,4.4,68.70552,25994.05811,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_one,2026-03-25T17:38:58Z,3,tremor,4.4,64.426101,21960.443041,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_one,2026-03-25T17:38:58Z,0,rest,4.7,2.462752,45.769694,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_one,2026-03-25T17:38:58Z,1,rest,4.5,3.152676,43.491275,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_one,2026-03-25T17:38:58Z,2,rest,5.9,2.042919,30.966715,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_one,2026-03-25T17:38:58Z,3,rest,5.7,1.710832,24.548768,89.3,0,Exaggerated tremor intensity - represents high-severity (MDS-UPDRS score 3-4) endpoint
+person_1,test_two,2026-03-25T17:41:56Z,0,tremor,4.0,24.302194,2536.787274,89.25,0,
+person_1,test_two,2026-03-25T17:41:56Z,1,tremor,4.0,45.555303,6629.875246,89.25,0,
+person_1,test_two,2026-03-25T17:41:56Z,2,tremor,5.0,21.388471,2859.482638,89.25,0,
+person_1,test_two,2026-03-25T17:41:56Z,3,tremor,4.0,27.585935,2861.246377,89.25,0,
+person_1,test_two,2026-03-25T17:41:56Z,0,rest,5.0,2.218585,50.6045,89.25,0,
+person_1,test_two,2026-03-25T17:41:56Z,1,rest,5.1,1.964783,32.794716,89.25,0,
+person_1,test_two,2026-03-25T17:41:56Z,2,rest,5.6,3.102141,48.004494,89.25,0,
+person_1,test_two,2026-03-25T17:41:56Z,3,rest,5.8,2.391762,42.493788,89.25,0,
+person_1,test_three,2026-03-25T17:44:54Z,0,tremor,4.8,41.789717,5552.70782,88.96,0,
+person_1,test_three,2026-03-25T17:44:54Z,1,tremor,4.8,69.227072,24331.47771,88.96,0,
+person_1,test_three,2026-03-25T17:44:54Z,2,tremor,4.8,41.046575,11281.005562,88.96,0,
+person_1,test_three,2026-03-25T17:44:54Z,3,tremor,4.4,56.739424,18616.357975,88.96,0,
+person_1,test_three,2026-03-25T17:44:54Z,0,rest,5.6,3.247057,45.240934,88.96,0,
+person_1,test_three,2026-03-25T17:44:54Z,1,rest,5.0,2.498708,32.651101,88.96,0,
+person_1,test_three,2026-03-25T17:44:54Z,2,rest,5.8,2.46986,44.909021,88.96,0,
+person_1,test_three,2026-03-25T17:44:54Z,3,rest,5.4,2.585587,43.37624,88.96,0,
+person_1,test_four,2026-03-25T17:46:42Z,0,tremor,6.0,22.759878,2950.444696,89.26,0,
+person_1,test_four,2026-03-25T17:46:42Z,1,tremor,4.3,20.804612,3485.754117,89.26,0,
+person_1,test_four,2026-03-25T17:46:42Z,2,tremor,4.7,10.899342,1030.390375,89.26,0,
+person_1,test_four,2026-03-25T17:46:42Z,3,tremor,4.7,22.025045,2426.676607,89.26,0,
+person_1,test_four,2026-03-25T17:46:42Z,0,rest,5.7,1.593217,12.576674,89.26,0,
+person_1,test_four,2026-03-25T17:46:42Z,1,rest,4.9,2.798077,37.416048,89.26,0,
+person_1,test_four,2026-03-25T17:46:42Z,2,rest,4.5,2.290096,30.182462,89.26,0,
+person_1,test_four,2026-03-25T17:46:42Z,3,rest,4.2,1.881924,21.149865,89.26,0,
+person_1,test_five,2026-03-25T18:00:02Z,0,tremor,4.5,13.875498,1409.288625,88.99,0,Clean environment - light tremor intensity
+person_1,test_five,2026-03-25T18:00:02Z,1,tremor,4.2,16.308212,1371.18431,88.99,0,Clean environment - light tremor intensity
+person_1,test_five,2026-03-25T18:00:02Z,2,tremor,4.2,19.832409,1947.979514,88.99,0,Clean environment - light tremor intensity
+person_1,test_five,2026-03-25T18:00:02Z,3,tremor,4.2,20.495254,2112.595454,88.99,0,Clean environment - light tremor intensity
+person_1,test_five,2026-03-25T18:00:02Z,0,rest,5.4,2.455356,36.944295,88.99,0,Clean environment - light tremor intensity
+person_1,test_five,2026-03-25T18:00:02Z,1,rest,5.8,2.625545,45.910006,88.99,0,Clean environment - light tremor intensity
+person_1,test_five,2026-03-25T18:00:02Z,2,rest,5.6,2.255383,38.737858,88.99,0,Clean environment - light tremor intensity
+person_1,test_five,2026-03-25T18:00:02Z,3,rest,5.8,2.757157,44.944366,88.99,0,Clean environment - light tremor intensity
+person_B,test_one,2026-03-25T18:03:42Z,0,tremor,5.8,18.775432,2718.713303,89.03,0,
+person_B,test_one,2026-03-25T18:03:42Z,1,tremor,4.1,20.530078,2153.115172,89.03,0,
+person_B,test_one,2026-03-25T18:03:42Z,2,tremor,4.1,39.370198,7702.344737,89.03,0,
+person_B,test_one,2026-03-25T18:03:42Z,3,tremor,4.1,49.489526,12402.182778,89.03,0,
+person_B,test_one,2026-03-25T18:03:42Z,0,rest,5.4,2.756184,43.69439,89.03,0,
+person_B,test_one,2026-03-25T18:03:42Z,1,rest,5.8,3.367108,54.376608,89.03,0,
+person_B,test_one,2026-03-25T18:03:42Z,2,rest,5.8,2.519809,52.634967,89.03,0,
+person_B,test_one,2026-03-25T18:03:42Z,3,rest,5.4,3.71447,69.039424,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,0,tremor,4.8,9.33166,672.072918,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,1,tremor,4.4,14.396091,1221.937744,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,2,tremor,4.0,22.116433,2626.913707,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,3,tremor,4.4,25.574567,3372.862583,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,0,rest,5.9,1.644725,22.333321,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,1,rest,5.3,2.808888,36.087904,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,2,rest,5.5,2.646102,40.922444,89.03,0,
+person_B,test_three,2026-03-25T18:05:36Z,3,rest,4.0,2.265247,23.85857,89.03,0,
+person_B,test_four,2026-03-25T18:06:37Z,0,tremor,5.2,10.461221,822.949419,89.0,0,
+person_B,test_four,2026-03-25T18:06:37Z,1,tremor,4.8,12.789545,1137.727235,89.0,0,
+person_B,test_four,2026-03-25T18:06:37Z,2,tremor,4.0,23.916498,3681.919596,89.0,0,
+person_B,test_four,2026-03-25T18:06:37Z,3,tremor,4.8,22.489878,2947.512007,89.0,0,
+person_B,test_four,2026-03-25T18:06:37Z,0,rest,4.7,1.699529,25.301396,89.0,0,
+person_B,test_four,2026-03-25T18:06:37Z,1,rest,5.6,1.646253,26.210949,89.0,0,
+person_B,test_four,2026-03-25T18:06:37Z,2,rest,4.7,2.325522,35.990861,89.0,0,
+person_B,test_four,2026-03-25T18:06:37Z,3,rest,5.3,2.397588,29.6354,89.0,0,
+person_B,test_five,2026-03-25T18:07:52Z,0,tremor,4.0,19.111467,1702.007448,89.26,0,
+person_B,test_five,2026-03-25T18:07:52Z,1,tremor,4.0,30.233863,2061.790832,89.26,0,
+person_B,test_five,2026-03-25T18:07:52Z,2,tremor,4.0,34.13545,4973.566781,89.26,0,
+person_B,test_five,2026-03-25T18:07:52Z,3,tremor,4.0,45.165636,5509.926753,89.26,0,
+person_B,test_five,2026-03-25T18:07:52Z,0,rest,5.6,2.087299,30.265745,89.26,0,
+person_B,test_five,2026-03-25T18:07:52Z,1,rest,4.6,1.837025,21.676794,89.26,0,
+person_B,test_five,2026-03-25T18:07:52Z,2,rest,5.6,1.920365,27.10914,89.26,0,
+person_B,test_five,2026-03-25T18:07:52Z,3,rest,4.0,3.159417,39.104802,89.26,0,

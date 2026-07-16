@@ -1,0 +1,645 @@
+[
+  {
+    "chunk_id": "deep_squat_overview",
+    "document_type": "exercise_overview",
+    "title": "Deep Squat: Overview",
+    "text": "Exercise: Deep Squat. Category: lower_limb_rehabilitation. Purpose: Represent a squat movement for posture and consistency analysis; Support explanations of alignment and controlled descent; Provide research-grounded movement descriptors. Starting position: Stand using the stance specified by the care team; Keep the feet stable on the floor; Begin with an upright, controlled trunk position.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "deep_squat_phases",
+    "document_type": "movement_phases",
+    "title": "Deep Squat: Movement phases",
+    "text": "descent: The hips and knees flex as the body moves downward.; bottom_position: The lowest configured position is reached while alignment is maintained.; ascent: The hips and knees extend as the body returns to standing.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "deep_squat_guidance",
+    "document_type": "patient_guidance",
+    "title": "Deep Squat: General guidance",
+    "text": "Use only the depth assigned by the care team.; Keep the feet stable and the knees aligned with the feet.; Keep the trunk controlled.; Move down and up smoothly.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "deep_squat_safety",
+    "document_type": "exercise_safety",
+    "title": "Deep Squat: Safety limits",
+    "text": "This record does not define a safe squat depth for a specific patient.; Use assistance or supervision when required.; Stop for severe pain, sudden weakness, dizziness, or loss of balance.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "deep_squat_error_1",
+    "document_type": "execution_error",
+    "title": "Deep Squat: knee_valgus_or_misalignment",
+    "text": "Possible execution issue: knee_valgus_or_misalignment. Observable signals: knees moving inward; knees not aligned over feet. Safe explanation: The knees may not have remained aligned with the feet.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "deep_squat_error_2",
+    "document_type": "execution_error",
+    "title": "Deep Squat: excessive_trunk_flexion",
+    "text": "Possible execution issue: excessive_trunk_flexion. Observable signals: large forward trunk angle. Safe explanation: The trunk may have leaned forward more than expected.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "deep_squat_error_3",
+    "document_type": "execution_error",
+    "title": "Deep Squat: limited_depth",
+    "text": "Possible execution issue: limited_depth. Observable signals: reduced knee or hip flexion relative to configured target. Safe explanation: The movement may not have reached the configured target depth.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "deep_squat_error_4",
+    "document_type": "execution_error",
+    "title": "Deep Squat: heel_lift",
+    "text": "Possible execution issue: heel_lift. Observable signals: loss of heel contact; pressure shift toward forefoot. Safe explanation: The heels may not have remained in stable contact with the floor.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "deep_squat",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_overview",
+    "document_type": "exercise_overview",
+    "title": "Hurdle Step: Overview",
+    "text": "Exercise: Hurdle Step. Category: lower_limb_rehabilitation. Purpose: Represent a stepping movement involving single-leg support; Support balance and lower-limb alignment analysis. Starting position: Stand in the setup specified by the care team; Use support when required; Maintain a stable trunk before stepping.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_phases",
+    "document_type": "movement_phases",
+    "title": "Hurdle Step: Movement phases",
+    "text": "weight_shift: Body weight shifts onto the supporting leg.; step_over: The moving leg lifts and passes over the obstacle.; placement: The foot is placed while balance is maintained.; return: The user returns to the starting position with control.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_guidance",
+    "document_type": "patient_guidance",
+    "title": "Hurdle Step: General guidance",
+    "text": "Use support when assigned.; Move slowly and keep the supporting leg stable.; Lift the stepping foot only as high as required.; Return to the starting position with control.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_safety",
+    "document_type": "exercise_safety",
+    "title": "Hurdle Step: Safety limits",
+    "text": "The obstacle height and support requirements must come from the care plan.; This exercise may create a fall risk and should not be attempted without required supervision.; Stop after a near-fall, fall, severe pain, or sudden weakness.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_error_1",
+    "document_type": "execution_error",
+    "title": "Hurdle Step: support_leg_misalignment",
+    "text": "Possible execution issue: support_leg_misalignment. Observable signals: hip, knee, or ankle moving out of vertical alignment. Safe explanation: The supporting leg may not have remained aligned during the step.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_error_2",
+    "document_type": "execution_error",
+    "title": "Hurdle Step: trunk_sway",
+    "text": "Possible execution issue: trunk_sway. Observable signals: large lateral trunk movement. Safe explanation: The trunk may have moved sideways to compensate for balance.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_error_3",
+    "document_type": "execution_error",
+    "title": "Hurdle Step: insufficient_clearance",
+    "text": "Possible execution issue: insufficient_clearance. Observable signals: low foot clearance relative to obstacle. Safe explanation: The moving foot may not have cleared the obstacle by the configured margin.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "hurdle_step_error_4",
+    "document_type": "execution_error",
+    "title": "Hurdle Step: loss_of_balance",
+    "text": "Possible execution issue: loss_of_balance. Observable signals: rapid corrective movements; unexpected foot placement. Safe explanation: The movement may have required an unexpected balance correction.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "hurdle_step",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_overview",
+    "document_type": "exercise_overview",
+    "title": "Seated Knee Extension: Overview",
+    "text": "Exercise: Seated Knee Extension. Category: lower_limb_rehabilitation. Purpose: Represent controlled knee-extension movement for dashboard explanations; Support repetition and posture analysis; Describe observable movement phases without prescribing treatment. Starting position: Sit in a stable chair with the back supported when appropriate; Keep the thigh supported and the trunk steady; Begin with the knee flexed and the foot in a comfortable resting position; Follow the range and duration configured by the care team.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_phases",
+    "document_type": "movement_phases",
+    "title": "Seated Knee Extension: Movement phases",
+    "text": "rest: The leg remains near the starting position before movement begins.; lift: The lower leg moves forward and upward as the knee extends.; hold: The target position is maintained for the configured duration, when a hold is part of the care plan.; lower: The lower leg returns gradually to the starting position.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_guidance",
+    "document_type": "patient_guidance",
+    "title": "Seated Knee Extension: General guidance",
+    "text": "Sit upright and keep the thigh steady.; Raise the lower leg smoothly.; Use only the range and hold time assigned by the care team.; Lower the leg slowly and with control.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_safety",
+    "document_type": "exercise_safety",
+    "title": "Seated Knee Extension: Safety limits",
+    "text": "This guide is educational and does not prescribe a patient-specific range of motion.; Stop and seek appropriate help for severe pain, sudden weakness, dizziness, a fall, or loss of balance.; Target angles, repetitions, resistance, and hold times must come from the care plan or clinician.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_error_1",
+    "document_type": "execution_error",
+    "title": "Seated Knee Extension: insufficient_extension",
+    "text": "Possible execution issue: insufficient_extension. Observable signals: reduced knee angle; reduced shin lift angle. Safe explanation: The lower leg may not have reached the configured target position.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_error_2",
+    "document_type": "execution_error",
+    "title": "Seated Knee Extension: movement_too_fast_or_abrupt",
+    "text": "Possible execution issue: movement_too_fast_or_abrupt. Observable signals: high angular velocity; short lift duration; high jerk score. Safe explanation: The movement may have been performed faster or less smoothly than expected.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_error_3",
+    "document_type": "execution_error",
+    "title": "Seated Knee Extension: short_hold",
+    "text": "Possible execution issue: short_hold. Observable signals: hold duration below configured target. Safe explanation: The raised position was not maintained for the configured duration.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "seated_knee_extension_error_4",
+    "document_type": "execution_error",
+    "title": "Seated Knee Extension: trunk_or_hip_compensation",
+    "text": "Possible execution issue: trunk_or_hip_compensation. Observable signals: increased trunk lean; thigh movement; hip lift from chair. Safe explanation: The upper body or thigh may have moved to compensate during the exercise.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "knee_rehabilitation_exercises_wearables",
+      "intelligent_knee_sleeves",
+      "knee_range_of_motion"
+    ],
+    "exercise_id": "seated_knee_extension",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "side_lunge_overview",
+    "document_type": "exercise_overview",
+    "title": "Side Lunge: Overview",
+    "text": "Exercise: Side Lunge. Category: lower_limb_rehabilitation. Purpose: Represent controlled lateral stepping and lowering; Support alignment, symmetry, and balance analysis. Starting position: Stand using the stance specified by the care team; Keep the trunk controlled; Use support when required.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "side_lunge",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "side_lunge_phases",
+    "document_type": "movement_phases",
+    "title": "Side Lunge: Movement phases",
+    "text": "lateral_step: One foot steps to the side.; lower: The body lowers toward the stepping side as the hip and knee flex.; push_return: The user pushes through the stepping leg and returns to the starting position.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "side_lunge",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "side_lunge_guidance",
+    "document_type": "patient_guidance",
+    "title": "Side Lunge: General guidance",
+    "text": "Use only the step width and depth assigned by the care team.; Keep the knee aligned with the foot.; Keep the trunk controlled.; Return to the starting position smoothly.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "side_lunge",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "side_lunge_safety",
+    "document_type": "exercise_safety",
+    "title": "Side Lunge: Safety limits",
+    "text": "Use required support or supervision.; The chatbot must not prescribe step width, depth, or repetition count.; Stop for severe pain, sudden weakness, dizziness, or loss of balance.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "side_lunge",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "side_lunge_error_1",
+    "document_type": "execution_error",
+    "title": "Side Lunge: knee_misalignment",
+    "text": "Possible execution issue: knee_misalignment. Observable signals: knee moving inward or away from foot alignment. Safe explanation: The knee may not have remained aligned with the foot.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "side_lunge",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "side_lunge_error_2",
+    "document_type": "execution_error",
+    "title": "Side Lunge: excessive_trunk_lean",
+    "text": "Possible execution issue: excessive_trunk_lean. Observable signals: large lateral or forward trunk angle. Safe explanation: The trunk may have leaned more than expected during the movement.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "side_lunge",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "side_lunge_error_3",
+    "document_type": "execution_error",
+    "title": "Side Lunge: limited_lateral_control",
+    "text": "Possible execution issue: limited_lateral_control. Observable signals: abrupt step; high jerk score; unstable return. Safe explanation: The side step or return may have been less controlled than expected.",
+    "sources": [
+      "ui_prmd"
+    ],
+    "exercise_id": "side_lunge",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_overview",
+    "document_type": "exercise_overview",
+    "title": "Sit to Stand: Overview",
+    "text": "Exercise: Sit to Stand. Category: lower_limb_rehabilitation. Purpose: Represent the transition between sitting and standing; Support posture, balance, and repetition analysis; Describe observable movement features for chatbot explanations. Starting position: Sit on a stable chair using the setup specified by the care team; Place the feet in a stable position; Keep the trunk controlled before initiating the movement.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_phases",
+    "document_type": "movement_phases",
+    "title": "Sit to Stand: Movement phases",
+    "text": "preparation: The user prepares to rise while maintaining a stable seated position.; forward_transfer: The trunk moves forward to shift body weight over the feet.; rise: The hips and knees extend as the body rises from the chair.; standing: The user reaches a stable upright position.; descent: The hips and knees flex as the user returns to the chair with control.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_guidance",
+    "document_type": "patient_guidance",
+    "title": "Sit to Stand: General guidance",
+    "text": "Use the chair and foot placement assigned by the care team.; Shift forward in a controlled way before standing.; Keep the knees aligned with the feet.; Return to the chair slowly and with control.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_safety",
+    "document_type": "exercise_safety",
+    "title": "Sit to Stand: Safety limits",
+    "text": "Use support or supervision when required by the care plan.; Do not perform the exercise if the environment is unstable or unsafe.; Stop and seek help after a fall, severe pain, sudden weakness, dizziness, or loss of balance.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_error_1",
+    "document_type": "execution_error",
+    "title": "Sit to Stand: knee_misalignment",
+    "text": "Possible execution issue: knee_misalignment. Observable signals: knees moving inward or outward relative to feet. Safe explanation: The knees may not have remained aligned with the feet during the movement.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_error_2",
+    "document_type": "execution_error",
+    "title": "Sit to Stand: excessive_trunk_compensation",
+    "text": "Possible execution issue: excessive_trunk_compensation. Observable signals: large trunk lean; rapid trunk motion. Safe explanation: The upper body may have moved more than expected to assist the transition.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_error_3",
+    "document_type": "execution_error",
+    "title": "Sit to Stand: asymmetric_weight_transfer",
+    "text": "Possible execution issue: asymmetric_weight_transfer. Observable signals: uneven left-right pressure; uneven joint motion. Safe explanation: More weight may have been placed on one side than the other.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "sit_to_stand_error_4",
+    "document_type": "execution_error",
+    "title": "Sit to Stand: uncontrolled_descent",
+    "text": "Possible execution issue: uncontrolled_descent. Observable signals: high descent velocity; high jerk score; short descent duration. Safe explanation: The return to the chair may have been faster or less controlled than expected.",
+    "sources": [
+      "wlu_rehabilitation_posture",
+      "ui_prmd"
+    ],
+    "exercise_id": "sit_to_stand",
+    "clinical_review_status": "pending"
+  },
+  {
+    "chunk_id": "metric_definition_knee_angle",
+    "document_type": "metric_definition",
+    "title": "Knee Angle",
+    "text": "display name: Knee Angle. unit: degrees. description: An angular representation of knee flexion or extension based on the system's joint model.. patient explanation: This describes how much the knee is bent or extended.. threshold source: care_plan_required",
+    "sources": [],
+    "metric_id": "knee_angle"
+  },
+  {
+    "chunk_id": "metric_definition_shin_lift_angle",
+    "document_type": "metric_definition",
+    "title": "Shin Lift Angle",
+    "text": "display name: Shin Lift Angle. unit: degrees. description: The elevation of the lower leg relative to a reference orientation.. patient explanation: This shows how far the lower leg was raised.. threshold source: care_plan_required",
+    "sources": [],
+    "metric_id": "shin_lift_angle"
+  },
+  {
+    "chunk_id": "metric_definition_lift_duration",
+    "document_type": "metric_definition",
+    "title": "Lift Duration",
+    "text": "display name: Lift Duration. unit: seconds. description: The measured time between movement onset and the target or peak lift phase.. patient explanation: This shows how long it took to raise the leg.. threshold source: care_plan_required",
+    "sources": [],
+    "metric_id": "lift_duration"
+  },
+  {
+    "chunk_id": "metric_definition_hold_duration",
+    "document_type": "metric_definition",
+    "title": "Hold Duration",
+    "text": "display name: Hold Duration. unit: seconds. description: The time the exercise position remained within the system's configured hold condition.. patient explanation: This shows how long the position was held.. threshold source: care_plan_required",
+    "sources": [],
+    "metric_id": "hold_duration"
+  },
+  {
+    "chunk_id": "metric_definition_angular_velocity",
+    "document_type": "metric_definition",
+    "title": "Angular Velocity",
+    "text": "display name: Angular Velocity. unit: degrees_per_second. description: The rate of change of limb orientation.. patient explanation: This describes how quickly the limb moved.. threshold source: system_calibration_or_care_plan_required",
+    "sources": [],
+    "metric_id": "angular_velocity"
+  },
+  {
+    "chunk_id": "metric_definition_jerk_score",
+    "document_type": "metric_definition",
+    "title": "Movement Smoothness Indicator",
+    "text": "display name: Movement Smoothness Indicator. unit: implementation_defined. description: A derived measure related to abrupt changes in acceleration or movement.. patient explanation: A larger value may mean the movement was less smooth, depending on system calibration.. threshold source: system_calibration_required",
+    "sources": [],
+    "metric_id": "jerk_score"
+  },
+  {
+    "chunk_id": "metric_definition_tof_symmetry",
+    "document_type": "metric_definition",
+    "title": "Movement Symmetry",
+    "text": "display name: Movement Symmetry. unit: implementation_defined. description: A system-specific comparison of left-side and right-side movement behavior.. patient explanation: This compares movement between the two sides.. threshold source: system_calibration_required",
+    "sources": [],
+    "metric_id": "tof_symmetry"
+  },
+  {
+    "chunk_id": "metric_definition_trunk_lean",
+    "document_type": "metric_definition",
+    "title": "Trunk Lean",
+    "text": "display name: Trunk Lean. unit: degrees. description: The angle of the trunk relative to a reference vertical direction.. patient explanation: This shows how far the upper body leaned.. threshold source: exercise_specific_review_required",
+    "sources": [],
+    "metric_id": "trunk_lean"
+  },
+  {
+    "chunk_id": "sensor_definition_imu",
+    "document_type": "sensor_definition",
+    "title": "Inertial Measurement Unit",
+    "text": "display name: Inertial Measurement Unit. measures: linear acceleration; angular velocity. components: accelerometer; gyroscope. description: A wearable sensor used to estimate motion and orientation changes.. limitations: sensor drift; placement sensitivity; calibration dependency",
+    "sources": [],
+    "sensor_id": "imu"
+  },
+  {
+    "chunk_id": "sensor_definition_fsr",
+    "document_type": "sensor_definition",
+    "title": "Force-Sensing Resistor",
+    "text": "display name: Force-Sensing Resistor. measures: relative pressure or force. description: A pressure-sensitive element that changes electrical resistance when force is applied.. limitations: nonlinear response; placement sensitivity; requires calibration",
+    "sources": [],
+    "sensor_id": "fsr"
+  },
+  {
+    "chunk_id": "sensor_definition_tof",
+    "document_type": "sensor_definition",
+    "title": "Time-of-Flight Distance Sensor",
+    "text": "display name: Time-of-Flight Distance Sensor. measures: distance. description: A sensor that estimates distance using the travel time of emitted light.. limitations: out-of-range readings; surface reflectivity; field-of-view effects",
+    "sources": [],
+    "sensor_id": "tof"
+  },
+  {
+    "chunk_id": "sensor_definition_pose_estimation",
+    "document_type": "sensor_definition",
+    "title": "Camera Pose Estimation",
+    "text": "display name: Camera Pose Estimation. measures: joint keypoint coordinates; derived joint angles. description: A computer-vision method that estimates body joint locations from images or video.. limitations: occlusion; camera angle; lighting; keypoint confidence",
+    "sources": [],
+    "sensor_id": "pose_estimation"
+  },
+  {
+    "chunk_id": "sensor_definition_motion_capture",
+    "document_type": "sensor_definition",
+    "title": "Optical Motion Capture",
+    "text": "display name: Optical Motion Capture. measures: marker positions; joint kinematics. description: A laboratory system that tracks markers to estimate body motion.. limitations: laboratory setup; marker placement; occlusion; cost",
+    "sources": [],
+    "sensor_id": "motion_capture"
+  },
+  {
+    "chunk_id": "clinical_concept_knee_range_of_motion",
+    "document_type": "clinical_concept",
+    "title": "Knee Range of Motion",
+    "text": "display name: Knee Range of Motion. description: The angular span through which the knee moves under a defined measurement convention.. patient explanation: This describes how far the knee moves between bent and straighter positions.. dataset labels: {\"source_id\": \"knee_range_of_motion\", \"angles_degrees\": [20, 45, 60, 90, 120], \"meaning\": \"These are dataset class labels and are not patient-specific treatment targets.\"}. threshold source: care_plan_required. safety note: The chatbot must not infer a safe or required patient angle from dataset labels.",
+    "sources": [],
+    "concept_id": "knee_range_of_motion"
+  },
+  {
+    "chunk_id": "safety_chatbot_boundaries",
+    "document_type": "safety_policy",
+    "title": "Chatbot boundaries",
+    "text": "{\"assistant_role\": \"Educational mobility-dashboard assistant\", \"allowed_capabilities\": [\"Explain approved exercise records\", \"Explain dashboard and sensor metrics\", \"Summarize recorded sessions\", \"Explain why configured system rules flagged a repetition\", \"Compare recorded sessions when sufficient data exists\", \"Provide dashboard navigation help\"], \"disallowed_capabilities\": [\"Diagnose a disease, injury, or neurological condition\", \"Prescribe or modify an exercise plan\", \"Set a patient-specific range of motion\", \"Recommend medication or medication changes\", \"Advise a user to ignore a clinician or treatment plan\", \"Claim that sensor data confirms a medical diagnosis\", \"Invent thresholds not present in the care plan or system configuration\"], \"required_response_behavior\": {\"unsupported_question\": \"I do not have approved information to answer that question.\", \"diagnosis_request\": \"I can explain recorded mobility data, but I cannot diagnose a medical condition.\", \"treatment_request\": \"Exercise targets and treatment decisions must come from the patient's clinician or care plan.\", \"missing_data\": \"I do not have enough recorded information to answer that reliably.\"}, \"grounding_requirements\": [\"Use retrieved mobility data for patient-specific statements\", \"Use approved knowledge records for exercise explanations\", \"Identify uncertainty when data is incomplete\", \"Do not convert research dataset labels into clinical thresholds\"]}",
+    "sources": []
+  },
+  {
+    "chunk_id": "safety_escalation_rules",
+    "document_type": "safety_policy",
+    "title": "Escalation rules",
+    "text": "{\"emergency_patterns\": [{\"id\": \"possible_emergency\", \"keywords\": [\"chest pain\", \"difficulty breathing\", \"cannot breathe\", \"collapsed\", \"unconscious\", \"stroke\", \"face drooping\", \"slurred speech\", \"sudden severe weakness\", \"hit my head\"], \"response\": \"This may require immediate medical attention. Contact local emergency services now.\"}, {\"id\": \"fall_or_acute_injury\", \"keywords\": [\"i fell\", \"patient fell\", \"severe pain\", \"cannot put weight\", \"can't put weight\", \"cannot move my leg\", \"sudden swelling\"], \"response\": \"Stop the exercise and seek prompt medical guidance. Use emergency services when the situation is severe or immediately dangerous.\"}], \"non_emergency_escalation_patterns\": [{\"id\": \"persistent_worsening\", \"keywords\": [\"getting worse\", \"worsening\", \"repeated alerts\", \"new weakness\", \"persistent pain\", \"more tremor\"], \"response\": \"Consider contacting the care team to review the repeated or worsening change.\"}], \"implementation_notes\": [\"Keyword matching is only a first-stage safeguard.\", \"Emergency wording should be reviewed for the deployment region.\", \"The chatbot must not delay emergency care by asking unnecessary follow-up questions.\"]}",
+    "sources": []
+  },
+  {
+    "chunk_id": "source_metadata_addbiomechanics",
+    "document_type": "source_metadata",
+    "title": "AddBiomechanics Dataset: Capturing the Physics of Human Motion at Scale",
+    "text": "title: AddBiomechanics Dataset: Capturing the Physics of Human Motion at Scale. url: https://addbiomechanics.org/download_data.html. source type: biomechanics_dataset. use for: joint kinematics; joint kinetics; ground-reaction forces; movement-model research. do not use for: patient-specific treatment; automatic clinical thresholds. license: CC BY 4.0. trust level: research_dataset. notes: Contains standardized musculoskeletal models and large-scale movement data.",
+    "sources": [],
+    "source_id": "addbiomechanics"
+  },
+  {
+    "chunk_id": "source_metadata_intelligent_knee_sleeves",
+    "document_type": "source_metadata",
+    "title": "Intelligent Knee Sleeves: A Real-time Multimodal Dataset for 3D Lower Body Motion Estimation Using Smart Textile",
+    "text": "title: Intelligent Knee Sleeves: A Real-time Multimodal Dataset for 3D Lower Body Motion Estimation Using Smart Textile. url: https://arxiv.org/abs/2311.12829. source type: peer_reviewed_dataset_paper. use for: wearable sensing; lower-body pose estimation; joint-angle estimation research. do not use for: diagnosis; treatment prescription. license: verify repository license before redistribution. trust level: peer_reviewed_research",
+    "sources": [],
+    "source_id": "intelligent_knee_sleeves"
+  },
+  {
+    "chunk_id": "source_metadata_wlu_rehabilitation_posture",
+    "document_type": "source_metadata",
+    "title": "WLU Rehabilitation Posture",
+    "text": "title: WLU Rehabilitation Posture. url: https://www.kaggle.com/datasets/sulaimanmuhammed/wlu-rehabilitation-posture. source type: rehabilitation_video_dataset. use for: correct-versus-incorrect posture research; knee extension; sit-to-stand; pose estimation. do not use for: patient-specific diagnosis; clinical target generation. license: MIT. trust level: research_dataset",
+    "sources": [],
+    "source_id": "wlu_rehabilitation_posture"
+  },
+  {
+    "chunk_id": "source_metadata_ui_prmd",
+    "document_type": "source_metadata",
+    "title": "University of Idaho Physical Rehabilitation Movement Data",
+    "text": "title: University of Idaho Physical Rehabilitation Movement Data. url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5773117/. source type: rehabilitation_motion_dataset. use for: exercise descriptions; joint positions; joint angles; repetition analysis; movement consistency research. do not use for: injury-specific clinical recommendations; patient-specific thresholds. license: Open Data Commons PDDL 1.0 for dataset; article is open access. trust level: peer_reviewed_research",
+    "sources": [],
+    "source_id": "ui_prmd"
+  },
+  {
+    "chunk_id": "source_metadata_knee_rehabilitation_exercises_wearables",
+    "document_type": "source_metadata",
+    "title": "A Knee Rehabilitation Exercises Dataset for Postural Assessment using Wearable Devices",
+    "text": "title: A Knee Rehabilitation Exercises Dataset for Postural Assessment using Wearable Devices. url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11992047/. source type: peer_reviewed_rehabilitation_dataset. use for: knee extension execution categories; squat execution categories; wearable postural assessment. do not use for: direct treatment recommendation; unreviewed patient-specific feedback. license: verify dataset repository terms before redistribution. trust level: peer_reviewed_research",
+    "sources": [],
+    "source_id": "knee_rehabilitation_exercises_wearables"
+  },
+  {
+    "chunk_id": "source_metadata_knee_range_of_motion",
+    "document_type": "source_metadata",
+    "title": "Knee Range of Motion",
+    "text": "title: Knee Range of Motion. url: https://www.kaggle.com/datasets/billskarm/knee-range-of-motion. source type: wearable_sensor_dataset. use for: angle-classification experiments; sensor-based range-of-motion research. do not use for: clinical target generation; patient-specific safe-angle decisions. dataset angle labels degrees: 20; 45; 60; 90; 120. license: Unknown. trust level: experimental_dataset",
+    "sources": [],
+    "source_id": "knee_range_of_motion"
+  },
+  {
+    "chunk_id": "source_metadata_requested_knee_rehabilitation_sensor_dataset",
+    "document_type": "source_metadata",
+    "title": "Requested Kaggle Knee Rehabilitation Sensor Dataset",
+    "text": "title: Requested Kaggle Knee Rehabilitation Sensor Dataset. url: https://www.kaggle.com/datasets/programmer3/knee-rehabilitation-sensor-dataset. source type: unverified_dataset_link. use for: pending manual inspection. do not use for: production retrieval; clinical claims; redistribution. license: unverified. trust level: unverified. notes: The supplied URL could not be reliably verified. Inspect the downloaded data card, provenance, and license before use.",
+    "sources": [],
+    "source_id": "requested_knee_rehabilitation_sensor_dataset"
+  }
+]

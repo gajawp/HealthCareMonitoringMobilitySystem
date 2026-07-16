@@ -1,0 +1,52 @@
+{
+  "emergency_patterns": [
+    {
+      "id": "possible_emergency",
+      "keywords": [
+        "chest pain",
+        "difficulty breathing",
+        "cannot breathe",
+        "collapsed",
+        "unconscious",
+        "stroke",
+        "face drooping",
+        "slurred speech",
+        "sudden severe weakness",
+        "hit my head"
+      ],
+      "response": "This may require immediate medical attention. Contact local emergency services now."
+    },
+    {
+      "id": "fall_or_acute_injury",
+      "keywords": [
+        "i fell",
+        "patient fell",
+        "severe pain",
+        "cannot put weight",
+        "can't put weight",
+        "cannot move my leg",
+        "sudden swelling"
+      ],
+      "response": "Stop the exercise and seek prompt medical guidance. Use emergency services when the situation is severe or immediately dangerous."
+    }
+  ],
+  "non_emergency_escalation_patterns": [
+    {
+      "id": "persistent_worsening",
+      "keywords": [
+        "getting worse",
+        "worsening",
+        "repeated alerts",
+        "new weakness",
+        "persistent pain",
+        "more tremor"
+      ],
+      "response": "Consider contacting the care team to review the repeated or worsening change."
+    }
+  ],
+  "implementation_notes": [
+    "Keyword matching is only a first-stage safeguard.",
+    "Emergency wording should be reviewed for the deployment region.",
+    "The chatbot must not delay emergency care by asking unnecessary follow-up questions."
+  ]
+}
