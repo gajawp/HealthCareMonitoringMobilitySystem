@@ -1,0 +1,17 @@
+session_id,rep_id,leg,duration_s,lift_duration_s,lower_duration_s,hold_duration_s,peak_tof_mm,tof_out_of_range,shin_lift_angle_deg,peak_angular_velocity,jerk_score,tof_symmetry,flagged,flag_hold,flag_angle,flag_jerk,patient_id
+session_20260610_110000,1,right,3.555,2.8,0.8,0.21,817.4,False,85.38,111.891,0.2837,0.93,False,False,False,False,P1015
+session_20260610_110000,2,left,4.657,3.5,1.2,0.1,246.6,False,70.5,107.873,0.5235,0.97,False,False,False,False,P1015
+session_20260610_110000,3,right,4.011,3.2,0.8,0.29,567.6,False,101.74,93.32,0.2016,0.941,False,False,False,False,P1015
+session_20260610_110000,4,right,4.329,3.3,1.0,0.3,231.1,False,101.31,113.234,0.3667,0.901,False,False,False,False,P1015
+session_20260610_110000,5,right,3.629,2.9,0.7,0.32,378.1,False,63.53,121.868,0.4039,0.889,False,False,False,False,P1015
+session_20260610_110000,6,right,3.891,2.8,1.1,0.12,440.5,False,87.56,125.585,0.3981,0.919,False,False,False,False,P1015
+session_20260610_110000,7,left,3.881,3.2,0.7,0.0,264.7,False,82.95,141.819,0.5223,0.813,True,True,False,False,P1015
+session_20260610_110000,8,left,4.091,3.2,0.9,0.0,742.4,False,53.08,60.713,0.5051,0.931,True,True,False,False,P1015
+session_20260610_110000,9,right,3.539,2.9,0.6,0.52,817.6,False,73.54,81.671,0.1893,0.971,False,False,False,False,P1015
+session_20260610_110000,10,left,4.571,3.6,1.0,0.3,393.6,False,71.4,85.312,0.5213,0.805,False,False,False,False,P1015
+session_20260610_110000,11,right,4.714,3.7,1.0,0.36,731.4,False,81.12,79.249,0.3673,0.886,False,False,False,False,P1015
+session_20260610_110000,12,left,3.238,2.4,0.8,0.0,404.6,False,61.89,137.166,0.5146,0.935,True,True,False,False,P1015
+session_20260610_110000,13,right,3.538,2.8,0.7,0.17,542.8,False,96.71,98.944,0.5194,0.897,False,False,False,False,P1015
+session_20260610_110000,14,left,3.845,3.0,0.8,0.05,8191.0,True,73.67,103.824,0.5063,0.0,True,True,False,False,P1015
+session_20260610_110000,15,left,3.917,2.9,1.0,0.01,486.1,False,57.25,139.903,0.575,0.987,True,True,False,True,P1015
+session_20260610_110000,16,left,5.067,4.0,1.1,0.0,809.0,False,73.63,126.003,0.6648,0.871,True,True,False,True,P1015

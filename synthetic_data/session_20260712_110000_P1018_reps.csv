@@ -1,0 +1,17 @@
+session_id,rep_id,leg,duration_s,lift_duration_s,lower_duration_s,hold_duration_s,peak_tof_mm,tof_out_of_range,shin_lift_angle_deg,peak_angular_velocity,jerk_score,tof_symmetry,flagged,flag_hold,flag_angle,flag_jerk,patient_id
+session_20260712_110000,1,right,3.933,3.3,0.6,0.43,611.9,False,104.07,89.074,0.3598,0.858,False,False,False,False,P1018
+session_20260712_110000,2,left,4.309,3.1,1.2,0.61,8191.0,True,140.83,99.474,0.2017,0.0,False,False,False,False,P1018
+session_20260712_110000,3,right,4.012,3.4,0.6,0.49,761.3,False,83.77,69.855,0.4932,0.864,True,False,False,True,P1018
+session_20260712_110000,4,right,3.189,2.3,0.9,0.26,831.1,False,100.99,104.292,0.3839,0.988,False,False,False,False,P1018
+session_20260712_110000,5,right,3.518,2.5,1.0,0.38,437.6,False,101.73,110.869,0.3643,0.987,False,False,False,False,P1018
+session_20260712_110000,6,right,3.925,3.3,0.6,0.44,628.0,False,102.99,116.599,0.3459,0.947,False,False,False,False,P1018
+session_20260712_110000,7,left,2.597,2.2,0.4,0.86,586.6,False,105.19,137.315,0.272,0.973,False,False,False,False,P1018
+session_20260712_110000,8,left,4.006,2.8,1.2,0.76,341.1,False,122.06,96.344,0.2325,0.861,False,False,False,False,P1018
+session_20260712_110000,9,right,4.256,3.3,1.0,0.22,625.8,False,92.08,159.695,0.2319,0.965,False,False,False,False,P1018
+session_20260712_110000,10,right,3.421,2.5,0.9,0.23,538.7,False,112.71,118.623,0.531,0.985,True,False,False,True,P1018
+session_20260712_110000,11,right,3.045,2.1,0.9,0.3,765.6,False,96.87,125.318,0.3874,0.855,False,False,False,False,P1018
+session_20260712_110000,12,left,2.999,2.4,0.6,0.85,655.8,False,112.76,130.789,0.3378,0.88,False,False,False,False,P1018
+session_20260712_110000,13,left,4.376,3.5,0.9,0.67,762.7,False,122.06,111.54,0.2625,0.93,False,False,False,False,P1018
+session_20260712_110000,14,left,3.91,2.9,1.0,0.63,8191.0,True,111.3,78.516,0.3916,0.0,False,False,False,False,P1018
+session_20260712_110000,15,left,3.907,3.0,0.9,0.55,303.6,False,115.75,99.844,0.2034,0.86,False,False,False,False,P1018
+session_20260712_110000,16,left,4.839,3.7,1.1,0.61,544.2,False,128.01,97.248,0.311,0.818,False,False,False,False,P1018

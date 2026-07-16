@@ -1,0 +1,14 @@
+session_id,rep_id,leg,duration_s,lift_duration_s,lower_duration_s,hold_duration_s,peak_tof_mm,tof_out_of_range,shin_lift_angle_deg,peak_angular_velocity,jerk_score,tof_symmetry,flagged,flag_hold,flag_angle,flag_jerk,patient_id
+session_20260620_120000,1,left,3.735,3.1,0.6,0.1,566.6,False,88.6,117.266,0.3717,0.937,False,False,False,False,P1016
+session_20260620_120000,2,right,4.547,3.6,0.9,0.36,241.1,False,118.35,130.857,0.2911,0.961,False,False,False,False,P1016
+session_20260620_120000,3,right,4.197,3.5,0.7,0.0,561.2,False,111.86,42.026,0.2049,0.99,True,True,False,False,P1016
+session_20260620_120000,4,left,4.597,3.6,1.0,0.0,766.2,False,86.35,137.403,0.4756,0.824,True,True,False,False,P1016
+session_20260620_120000,5,left,4.343,3.3,1.0,0.04,756.3,False,83.17,100.473,0.5194,0.852,True,True,False,True,P1016
+session_20260620_120000,6,left,3.765,2.8,1.0,0.05,8191.0,True,81.49,88.864,0.4499,0.0,True,True,False,False,P1016
+session_20260620_120000,7,left,4.247,3.6,0.6,0.22,659.9,False,80.52,85.665,0.373,0.961,False,False,False,False,P1016
+session_20260620_120000,8,right,4.344,3.5,0.8,0.34,183.4,False,102.06,86.855,0.315,0.956,False,False,False,False,P1016
+session_20260620_120000,9,right,3.826,2.8,1.0,0.36,804.6,False,126.8,127.684,0.4495,0.959,False,False,False,False,P1016
+session_20260620_120000,10,left,3.309,2.5,0.8,0.09,741.5,False,72.16,97.981,0.4805,0.87,True,True,False,True,P1016
+session_20260620_120000,11,right,3.559,3.0,0.6,0.53,168.8,False,120.0,93.674,0.2717,0.956,False,False,False,False,P1016
+session_20260620_120000,12,right,4.235,3.0,1.2,0.4,463.8,False,103.55,56.525,0.1533,0.985,False,False,False,False,P1016
+session_20260620_120000,13,right,3.794,2.9,0.9,0.45,610.3,False,103.24,128.269,0.3288,0.924,False,False,False,False,P1016

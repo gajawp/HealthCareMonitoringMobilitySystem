@@ -1,0 +1,17 @@
+session_id,rep_id,leg,duration_s,lift_duration_s,lower_duration_s,hold_duration_s,peak_tof_mm,tof_out_of_range,shin_lift_angle_deg,peak_angular_velocity,jerk_score,tof_symmetry,flagged,flag_hold,flag_angle,flag_jerk,patient_id
+session_20260523_120000,1,right,3.971,2.9,1.1,0.04,893.8,False,75.03,87.354,0.5561,0.839,True,True,False,True,P1013
+session_20260523_120000,2,right,4.346,3.5,0.8,0.19,889.5,False,74.6,79.275,0.4407,0.836,False,False,False,False,P1013
+session_20260523_120000,3,left,3.259,2.7,0.6,0.59,896.4,False,97.03,165.035,0.266,0.879,False,False,False,False,P1013
+session_20260523_120000,4,right,4.945,4.2,0.7,0.0,556.8,False,63.97,88.414,0.5359,0.953,True,True,False,False,P1013
+session_20260523_120000,5,left,2.997,2.1,0.9,0.41,579.9,False,100.75,112.578,0.2994,0.984,False,False,False,False,P1013
+session_20260523_120000,6,left,3.792,3.0,0.8,0.25,569.9,False,84.83,102.959,0.4339,0.957,False,False,False,False,P1013
+session_20260523_120000,7,right,4.19,3.0,1.2,0.29,733.0,False,87.7,96.693,0.4318,0.99,False,False,False,False,P1013
+session_20260523_120000,8,right,2.705,2.0,0.7,0.2,627.3,False,87.49,94.236,0.5607,0.95,True,False,False,True,P1013
+session_20260523_120000,9,right,3.982,3.1,0.9,0.17,8191.0,True,72.78,148.475,0.5474,0.0,False,False,False,False,P1013
+session_20260523_120000,10,left,4.493,3.7,0.8,0.26,794.2,False,108.09,87.212,0.4291,0.997,False,False,False,False,P1013
+session_20260523_120000,11,left,3.436,2.8,0.6,0.26,527.8,False,118.08,140.207,0.2718,0.929,False,False,False,False,P1013
+session_20260523_120000,12,right,3.506,2.7,0.8,0.24,399.1,False,66.58,109.091,0.4475,0.831,False,False,False,False,P1013
+session_20260523_120000,13,left,3.808,3.2,0.6,0.59,537.6,False,106.49,96.269,0.1828,0.852,False,False,False,False,P1013
+session_20260523_120000,14,left,4.852,3.8,1.1,0.48,467.2,False,95.58,89.442,0.1841,0.913,False,False,False,False,P1013
+session_20260523_120000,15,right,3.761,3.1,0.7,0.05,371.9,False,86.41,96.931,0.4424,0.943,True,True,False,False,P1013
+session_20260523_120000,16,left,4.176,3.3,0.9,0.56,773.2,False,111.63,96.551,0.3645,0.808,False,False,False,False,P1013

@@ -1,0 +1,17 @@
+session_id,rep_id,leg,duration_s,lift_duration_s,lower_duration_s,hold_duration_s,peak_tof_mm,tof_out_of_range,shin_lift_angle_deg,peak_angular_velocity,jerk_score,tof_symmetry,flagged,flag_hold,flag_angle,flag_jerk,patient_id
+session_20260228_100000,1,left,3.959,3.1,0.9,0.12,8191.0,True,66.02,79.774,0.277,0.0,False,False,False,False,P1006
+session_20260228_100000,2,right,3.834,3.1,0.7,0.43,644.0,False,102.74,127.879,0.2093,0.985,False,False,False,False,P1006
+session_20260228_100000,3,right,4.173,3.2,1.0,0.6,8191.0,True,108.77,121.668,0.3486,0.0,False,False,False,False,P1006
+session_20260228_100000,4,right,3.383,2.9,0.5,0.44,311.0,False,111.68,107.572,0.217,0.813,False,False,False,False,P1006
+session_20260228_100000,5,left,3.873,3.0,0.9,0.17,853.7,False,94.39,66.392,0.4358,0.963,False,False,False,False,P1006
+session_20260228_100000,6,right,3.742,2.6,1.1,0.4,669.0,False,112.59,106.349,0.3261,0.891,False,False,False,False,P1006
+session_20260228_100000,7,left,3.072,2.3,0.8,0.0,8191.0,True,86.23,120.739,0.4689,0.0,True,True,False,True,P1006
+session_20260228_100000,8,right,4.692,3.5,1.2,0.09,306.8,False,110.8,97.035,0.2637,0.817,True,True,False,False,P1006
+session_20260228_100000,9,left,4.331,3.3,1.0,0.0,438.5,False,68.59,122.111,0.3939,0.891,True,True,False,False,P1006
+session_20260228_100000,10,right,4.202,3.0,1.2,0.47,506.7,False,111.14,158.929,0.2751,0.881,False,False,False,False,P1006
+session_20260228_100000,11,left,4.268,3.4,0.9,0.0,237.3,False,85.35,106.63,0.4347,0.922,True,True,False,False,P1006
+session_20260228_100000,12,right,3.87,3.0,0.9,0.44,8191.0,True,97.12,94.243,0.329,0.0,False,False,False,False,P1006
+session_20260228_100000,13,left,4.718,3.6,1.1,0.03,416.2,False,91.35,98.37,0.464,0.882,True,True,False,False,P1006
+session_20260228_100000,14,right,3.901,2.8,1.1,0.58,267.6,False,102.13,93.015,0.3929,0.965,False,False,False,False,P1006
+session_20260228_100000,15,left,4.193,3.3,0.9,0.0,850.7,False,80.71,118.839,0.3088,0.982,True,True,False,False,P1006
+session_20260228_100000,16,left,4.879,3.8,1.1,0.29,658.1,False,79.32,95.96,0.5444,0.885,True,False,False,True,P1006
