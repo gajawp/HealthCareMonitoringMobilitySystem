@@ -1,29 +1,22 @@
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 from typing import Any
 
 import streamlit as st
 
-
-try:
-    from chatbot.orchestrator import HealthcareChatbotOrchestrator
-except ImportError as exc:
-    HealthcareChatbotOrchestrator = None
-    CHATBOT_IMPORT_ERROR = exc
-else:
-    CHATBOT_IMPORT_ERROR = None
+from app.chatbot.orchestrator import (
+    HealthcareChatbotOrchestrator,
+)
 
 
-@st.cache_resource(show_spinner=False)
-def get_chatbot() -> Any:
-    """Create one reusable backend orchestrator for the Streamlit process."""
-    if HealthcareChatbotOrchestrator is None:
-        raise RuntimeError(
-            "The Phase 2 backend could not be imported from 'Application 2'. "
-            f"Original error: {CHATBOT_IMPORT_ERROR}"
-        )
+def get_chatbot() -> HealthcareChatbotOrchestrator:
+    """
+    Create a fresh secure healthcare chatbot orchestrator.
+
+    Caching is intentionally disabled while authentication, mobility retrieval,
+    authorization, privacy filtering, and audit logging are being validated.
+    """
+
     return HealthcareChatbotOrchestrator()
 
 
@@ -56,30 +49,72 @@ def _initial_message(user_name: str, role: str) -> dict[str, str]:
     }
 
 
-def _suggested_questions(role: str) -> list[tuple[str, str]]:
+def _suggested_questions(
+    role: str,
+    selected_exercise: str,
+) -> list[tuple[str, str]]:
+    """Return role-specific prompts using the currently selected exercise."""
+
+    exercise_prompt = f"How should I perform {selected_exercise}?"
+
     if role == "Clinician":
         return [
-            ("📋 Session summary", "Summarize the latest recorded mobility session."),
-            ("⚠️ Flagged repetitions", "Explain the flagged repetitions."),
-            ("📐 Metric explanation", "What does jerk score mean?"),
-            ("🦵 Exercise reference", "Explain the seated knee extension exercise."),
+            (
+                "📋 Session summary",
+                "Summarize the latest recorded mobility session.",
+            ),
+            (
+                "⚠️ Flagged repetitions",
+                "Explain the flagged repetitions.",
+            ),
+            (
+                "📐 Metric explanation",
+                "What does jerk score mean?",
+            ),
+            (
+                f"🦵 Guidance: {selected_exercise}",
+                exercise_prompt,
+            ),
         ]
 
     if role == "Caregiver":
         return [
-            ("📋 Latest session", "Summarize the latest mobility session."),
-            ("⚠️ Explain alerts", "Why were repetitions flagged?"),
-            ("📈 Progress", "Is the patient improving over time?"),
-            ("🦵 Exercise guidance", "How should seated knee extension be performed?"),
+            (
+                "📋 Latest session",
+                "Summarize the latest mobility session.",
+            ),
+            (
+                "⚠️ Explain alerts",
+                "Why were repetitions flagged?",
+            ),
+            (
+                "📈 Progress",
+                "Is the patient improving over time?",
+            ),
+            (
+                f"🦵 Guidance: {selected_exercise}",
+                exercise_prompt,
+            ),
         ]
 
     return [
-        ("📋 My latest session", "Summarize my latest mobility session."),
-        ("⚠️ Explain my alerts", "Why were my repetitions flagged?"),
-        ("📈 Am I improving?", "Am I improving over time?"),
-        ("🦵 Exercise guidance", "How should I perform a seated knee extension?"),
+        (
+            "📋 My latest session",
+            "Summarize my latest mobility session.",
+        ),
+        (
+            "⚠️ Explain my alerts",
+            "Why were my repetitions flagged?",
+        ),
+        (
+            "📈 Am I improving?",
+            "Am I improving over time?",
+        ),
+        (
+            f"🦵 Guidance: {selected_exercise}",
+            exercise_prompt,
+        ),
     ]
-
 
 def _render_sources(sources: list[str]) -> None:
     if not sources:
@@ -123,7 +158,38 @@ def render_chatbot(
         st.session_state[key] = [_initial_message(user_name, role)]
 
     st.markdown("### Suggested questions")
-    suggestions = _suggested_questions(role)
+
+    exercise_options = [
+        "seated knee extension",
+        "sit-to-stand exercise",
+        "seated marching",
+        "finger tapping drill",
+        "hand open-close repetitions",
+        "resting tremor assessment",
+        "leg raise exercise",
+    ]
+
+    default_exercise = (
+        selected_exercise_id.strip().replace("_", " ")
+        if isinstance(selected_exercise_id, str)
+        and selected_exercise_id.strip()
+        else exercise_options[0]
+    )
+
+    if default_exercise not in exercise_options:
+        exercise_options.insert(0, default_exercise)
+
+    selected_exercise = st.selectbox(
+        "Choose an exercise for guidance",
+        options=exercise_options,
+        index=exercise_options.index(default_exercise),
+        key=f"exercise_guidance::{user_id}::{patient_id}",
+    )
+
+    suggestions = _suggested_questions(
+        role,
+        selected_exercise,
+    )
     columns = st.columns(2)
     selected_prompt: str | None = None
 
@@ -205,8 +271,7 @@ def render_chatbot(
             except Exception as exc:
                 error_text = (
                     "The mobility assistant could not complete this request. "
-                    "Confirm that the Phase 2 files exist under `Application 2`, "
-                    "then review the terminal for details."
+                    "Please review the application terminal for the technical error."
                 )
                 st.error(error_text)
                 st.exception(exc)

@@ -1,10 +1,23 @@
+import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+load_dotenv(PROJECT_ROOT / ".env")
+
 import streamlit as st
 import pandas as pd
 import numpy as np
 import datetime
 import os
 
-from chatbot_ui import render_chatbot
+from app.chatbot_ui import render_chatbot
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Healthcare Mobility Monitoring", layout="wide")
@@ -164,6 +177,22 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 REAL_DATA_BADGE = '<span class="real-data-badge">Real Data</span>'
+from app.auth.login_security import (
+    check_login_allowed,
+    record_failed_login,
+    record_successful_login,
+)
+from app.auth.service import AuthenticationService
+from app.auth.demo_users import DEMO_USERS
+from app.auth.session import (
+    get_authenticated_user,
+    initialize_session_state,
+    logout as clear_authenticated_session,
+    refresh_session,
+    set_authenticated_user,
+)
+from app.config import SESSION_TIMEOUT_MINUTES
+from app.security.audit import AuditLogger
 
 # =====================================================================
 # DATA SOURCE CONFIGURATION
@@ -332,25 +361,25 @@ def get_chair_session_summary():
 # =====================================================================
 
 USERS = {
-    "P1001": {"password": "pass123", "role": "Patient", "name": "John Smith",
+    "P1001": {"role": "Patient", "name": "John Smith",
               "caregiver": "C2001", "clinician": "D3001"},
-    "P1002": {"password": "pass123", "role": "Patient", "name": "Mary Johnson",
+    "P1002": {"role": "Patient", "name": "Mary Johnson",
               "caregiver": "C2001", "clinician": "D3001"},
-    "P1003": {"password": "pass123", "role": "Patient", "name": "Robert Davis",
+    "P1003": {"role": "Patient", "name": "Robert Davis",
               "caregiver": "C2002", "clinician": "D3001"},
-    "P1004": {"password": "pass123", "role": "Patient", "name": "Linda Wilson",
+    "P1004": {"role": "Patient", "name": "Linda Wilson",
               "caregiver": "C2002", "clinician": "D3002"},
-    "P1005": {"password": "pass123", "role": "Patient", "name": "James Brown",
+    "P1005": {"role": "Patient", "name": "James Brown",
               "caregiver": "C2003", "clinician": "D3002"},
-    "C2001": {"password": "pass123", "role": "Caregiver", "name": "Alice Martin",
+    "C2001": {"role": "Caregiver", "name": "Alice Martin",
               "clinician": "D3001", "patients": ["P1001", "P1002"]},
-    "C2002": {"password": "pass123", "role": "Caregiver", "name": "Bob Taylor",
+    "C2002": {"role": "Caregiver", "name": "Bob Taylor",
               "clinician": "D3001", "patients": ["P1003", "P1004"]},
-    "C2003": {"password": "pass123", "role": "Caregiver", "name": "Carol White",
+    "C2003": {"role": "Caregiver", "name": "Carol White",
               "clinician": "D3002", "patients": ["P1005"]},
-    "D3001": {"password": "pass123", "role": "Clinician", "name": "Dr. Sarah Lee",
+    "D3001": {"role": "Clinician", "name": "Dr. Sarah Lee",
               "caregivers": ["C2001", "C2002"]},
-    "D3002": {"password": "pass123", "role": "Clinician", "name": "Dr. Michael Chen",
+    "D3002": {"role": "Clinician", "name": "Dr. Michael Chen",
               "caregivers": ["C2003"]},
 }
 
@@ -790,32 +819,159 @@ def get_feedbacks(patient_id: str):
 # SESSION STATE HELPERS
 # =====================================================================
 
-def init_session():
-    for key in ["logged_in", "user_id", "role", "name", "view", "selected_patient",
-                "selected_caregiver"]:
+def _get_authentication_service() -> AuthenticationService:
+    """Create the bcrypt-backed authentication service."""
+
+    return AuthenticationService()
+
+
+def _get_audit_logger() -> AuditLogger:
+    """Create the privacy-safe audit logger."""
+
+    return AuditLogger()
+
+
+def init_session() -> None:
+    """Initialize secure and legacy-compatible dashboard session values."""
+
+    initialize_session_state()
+
+    for key in [
+        "logged_in",
+        "user_id",
+        "role",
+        "name",
+        "view",
+        "selected_patient",
+        "selected_caregiver",
+    ]:
         if key not in st.session_state:
             st.session_state[key] = None
-    if st.session_state.logged_in is None:
+
+    authenticated_user = get_authenticated_user()
+
+    if authenticated_user is None:
         st.session_state.logged_in = False
+        st.session_state.user_id = None
+        st.session_state.role = None
+        st.session_state.name = None
+        return
 
+    # Refresh the inactivity timeout during an authenticated app rerun.
+    refresh_session(timeout_minutes=SESSION_TIMEOUT_MINUTES)
 
-def do_login(user_id: str, password: str, role: str):
-    user_id = user_id.strip().upper()
-    if user_id in USERS and USERS[user_id]["password"] == password and USERS[user_id]["role"] == role:
-        st.session_state.logged_in = True
-        st.session_state.user_id = user_id
-        st.session_state.role = role
-        st.session_state.name = USERS[user_id]["name"]
+    st.session_state.logged_in = True
+    st.session_state.user_id = authenticated_user.username
+    st.session_state.role = authenticated_user.role.value.title()
+    st.session_state.name = authenticated_user.display_name
+
+    if st.session_state.view is None:
         st.session_state.view = "home"
-        st.session_state.selected_patient = None
-        st.session_state.selected_caregiver = None
-        return True
-    return False
 
 
-def do_logout():
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
+def do_login(user_id: str, password: str, role: str) -> bool:
+    """Authenticate with bcrypt and establish a secure Streamlit session."""
+
+    login_decision = check_login_allowed()
+
+    if not login_decision.allowed:
+        st.session_state["login_error"] = login_decision.reason
+        return False
+
+    authentication_service = _get_authentication_service()
+    audit_logger = _get_audit_logger()
+
+    result = authentication_service.authenticate(
+        username=user_id,
+        password=password,
+    )
+
+    selected_role = role.strip().lower()
+    authenticated_role = (
+        result.user.role.value
+        if result.user is not None
+        else None
+    )
+
+    role_matches = (
+        result.success
+        and result.user is not None
+        and authenticated_role == selected_role
+    )
+
+    if not role_matches:
+        failed_decision = record_failed_login()
+
+        audit_logger.record_login(
+            username=user_id,
+            success=False,
+            role="unknown",
+            reason_code="invalid_credentials",
+        )
+
+        st.session_state["login_error"] = failed_decision.reason
+        return False
+
+    record_successful_login()
+
+    set_authenticated_user(
+        result.user,
+        timeout_minutes=SESSION_TIMEOUT_MINUTES,
+    )
+
+    audit_logger.record_login(
+        username=user_id,
+        success=True,
+        role=result.user.role.value,
+        reason_code="authentication_success",
+    )
+
+    # Keep the current dashboards compatible while identity is sourced from
+    # the secure authenticated session.
+    st.session_state.logged_in = True
+    st.session_state.user_id = result.user.username
+    st.session_state.role = result.user.role.value.title()
+    st.session_state.name = result.user.display_name
+    st.session_state.view = "home"
+    st.session_state.selected_patient = None
+    st.session_state.selected_caregiver = None
+    st.session_state.pop("login_error", None)
+
+    return True
+
+
+def do_logout() -> None:
+    """Audit logout and clear authentication, patient selection, and chat data."""
+
+    authenticated_user = get_authenticated_user()
+
+    if authenticated_user is not None:
+        _get_audit_logger().record(
+            event_type="authentication",
+            action="logout",
+            user_key=authenticated_user.user_key,
+            role=authenticated_user.role.value,
+            allowed=True,
+            details={
+                "reason_code": "user_logout",
+            },
+        )
+
+    clear_authenticated_session()
+
+    for key in [
+        "logged_in",
+        "user_id",
+        "role",
+        "name",
+        "view",
+        "selected_patient",
+        "selected_caregiver",
+        "login_error",
+    ]:
+        st.session_state.pop(key, None)
+
+    initialize_session_state()
     st.session_state.logged_in = False
 
 
@@ -1034,31 +1190,79 @@ def render_send_feedback(sender_id: str, target_id: str, label: str = "patient")
 # LOGIN PAGE
 # =====================================================================
 
-def login_page():
-    st.markdown("<h1 style='text-align:center;'>Healthcare Mobility Monitoring System</h1>",
-                unsafe_allow_html=True)
-    st.markdown("<h2 style='text-align:center;'>Login to continue</h2>",
-                unsafe_allow_html=True)
+def login_page() -> None:
+    """Render the bcrypt-backed, rate-limited login form."""
+
+    st.markdown(
+        "<h1 style='text-align:center;'>Healthcare Mobility Monitoring System</h1>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "<h2 style='text-align:center;'>Login to continue</h2>",
+        unsafe_allow_html=True,
+    )
     st.divider()
-    col_left, col_center, col_right = st.columns([1, 2, 1])
+
+    _, col_center, _ = st.columns([1, 2, 1])
+
     with col_center:
-        role = st.selectbox("I am a:", ["Patient", "Caregiver", "Clinician"])
-        user_id = st.text_input("User ID")
-        password = st.text_input("Password", type="password")
-        if st.button("Login", use_container_width=True):
+        role = st.selectbox(
+            "I am a:",
+            ["Patient", "Caregiver", "Clinician"],
+        )
+        user_id = st.text_input(
+            "User ID",
+            key="login_user_id",
+        )
+        password = st.text_input(
+            "Password",
+            type="password",
+            key="login_password",
+        )
+
+        login_decision = check_login_allowed()
+
+        if not login_decision.allowed:
+            st.error(login_decision.reason)
+        elif st.button(
+            "Login",
+            use_container_width=True,
+            type="primary",
+        ):
             if do_login(user_id, password, role):
                 st.rerun()
             else:
-                st.error("Invalid credentials. Please try again.")
+                st.error(
+                    st.session_state.get(
+                        "login_error",
+                        "Invalid username or password.",
+                    )
+                )
+
         st.divider()
-        st.markdown("**Demo credentials** (password for all: `pass123`)")
-        demo = {
-            "Patient": "P1001, P1002, P1003, P1004, P1005",
-            "Caregiver": "C2001, C2002, C2003",
-            "Clinician": "D3001, D3002",
+        st.markdown("**Configured demo accounts**")
+
+        accounts_by_role: dict[str, list[str]] = {
+            "Patient": [],
+            "Caregiver": [],
+            "Clinician": [],
         }
-        for r, ids in demo.items():
-            st.markdown(f"- **{r}**: {ids}")
+
+        for username, record in DEMO_USERS.items():
+            account_role = str(record.get("role", "")).title()
+            if account_role in accounts_by_role:
+                accounts_by_role[account_role].append(username)
+
+        for account_role, account_ids in accounts_by_role.items():
+            if account_ids:
+                st.markdown(
+                    f"- **{account_role}**: {', '.join(sorted(account_ids))}"
+                )
+
+        st.caption(
+            "Passwords are verified with bcrypt hashes and are never stored "
+            "in Streamlit session state or audit logs."
+        )
 
 
 # =====================================================================
@@ -1469,13 +1673,19 @@ def clinician_dashboard():
 
 init_session()
 
-if not st.session_state.logged_in:
+authenticated_user = get_authenticated_user()
+
+if authenticated_user is None:
     login_page()
 else:
-    role = st.session_state.role
+    role = authenticated_user.role.value.title()
+
     if role == "Patient":
         patient_dashboard()
     elif role == "Caregiver":
         caregiver_dashboard()
     elif role == "Clinician":
         clinician_dashboard()
+    else:
+        st.error("The authenticated account has an unsupported role.")
+        do_logout()

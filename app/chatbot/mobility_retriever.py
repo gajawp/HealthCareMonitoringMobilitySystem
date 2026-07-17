@@ -6,32 +6,48 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_REPS_CSV = (
-    PROJECT_ROOT / "data" / "mobility" / "processed"
+    PROJECT_ROOT
+    / "data"
+    / "mobility"
+    / "processed"
     / "session_20260314_131518_reps.csv"
 )
 
 DEFAULT_FRAMES_CSV = (
-    PROJECT_ROOT / "data" / "mobility" / "processed"
+    PROJECT_ROOT
+    / "data"
+    / "mobility"
+    / "processed"
     / "session_20260314_131518_frames.csv"
 )
 
 DEFAULT_POSE_CSV = (
-    PROJECT_ROOT / "data" / "mobility" / "pose"
+    PROJECT_ROOT
+    / "data"
+    / "mobility"
+    / "pose"
     / "session_20260314_131518_pose.csv"
 )
 
 DEFAULT_SESSION_JSON = (
-    PROJECT_ROOT / "data" / "mobility" / "raw"
+    PROJECT_ROOT
+    / "data"
+    / "mobility"
+    / "raw"
     / "session_20260314_131518.json"
 )
 
 DEFAULT_TREMOR_CSV = (
-    PROJECT_ROOT / "data" / "tremor" / "tremor_validation_master.csv"
+    PROJECT_ROOT
+    / "data"
+    / "tremor"
+    / "tremor_validation_master.csv"
 )
 
 
