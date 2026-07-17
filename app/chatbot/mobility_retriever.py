@@ -11,8 +11,7 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_REPS_CSV = (
-    PROJECT_ROOT / "data" / "mobility" / "processed"
-    / "session_20260314_131518_reps.csv"
+    PROJECT_ROOT / "synthetic_data" / "synthetic_all_reps.csv"
 )
 
 DEFAULT_FRAMES_CSV = (
@@ -55,6 +54,23 @@ def _read_json(path: Path) -> dict[str, Any]:
         return data if isinstance(data, dict) else {}
     except (OSError, UnicodeDecodeError, json.JSONDecodeError):
         return {}
+
+
+def _normalize_session_id(value: Any) -> str | None:
+    """Return a comparable session id, ignoring a leading 'session_' prefix."""
+    if value is None:
+        return None
+    text = str(value).strip()
+    if text.startswith("session_"):
+        text = text[len("session_"):]
+    return text or None
+
+
+def _session_ids_match(left: Any, right: Any) -> bool:
+    """True when two session ids refer to the same recording."""
+    left_id = _normalize_session_id(left)
+    right_id = _normalize_session_id(right)
+    return left_id is not None and left_id == right_id
 
 
 def _to_bool(series: pd.Series) -> pd.Series:
@@ -121,6 +137,47 @@ class MobilityRetriever:
             tremor_csv or os.getenv("TREMOR_CSV", str(DEFAULT_TREMOR_CSV))
         )
 
+    def _select_reps(
+        self,
+        reps: pd.DataFrame,
+        *,
+        patient_id: str | None,
+        session_id: str | None = None,
+        latest_when_unscoped: bool = False,
+    ) -> pd.DataFrame:
+        """Scope a reps frame to one patient and, optionally, one session.
+
+        - When a ``patient_id`` column is present (multi-patient files such as
+          ``synthetic_all_reps.csv``), rows are filtered to that patient. A
+          missing column means the file is already single-patient, so no patient
+          filter is applied. An unknown patient yields an empty frame rather than
+          leaking another patient's rows.
+        - When ``session_id`` is supplied and matched, only that session is kept.
+        - Otherwise, when ``latest_when_unscoped`` is set, only the most recent
+          session for the patient is kept (session ids sort chronologically).
+        """
+        if reps.empty:
+            return reps
+
+        if "patient_id" in reps.columns and patient_id is not None:
+            reps = reps[reps["patient_id"].astype(str) == str(patient_id)]
+            if reps.empty:
+                return reps
+
+        if "session_id" not in reps.columns:
+            return reps
+
+        if session_id is not None:
+            selected = reps[reps["session_id"].astype(str) == str(session_id)]
+            if not selected.empty:
+                return selected
+
+        if latest_when_unscoped:
+            latest_session = reps["session_id"].astype(str).max()
+            return reps[reps["session_id"].astype(str) == latest_session]
+
+        return reps
+
     def get_session_summary(
         self,
         *,
@@ -128,12 +185,30 @@ class MobilityRetriever:
         session_id: str | None = None,
     ) -> dict[str, Any]:
         reps = _read_csv(self.reps_csv)
-        raw_session = _read_json(self.session_json)
+        reps = self._select_reps(
+            reps,
+            patient_id=patient_id,
+            session_id=session_id,
+            latest_when_unscoped=True,
+        )
 
-        if not reps.empty and session_id and "session_id" in reps.columns:
-            selected = reps[reps["session_id"].astype(str) == str(session_id)]
-            if not selected.empty:
-                reps = selected
+        # Identify which session these reps belong to.
+        reps_session_id = session_id
+        if (
+            reps_session_id is None
+            and not reps.empty
+            and "session_id" in reps.columns
+        ):
+            reps_session_id = str(reps["session_id"].iloc[0])
+
+        # Raw-session metadata describes one specific recording; only attach it
+        # when it matches the reps being summarized, so a patient never sees
+        # another session's start time or frame count.
+        raw_session = _read_json(self.session_json)
+        if raw_session and not _session_ids_match(
+            raw_session.get("session_id"), reps_session_id
+        ):
+            raw_session = {}
 
         if reps.empty and not raw_session:
             return {
@@ -146,7 +221,7 @@ class MobilityRetriever:
         result: dict[str, Any] = {
             "available": True,
             "patient_id": patient_id,
-            "session_id": session_id,
+            "session_id": reps_session_id,
         }
 
         if raw_session:
@@ -207,6 +282,12 @@ class MobilityRetriever:
         limit: int = 10,
     ) -> dict[str, Any]:
         reps = _read_csv(self.reps_csv)
+        reps = self._select_reps(
+            reps,
+            patient_id=patient_id,
+            session_id=session_id,
+            latest_when_unscoped=True,
+        )
 
         if reps.empty:
             return {
@@ -215,11 +296,6 @@ class MobilityRetriever:
                 "flagged_repetitions": [],
                 "message": "No repetition data was found.",
             }
-
-        if session_id and "session_id" in reps.columns:
-            selected = reps[reps["session_id"].astype(str) == str(session_id)]
-            if not selected.empty:
-                reps = selected
 
         if "flagged" in reps.columns:
             mask = _to_bool(reps["flagged"])
@@ -280,8 +356,15 @@ class MobilityRetriever:
         *,
         patient_id: str,
         rep_id: int,
+        session_id: str | None = None,
     ) -> dict[str, Any]:
         reps = _read_csv(self.reps_csv)
+        reps = self._select_reps(
+            reps,
+            patient_id=patient_id,
+            session_id=session_id,
+            latest_when_unscoped=True,
+        )
 
         if reps.empty or "rep_id" not in reps.columns:
             return {
@@ -392,7 +475,11 @@ class MobilityRetriever:
 
         if intent == "flag_explanation":
             if rep_id is not None:
-                return self.get_repetition(patient_id=patient_id, rep_id=rep_id)
+                return self.get_repetition(
+                    patient_id=patient_id,
+                    rep_id=rep_id,
+                    session_id=session_id,
+                )
             return self.get_flagged_repetitions(
                 patient_id=patient_id,
                 session_id=session_id,
