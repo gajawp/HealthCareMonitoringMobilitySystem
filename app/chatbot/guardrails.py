@@ -41,9 +41,10 @@ TREATMENT_PATTERNS = (
 )
 
 UNSAFE_OUTPUT_PATTERNS = (
-    r"\byou have [a-z]",
+    r"\byou have (parkinson'?s?|arthritis|a stroke|a disease|a disorder)\b",
     r"\byou are diagnosed with\b",
-    r"\bthis confirms\b",
+    r"\bthis confirms (a|the|that you have)\b",
+    r"\bthe results confirm (a|the|that you have)\b",
     r"\bstop taking your\b",
     r"\bincrease your dose\b",
     r"\bdecrease your dose\b",

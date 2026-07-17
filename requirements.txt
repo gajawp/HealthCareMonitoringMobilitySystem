@@ -9,3 +9,5 @@ fpdf
 openai
 python-dotenv
 pytest
+cryptography
+python-dotenv
