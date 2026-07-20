@@ -11,3 +11,5 @@ python-dotenv
 pytest
 cryptography
 python-dotenv
+gTTS
+streamlit-mic-recorder

@@ -2,10 +2,28 @@ from __future__ import annotations
 
 import base64
 import html
+import io
+import os
+import tempfile
 from pathlib import Path
 from typing import Any
 
 import streamlit as st
+
+try:
+    from gtts import gTTS
+except ImportError:
+    gTTS = None
+
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
+
+try:
+    from streamlit_mic_recorder import mic_recorder
+except ImportError:
+    mic_recorder = None
 
 from app.chatbot.language_service import LanguageService
 from app.chatbot.orchestrator import (
@@ -24,6 +42,129 @@ LANGUAGE_OPTIONS: dict[str, str] = {
     "Tamil - தமிழ்": "ta",
     "Chinese - 中文": "zh",
     "Arabic - العربية": "ar",
+}
+
+
+VOICE_UI_TEXT: dict[str, dict[str, str]] = {
+    "en": {
+        "heading": "Voice assistant",
+        "start": "Start recording",
+        "stop": "Stop recording",
+        "processing": "Converting speech to text...",
+        "heard": "I heard",
+        "play": "Listen to response",
+        "unavailable": (
+            "Voice support requires gTTS, openai, and "
+            "streamlit-mic-recorder."
+        ),
+        "error": "Voice processing failed.",
+    },
+    "es": {
+        "heading": "Asistente de voz",
+        "start": "Iniciar grabación",
+        "stop": "Detener grabación",
+        "processing": "Convirtiendo voz a texto...",
+        "heard": "Escuché",
+        "play": "Escuchar la respuesta",
+        "unavailable": "El soporte de voz no está disponible.",
+        "error": "Falló el procesamiento de voz.",
+    },
+    "fr": {
+        "heading": "Assistant vocal",
+        "start": "Démarrer l’enregistrement",
+        "stop": "Arrêter l’enregistrement",
+        "processing": "Conversion de la voix en texte...",
+        "heard": "J’ai entendu",
+        "play": "Écouter la réponse",
+        "unavailable": "L’assistance vocale n’est pas disponible.",
+        "error": "Le traitement vocal a échoué.",
+    },
+    "de": {
+        "heading": "Sprachassistent",
+        "start": "Aufnahme starten",
+        "stop": "Aufnahme stoppen",
+        "processing": "Sprache wird in Text umgewandelt...",
+        "heard": "Ich habe gehört",
+        "play": "Antwort anhören",
+        "unavailable": "Sprachunterstützung ist nicht verfügbar.",
+        "error": "Die Sprachverarbeitung ist fehlgeschlagen.",
+    },
+    "hi": {
+        "heading": "वॉइस सहायक",
+        "start": "रिकॉर्डिंग शुरू करें",
+        "stop": "रिकॉर्डिंग रोकें",
+        "processing": "आवाज़ को टेक्स्ट में बदला जा रहा है...",
+        "heard": "मैंने सुना",
+        "play": "उत्तर सुनें",
+        "unavailable": "वॉइस सहायता उपलब्ध नहीं है।",
+        "error": "वॉइस प्रोसेसिंग विफल रही।",
+    },
+    "te": {
+        "heading": "వాయిస్ సహాయకుడు",
+        "start": "రికార్డింగ్ ప్రారంభించండి",
+        "stop": "రికార్డింగ్ ఆపండి",
+        "processing": "మాటలను పాఠ్యంగా మారుస్తోంది...",
+        "heard": "నేను విన్నది",
+        "play": "సమాధానాన్ని వినండి",
+        "unavailable": "వాయిస్ సహాయం అందుబాటులో లేదు.",
+        "error": "వాయిస్ ప్రాసెసింగ్ విఫలమైంది.",
+    },
+    "ta": {
+        "heading": "குரல் உதவியாளர்",
+        "start": "பதிவைத் தொடங்கவும்",
+        "stop": "பதிவை நிறுத்தவும்",
+        "processing": "குரல் உரையாக மாற்றப்படுகிறது...",
+        "heard": "நான் கேட்டது",
+        "play": "பதிலைக் கேட்கவும்",
+        "unavailable": "குரல் உதவி கிடைக்கவில்லை.",
+        "error": "குரல் செயலாக்கம் தோல்வியடைந்தது.",
+    },
+    "zh": {
+        "heading": "语音助手",
+        "start": "开始录音",
+        "stop": "停止录音",
+        "processing": "正在将语音转换为文字...",
+        "heard": "我听到的是",
+        "play": "收听回复",
+        "unavailable": "语音支持不可用。",
+        "error": "语音处理失败。",
+    },
+    "ar": {
+        "heading": "المساعد الصوتي",
+        "start": "بدء التسجيل",
+        "stop": "إيقاف التسجيل",
+        "processing": "جارٍ تحويل الصوت إلى نص...",
+        "heard": "سمعت",
+        "play": "الاستماع إلى الرد",
+        "unavailable": "الدعم الصوتي غير متاح.",
+        "error": "فشلت معالجة الصوت.",
+    },
+}
+
+
+TRANSCRIPTION_LANGUAGE_CODES: dict[str, str] = {
+    "en": "en",
+    "es": "es",
+    "fr": "fr",
+    "de": "de",
+    "hi": "hi",
+    "te": "te",
+    "ta": "ta",
+    "zh": "zh",
+    "ar": "ar",
+}
+
+
+TTS_LANGUAGE_CODES: dict[str, str] = {
+    "en": "en",
+    "es": "es",
+    "fr": "fr",
+    "de": "de",
+    "hi": "hi",
+    "te": "te",
+    "ta": "ta",
+    "zh": "zh-CN",
+    "ar": "ar",
 }
 
 
@@ -469,6 +610,85 @@ UI_TEXT: dict[str, dict[str, str]] = {
         "suggested_exercises_heading": "التمارين المقترحة",
     },
 }
+
+
+def _voice_labels(language_code: str) -> dict[str, str]:
+    return VOICE_UI_TEXT.get(language_code, VOICE_UI_TEXT["en"])
+
+
+def _transcribe_audio(
+    audio_bytes: bytes,
+    language_code: str,
+) -> str:
+    """
+    Transcribe recorded audio.
+
+    The transcription API is allowed to detect the spoken language
+    automatically. We intentionally do not pass the selected dashboard
+    language as the API ``language`` parameter because codes such as
+    Telugu (``te``) are rejected by some transcription models.
+    """
+
+    del language_code
+
+    if OpenAI is None:
+        raise RuntimeError(
+            "The openai package is not installed."
+        )
+
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "OPENAI_API_KEY is not configured."
+        )
+
+    client = OpenAI(api_key=api_key)
+    temporary_path: str | None = None
+
+    try:
+        with tempfile.NamedTemporaryFile(
+            suffix=".wav",
+            delete=False,
+        ) as temporary_file:
+            temporary_file.write(audio_bytes)
+            temporary_path = temporary_file.name
+
+        with open(temporary_path, "rb") as audio_file:
+            transcription = client.audio.transcriptions.create(
+                model="whisper-1",
+                file=audio_file,
+            )
+
+        return transcription.text.strip()
+
+    finally:
+        if temporary_path and os.path.exists(
+            temporary_path
+        ):
+            os.remove(temporary_path)
+
+
+def _generate_speech(
+    text: str,
+    language_code: str,
+) -> bytes | None:
+    if not text.strip() or gTTS is None:
+        return None
+
+    audio_buffer = io.BytesIO()
+
+    speech = gTTS(
+        text=text,
+        lang=TTS_LANGUAGE_CODES.get(
+            language_code,
+            "en",
+        ),
+        slow=False,
+    )
+    speech.write_to_fp(audio_buffer)
+    audio_buffer.seek(0)
+
+    return audio_buffer.read()
 
 
 def get_chatbot() -> HealthcareChatbotOrchestrator:
@@ -995,6 +1215,15 @@ def render_chatbot(
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+            if (
+                message["role"] == "assistant"
+                and message.get("audio")
+            ):
+                st.audio(
+                    message["audio"],
+                    format="audio/mp3",
+                )
+
             if message.get("sources"):
                 _render_sources(
                     message["sources"],
@@ -1010,18 +1239,88 @@ def render_chatbot(
                     labels,
                 )
 
+    voice_labels = _voice_labels(ui_language)
+    voice_prompt: str | None = None
+
+    st.markdown(f"### 🎙️ {voice_labels['heading']}")
+
+    if mic_recorder is None:
+        st.info(voice_labels["unavailable"])
+    else:
+        recorded_audio = mic_recorder(
+            start_prompt=voice_labels["start"],
+            stop_prompt=voice_labels["stop"],
+            just_once=True,
+            use_container_width=True,
+            key=(
+                f"voice_recorder::{user_id}::"
+                f"{patient_id}::{ui_language}"
+            ),
+        )
+
+        if (
+            recorded_audio
+            and recorded_audio.get("bytes")
+        ):
+            audio_signature = hash(
+                recorded_audio["bytes"]
+            )
+            processed_audio_key = (
+                f"processed_voice::{user_id}::"
+                f"{patient_id}::{ui_language}"
+            )
+
+            if (
+                st.session_state.get(
+                    processed_audio_key
+                )
+                != audio_signature
+            ):
+                try:
+                    with st.spinner(
+                        voice_labels["processing"]
+                    ):
+                        voice_prompt = _transcribe_audio(
+                            recorded_audio["bytes"],
+                            ui_language,
+                        )
+
+                    st.session_state[
+                        processed_audio_key
+                    ] = audio_signature
+                    st.session_state[
+                        f"voice_text::{user_id}::"
+                        f"{patient_id}::{ui_language}"
+                    ] = voice_prompt
+
+                except Exception as exc:
+                    st.error(
+                        f"{voice_labels['error']} {exc}"
+                    )
+            else:
+                voice_prompt = st.session_state.get(
+                    f"voice_text::{user_id}::"
+                    f"{patient_id}::{ui_language}"
+                )
+
+            if voice_prompt:
+                st.success(
+                    f"{voice_labels['heard']}: "
+                    f"{voice_prompt}"
+                )
+
     typed_prompt = st.chat_input(
         labels["chat_input"]
     )
 
-    displayed_prompt = typed_prompt
+    displayed_prompt = typed_prompt or voice_prompt
     english_prompt = selected_prompt
 
-    if typed_prompt:
+    if displayed_prompt:
         if selected_language == "auto":
             detected_language = (
                 language_service.detect_language(
-                    typed_prompt
+                    displayed_prompt
                 )
             )
             st.session_state[
@@ -1033,7 +1332,7 @@ def render_chatbot(
 
         english_prompt = (
             language_service.translate_to_english(
-                typed_prompt,
+                displayed_prompt,
                 resolved_language,
             )
         )
@@ -1094,7 +1393,21 @@ def render_chatbot(
                     )
                 )
 
+                response_audio = None
+                try:
+                    response_audio = _generate_speech(
+                        localized_answer,
+                        resolved_language,
+                    )
+                except Exception:
+                    response_audio = None
+
                 st.markdown(localized_answer)
+                if response_audio:
+                    st.audio(
+                        response_audio,
+                        format="audio/mp3",
+                    )
                 _render_sources(
                     response.sources,
                     labels,
@@ -1140,6 +1453,7 @@ def render_chatbot(
                     "sources": response.sources,
                     "response_type": response.response_type,
                     "exercise_data": localized_exercise_data,
+                    "audio": response_audio,
                 }
 
             except Exception as exc:
