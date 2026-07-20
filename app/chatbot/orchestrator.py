@@ -20,6 +20,9 @@ from __future__ import annotations
 
 import inspect
 import re
+from datetime import date, timedelta
+
+from dateutil import parser as date_parser
 from dataclasses import asdict, dataclass, is_dataclass
 from typing import Any
 
@@ -35,6 +38,7 @@ from .context_builder import (
     build_user_context,
 )
 from .guardrails import HealthcareGuardrails
+from .exercise_recommender import ExerciseRecommendationService
 from .intent import detect_intent
 from .knowledge_retriever import ClinicalKnowledgeRetriever
 from .llm_service import LLMService
@@ -55,6 +59,8 @@ class ChatbotResponse:
     safety_action: str
     escalation_required: bool
     metadata: dict[str, Any]
+    response_type: str = "text"
+    exercise_data: dict[str, Any] | None = None
 
 
 PATIENT_REFERENCE_PATTERN = re.compile(
@@ -161,6 +167,143 @@ def _extract_rep_id(question: str) -> int | None:
     return None
 
 
+def _parse_date_text(
+    text: str,
+    *,
+    default_year: int | None = None,
+) -> str | None:
+    """Parse a user-provided date and normalize it to YYYY-MM-DD."""
+
+    cleaned = re.sub(
+        r"\b(?:on|from|to|through|until|between|and)\b",
+        " ",
+        text,
+        flags=re.IGNORECASE,
+    ).strip(" ,.")
+
+    if not cleaned:
+        return None
+
+    default_value = date(
+        default_year or date.today().year,
+        1,
+        1,
+    )
+
+    try:
+        parsed = date_parser.parse(
+            cleaned,
+            fuzzy=True,
+            default=default_value,
+        )
+    except (ValueError, TypeError, OverflowError):
+        return None
+
+    return parsed.strftime("%Y-%m-%d")
+
+
+def _extract_date_filters(
+    question: str,
+) -> tuple[str | None, str | None, str | None]:
+    """
+    Extract one date or an inclusive date range from a question.
+
+    Returns: (session_date, start_date, end_date)
+    """
+
+    text = question.strip()
+    relative_days_match = re.search(
+        r"\b(?:last|past)\s+(\d+)\s+days?\b",
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    if relative_days_match:
+        number_of_days = int(relative_days_match.group(1))
+
+        if number_of_days <= 0:
+            return None, None, None
+
+        end_value = date.today()
+        start_value = end_value - timedelta(
+            days=number_of_days - 1
+        )
+
+        return (
+            None,
+            start_value.strftime("%Y-%m-%d"),
+            end_value.strftime("%Y-%m-%d"),
+        )
+
+    range_patterns = (
+        r"\bfrom\s+(.+?)\s+(?:to|through|until)\s+(.+?)(?:[?.!]|$)",
+        r"\bbetween\s+(.+?)\s+and\s+(.+?)(?:[?.!]|$)",
+    )
+
+    for pattern in range_patterns:
+        match = re.search(
+            pattern,
+            text,
+            flags=re.IGNORECASE,
+        )
+        if not match:
+            continue
+
+        left_text = match.group(1).strip()
+        right_text = match.group(2).strip()
+
+        right_date = _parse_date_text(right_text)
+        inferred_year = (
+            int(right_date[:4])
+            if right_date is not None
+            else None
+        )
+        left_date = _parse_date_text(
+            left_text,
+            default_year=inferred_year,
+        )
+
+        if left_date and right_date:
+            if left_date > right_date:
+                left_date, right_date = right_date, left_date
+            return None, left_date, right_date
+
+    explicit_patterns = (
+        r"\b\d{4}-\d{1,2}-\d{1,2}\b",
+        r"\b\d{1,2}/\d{1,2}/\d{2,4}\b",
+        (
+            r"\b(?:january|february|march|april|may|june|july|"
+            r"august|september|october|november|december|"
+            r"jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec)"
+            r"\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s*\d{4})?\b"
+        ),
+        (
+            r"\b\d{1,2}(?:st|nd|rd|th)?\s+"
+            r"(?:january|february|march|april|may|june|july|"
+            r"august|september|october|november|december|"
+            r"jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec)"
+            r"(?:\s+\d{4})?\b"
+        ),
+    )
+
+    for pattern in explicit_patterns:
+        match = re.search(pattern, text, flags=re.IGNORECASE)
+        if match:
+            parsed = _parse_date_text(match.group(0))
+            if parsed:
+                return parsed, None, None
+
+    return None, None, None
+
+
+def _is_session_count_question(question: str) -> bool:
+    normalized = question.casefold()
+    return (
+        ("how many" in normalized or "number of" in normalized)
+        and "session" in normalized
+    )
+
+
 def _normalize_role(role: str) -> UserRole:
     """Normalize role names into the UserRole enum."""
 
@@ -262,6 +405,7 @@ def _remove_sensitive_fields(value: Any) -> Any:
         "authorized_patient_ids",
         "authorized_patient_keys",
         "authorized_patients",
+        "available_patient_ids",
         "display_name",
         "full_name",
         "first_name",
@@ -273,10 +417,13 @@ def _remove_sensitive_fields(value: Any) -> Any:
         "dob",
         "filename",
         "file_name",
+        "source_file",
+        "sourcefile",
         "file_path",
         "filepath",
         "source_path",
         "raw_path",
+        "checked_paths",
     }
 
     if isinstance(value, dict):
@@ -364,6 +511,7 @@ class HealthcareChatbotOrchestrator:
         privacy_filter: PrivacyFilter | None = None,
         authorization_service: AuthorizationService | None = None,
         audit_logger: AuditLogger | None = None,
+        exercise_recommender: ExerciseRecommendationService | None = None,
     ) -> None:
         self.identity_service = (
             identity_service
@@ -407,6 +555,11 @@ class HealthcareChatbotOrchestrator:
             or AuditLogger()
         )
 
+        self.exercise_recommender = (
+            exercise_recommender
+            or ExerciseRecommendationService()
+        )
+
     def answer(
         self,
         *,
@@ -415,6 +568,7 @@ class HealthcareChatbotOrchestrator:
         user_name: str,
         role: str,
         patient_id: str,
+        patient_condition: str | None = None,
         authorized_patient_ids: list[str] | None = None,
         current_page: str = "AI Assistant",
         selected_session_id: str | None = None,
@@ -663,17 +817,187 @@ class HealthcareChatbotOrchestrator:
 
         intent_result = detect_intent(clean_question)
         rep_id = _extract_rep_id(clean_question)
+        session_date, start_date, end_date = _extract_date_filters(
+            clean_question
+        )
+
+        effective_intent = intent_result.name
+        normalized_question = clean_question.casefold()
+
+        has_date_filter = bool(
+            session_date or start_date or end_date
+        )
+
+        mentions_doctor_feedback = any(
+            phrase in normalized_question
+            for phrase in (
+                "doctor feedback",
+                "doctor's feedback",
+                "feedback from my doctor",
+                "feedback from doctor",
+                "what did my doctor say",
+                "what has my doctor said",
+                "doctor comments",
+                "doctor notes",
+                "clinician feedback",
+                "physician feedback",
+            )
+        )
+
+        mentions_caregiver_feedback = any(
+            phrase in normalized_question
+            for phrase in (
+                "caregiver feedback",
+                "feedback from my caregiver",
+                "what did my caregiver say",
+                "caregiver comments",
+                "caregiver notes",
+            )
+        )
+
+        mentions_care_team_feedback = any(
+            phrase in normalized_question
+            for phrase in (
+                "care team feedback",
+                "feedback from my care team",
+                "all feedback",
+                "doctor and caregiver feedback",
+            )
+        )
+
+        mentions_mobility_history = any(
+            phrase in normalized_question
+            for phrase in (
+                "session",
+                "sessions",
+                "mobility",
+                "report",
+                "summary",
+                "repetitions",
+                "metrics",
+            )
+        )
+
+        mentions_trend = any(
+            phrase in normalized_question
+            for phrase in (
+                "improving",
+                "improvement",
+                "trend",
+                "changed",
+                "change over time",
+                "progress",
+                "compare",
+            )
+        )
+
+        # Feedback intent has priority so words such as "summary" or a date
+        # cannot accidentally reroute a feedback request to mobility history.
+        if mentions_doctor_feedback:
+            effective_intent = "doctor_feedback"
+
+        elif mentions_caregiver_feedback:
+            effective_intent = "caregiver_feedback"
+
+        elif mentions_care_team_feedback:
+            effective_intent = "care_team_feedback"
+
+        elif has_date_filter and mentions_trend:
+            effective_intent = "trend_analysis"
+
+        elif has_date_filter and mentions_mobility_history:
+            effective_intent = (
+                "sessions_by_date_range"
+                if start_date or end_date
+                else "sessions_by_date"
+            )
+
+        elif _is_session_count_question(clean_question):
+            effective_intent = "session_summary"
+
+        # ------------------------------------------------------------------
+        # 7. Return condition-based exercises from the controlled JSON.
+        #
+        # Exercise selection is deterministic and does not use the LLM.
+        # ------------------------------------------------------------------
+
+        if effective_intent == "exercise_recommendation":
+            exercise_data = self.exercise_recommender.get_recommendations(
+                condition=patient_condition,
+            )
+
+            profile_name = exercise_data.get(
+                "profile_name",
+                "General Lower-Limb Mobility",
+            )
+            exercise_count = len(
+                exercise_data.get("exercises", [])
+            )
+
+            self.audit_logger.record(
+                event_type="chatbot",
+                action="retrieve_exercise_recommendations",
+                user_key=authenticated_user.user_key,
+                role=authenticated_user.role.value,
+                patient_key=authorized_patient_key,
+                allowed=True,
+                request_id=request_id,
+                details={
+                    "intent": effective_intent,
+                    "profile_key": exercise_data.get("profile_key"),
+                    "exercise_count": exercise_count,
+                    "used_llm": False,
+                },
+            )
+
+            return ChatbotResponse(
+                answer=(
+                    f"Here are the clinician-configured exercises for the "
+                    f"{profile_name} profile."
+                    if exercise_count
+                    else (
+                        "No exercises are currently configured for this "
+                        "patient profile."
+                    )
+                ),
+                intent=effective_intent,
+                intent_confidence=intent_result.confidence,
+                sources=[],
+                used_llm=False,
+                provider="exercise_recommendation_service",
+                model=None,
+                safety_action="allow",
+                escalation_required=False,
+                metadata={
+                    "matched_phrases": list(
+                        intent_result.matched_phrases
+                    ),
+                    "request_id": request_id,
+                    "patient_context": "de_identified",
+                    "authorization_checked": True,
+                    "profile_key": exercise_data.get("profile_key"),
+                    "clinical_review_status": exercise_data.get(
+                        "clinical_review_status"
+                    ),
+                    "exercise_count": exercise_count,
+                },
+                response_type="exercise_recommendations",
+                exercise_data=exercise_data,
+            )
 
         # ------------------------------------------------------------------
         # 7. Retrieve mobility data only after authorization.
         # ------------------------------------------------------------------
 
         mobility_data = self._retrieve_mobility_data(
-            intent=intent_result.name,
+            intent=effective_intent,
             patient_id=patient_id,
             patient_key=authorized_patient_key,
             session_id=selected_session_id,
             rep_id=rep_id,
+            session_date=session_date,
+            start_date=start_date,
+            end_date=end_date,
         )
 
         # ------------------------------------------------------------------
@@ -689,7 +1013,7 @@ class HealthcareChatbotOrchestrator:
 
         clinical_knowledge: list[Any] = []
 
-        if intent_result.name in knowledge_query_intents:
+        if effective_intent in knowledge_query_intents:
             clinical_knowledge = (
                 self.knowledge_retriever.search(
                     clean_question,
@@ -727,7 +1051,7 @@ class HealthcareChatbotOrchestrator:
 
         retrieval_context = assemble_retrieval_context(
             question=clean_question,
-            intent=intent_result.name,
+            intent=effective_intent,
             intent_confidence=intent_result.confidence,
             user_context=user_context,
             dashboard_context=dashboard_context,
@@ -873,7 +1197,7 @@ class HealthcareChatbotOrchestrator:
             allowed=True,
             request_id=request_id,
             details={
-                "intent": intent_result.name,
+                "intent": effective_intent,
                 "used_llm": generation.used_llm,
                 "provider": generation.provider,
                 "safety_action": output_decision.action,
@@ -886,7 +1210,7 @@ class HealthcareChatbotOrchestrator:
 
         return ChatbotResponse(
             answer=answer,
-            intent=intent_result.name,
+            intent=effective_intent,
             intent_confidence=intent_result.confidence,
             sources=safe_sources,
             used_llm=generation.used_llm,
@@ -904,6 +1228,12 @@ class HealthcareChatbotOrchestrator:
                 "mobility_available": bool(
                     mobility_data.get("available")
                 ),
+                "mobility_data_source": mobility_data.get(
+                    "data_source"
+                ),
+                "session_date_filter": session_date,
+                "start_date_filter": start_date,
+                "end_date_filter": end_date,
                 "knowledge_results": len(
                     clinical_knowledge
                 ),
@@ -922,6 +1252,9 @@ class HealthcareChatbotOrchestrator:
         patient_key: str,
         session_id: str | None,
         rep_id: int | None,
+        session_date: str | None,
+        start_date: str | None,
+        end_date: str | None,
     ) -> dict[str, Any]:
         """
         Retrieve mobility data using the new patient_key API when available.
@@ -947,6 +1280,13 @@ class HealthcareChatbotOrchestrator:
             "session_id": session_id,
             "rep_id": rep_id,
         }
+
+        if "session_date" in parameters:
+            arguments["session_date"] = session_date
+        if "start_date" in parameters:
+            arguments["start_date"] = start_date
+        if "end_date" in parameters:
+            arguments["end_date"] = end_date
 
         if "patient_key" in parameters:
             arguments["patient_key"] = patient_key
@@ -1040,6 +1380,11 @@ def answer_question(
         ),
         role=str(context["role"]),
         patient_id=str(context["patient_id"]),
+        patient_condition=(
+            str(context["patient_condition"])
+            if context.get("patient_condition") is not None
+            else None
+        ),
         authorized_patient_ids=context.get(
             "authorized_patient_ids"
         ),

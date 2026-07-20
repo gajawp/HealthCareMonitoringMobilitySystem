@@ -361,27 +361,71 @@ def get_chair_session_summary():
 # =====================================================================
 
 USERS = {
-    "P1001": {"role": "Patient", "name": "John Smith",
-              "caregiver": "C2001", "clinician": "D3001"},
-    "P1002": {"role": "Patient", "name": "Mary Johnson",
-              "caregiver": "C2001", "clinician": "D3001"},
-    "P1003": {"role": "Patient", "name": "Robert Davis",
-              "caregiver": "C2002", "clinician": "D3001"},
-    "P1004": {"role": "Patient", "name": "Linda Wilson",
-              "caregiver": "C2002", "clinician": "D3002"},
-    "P1005": {"role": "Patient", "name": "James Brown",
-              "caregiver": "C2003", "clinician": "D3002"},
-    "C2001": {"role": "Caregiver", "name": "Alice Martin",
-              "clinician": "D3001", "patients": ["P1001", "P1002"]},
-    "C2002": {"role": "Caregiver", "name": "Bob Taylor",
-              "clinician": "D3001", "patients": ["P1003", "P1004"]},
-    "C2003": {"role": "Caregiver", "name": "Carol White",
-              "clinician": "D3002", "patients": ["P1005"]},
-    "D3001": {"role": "Clinician", "name": "Dr. Sarah Lee",
-              "caregivers": ["C2001", "C2002"]},
-    "D3002": {"role": "Clinician", "name": "Dr. Michael Chen",
-              "caregivers": ["C2003"]},
-}
+    "P1001": {
+        "role": "Patient",
+        "name": "John Smith",
+        "caregiver": "C2001",
+        "clinician": "D3001",
+        "condition": "knee_rehabilitation",
+    },
+    "P1002": {
+        "role": "Patient",
+        "name": "Mary Johnson",
+        "caregiver": "C2001",
+        "clinician": "D3001",
+        "condition": "balance_and_stepping",
+    },
+    "P1003": {
+        "role": "Patient",
+        "name": "Robert Davis",
+        "caregiver": "C2002",
+        "clinician": "D3001",
+        "condition": "lower_limb_strength_and_control",
+    },
+    "P1004": {
+        "role": "Patient",
+        "name": "Linda Wilson",
+        "caregiver": "C2002",
+        "clinician": "D3002",
+        "condition": "lateral_mobility",
+    },
+    "P1005": {
+        "role": "Patient",
+        "name": "James Brown",
+        "caregiver": "C2003",
+        "clinician": "D3002",
+        "condition": "squat_movement_training",
+    },
+
+    "C2001": {
+        "role": "Caregiver",
+        "name": "Alice Martin",
+        "clinician": "D3001",
+        "patients": ["P1001", "P1002"],
+    },
+    "C2002": {
+        "role": "Caregiver",
+        "name": "Bob Taylor",
+        "clinician": "D3001",
+        "patients": ["P1003", "P1004"],
+    },
+    "C2003": {
+        "role": "Caregiver",
+        "name": "Carol White",
+        "clinician": "D3002",
+        "patients": ["P1005"],
+    },
+    "D3001": {
+        "role": "Clinician",
+        "name": "Dr. Sarah Lee",
+        "caregivers": ["C2001", "C2002"],
+    },
+    "D3002": {
+        "role": "Clinician",
+        "name": "Dr. Michael Chen",
+        "caregivers": ["C2003"],
+    },
+    }
 
 
 # =====================================================================
@@ -1498,6 +1542,10 @@ def patient_dashboard():
             user_name=name,
             role="Patient",
             patient_id=uid,
+            patient_condition=USERS.get(uid, {}).get(
+                "condition",
+                "general_lower_limb_mobility",
+            ),
             authorized_patient_ids=[uid],
             current_page=menu,
             active_alert={"alerts": get_alerts(uid)},
@@ -1540,6 +1588,10 @@ def caregiver_dashboard():
                 user_name=name,
                 role="Caregiver",
                 patient_id=pid,
+                patient_condition=USERS.get(pid, {}).get(
+                    "condition",
+                    "general_lower_limb_mobility",
+                ),
                 authorized_patient_ids=patient_ids,
                 current_page="Patient Details / AI Assistant",
                 active_alert={"alerts": get_alerts(pid)},
@@ -1625,6 +1677,10 @@ def clinician_dashboard():
                 user_name=name,
                 role="Clinician",
                 patient_id=pid,
+                patient_condition=USERS.get(pid, {}).get(
+                    "condition",
+                    "general_lower_limb_mobility",
+                ),
                 authorized_patient_ids=authorized_patients,
                 current_page="Patient Details / AI Assistant",
                 active_alert={"alerts": get_alerts(pid)},
