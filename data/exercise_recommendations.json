@@ -1,0 +1,708 @@
+{
+  "schema_version": "1.0",
+  "file_purpose": "Condition-aware exercise recommendation configuration for the mobility monitoring chatbot.",
+  "global_safety_message": "Suggested exercises must come from a clinician-approved care plan. The chatbot may explain and display approved exercises but must not diagnose, prescribe, change dosage, or create patient-specific treatment targets.",
+  "fallback_profile": "general_lower_limb_mobility",
+  "condition_profiles": {
+    "knee_rehabilitation": {
+      "display_name": "Knee Rehabilitation",
+      "description": "Exercises related to controlled knee movement and functional lower-limb activity.",
+      "exercise_ids": [
+        "seated_knee_extension",
+        "sit_to_stand"
+      ],
+      "clinical_review_status": "pending"
+    },
+    "lower_limb_strength_and_control": {
+      "display_name": "Lower-Limb Strength and Movement Control",
+      "description": "Exercises involving coordinated hip, knee, ankle, and trunk movement.",
+      "exercise_ids": [
+        "sit_to_stand",
+        "deep_squat",
+        "side_lunge"
+      ],
+      "clinical_review_status": "pending"
+    },
+    "balance_and_stepping": {
+      "display_name": "Balance and Stepping",
+      "description": "Exercises involving single-leg support, stepping, foot clearance, and balance.",
+      "exercise_ids": [
+        "hurdle_step",
+        "sit_to_stand"
+      ],
+      "clinical_review_status": "pending"
+    },
+    "lateral_mobility": {
+      "display_name": "Lateral Mobility",
+      "description": "Exercises emphasizing controlled side-to-side lower-limb movement.",
+      "exercise_ids": [
+        "side_lunge"
+      ],
+      "clinical_review_status": "pending"
+    },
+    "squat_movement_training": {
+      "display_name": "Squat Movement Training",
+      "description": "Exercises involving controlled lowering and return to standing.",
+      "exercise_ids": [
+        "deep_squat",
+        "sit_to_stand"
+      ],
+      "clinical_review_status": "pending"
+    },
+    "general_lower_limb_mobility": {
+      "display_name": "General Lower-Limb Mobility",
+      "description": "Fallback profile used only when a clinician-approved patient condition mapping is unavailable.",
+      "exercise_ids": [
+        "sit_to_stand",
+        "seated_knee_extension"
+      ],
+      "clinical_review_status": "pending"
+    }
+  },
+  "exercise_library": {
+    "deep_squat": {
+      "exercise_id": "deep_squat",
+      "exercise_name": "Deep Squat",
+      "category": "lower_limb_rehabilitation",
+      "body_region": [
+        "hip",
+        "knee",
+        "ankle",
+        "trunk"
+      ],
+      "purpose": [
+        "Represent a squat movement for posture and consistency analysis",
+        "Support explanations of alignment and controlled descent",
+        "Provide research-grounded movement descriptors"
+      ],
+      "starting_position": [
+        "Stand using the stance specified by the care team",
+        "Keep the feet stable on the floor",
+        "Begin with an upright, controlled trunk position"
+      ],
+      "movement_phases": [
+        {
+          "phase": "descent",
+          "description": "The hips and knees flex as the body moves downward."
+        },
+        {
+          "phase": "bottom_position",
+          "description": "The lowest configured position is reached while alignment is maintained."
+        },
+        {
+          "phase": "ascent",
+          "description": "The hips and knees extend as the body returns to standing."
+        }
+      ],
+      "observable_metrics": [
+        "knee_angle",
+        "hip_angle",
+        "ankle_angle",
+        "trunk_lean",
+        "knee_alignment",
+        "heel_contact",
+        "duration",
+        "angular_velocity",
+        "jerk_score",
+        "symmetry"
+      ],
+      "common_execution_errors": [
+        {
+          "error": "knee_valgus_or_misalignment",
+          "observable_signals": [
+            "knees moving inward",
+            "knees not aligned over feet"
+          ],
+          "safe_explanation": "The knees may not have remained aligned with the feet."
+        },
+        {
+          "error": "excessive_trunk_flexion",
+          "observable_signals": [
+            "large forward trunk angle"
+          ],
+          "safe_explanation": "The trunk may have leaned forward more than expected."
+        },
+        {
+          "error": "limited_depth",
+          "observable_signals": [
+            "reduced knee or hip flexion relative to configured target"
+          ],
+          "safe_explanation": "The movement may not have reached the configured target depth."
+        },
+        {
+          "error": "heel_lift",
+          "observable_signals": [
+            "loss of heel contact",
+            "pressure shift toward forefoot"
+          ],
+          "safe_explanation": "The heels may not have remained in stable contact with the floor."
+        }
+      ],
+      "patient_friendly_guidance": [
+        "Use only the depth assigned by the care team.",
+        "Keep the feet stable and the knees aligned with the feet.",
+        "Keep the trunk controlled.",
+        "Move down and up smoothly."
+      ],
+      "safety_notes": [
+        "This record does not define a safe squat depth for a specific patient.",
+        "Use assistance or supervision when required.",
+        "Stop for severe pain, sudden weakness, dizziness, or loss of balance."
+      ],
+      "evidence_sources": [
+        "ui_prmd"
+      ],
+      "clinical_review_status": "pending",
+      "media": {
+        "youtube_url": "https://www.youtube.com/watch?v=IHApHfNA2Ag",
+        "video_title": "How to perform Deep Squat",
+        "video_source": "Hinge Health",
+        "media_review_status": "pending",
+        "images": [
+          {
+            "image_path": "assets/deep_squat/deep_squat_assisted.jpg",
+            "caption": "Assisted deep squat demonstration",
+            "alt_text": "Assisted deep squat demonstration",
+            "display_order": 1
+          },
+          {
+            "image_path": "assets/deep_squat/deep_squat_progression.jpg",
+            "caption": "Deep squat progression demonstration",
+            "alt_text": "Deep squat progression demonstration",
+            "display_order": 2
+          }
+        ]
+      },
+      "care_plan_parameters": {
+        "sets": null,
+        "repetitions": null,
+        "hold_seconds": null,
+        "rest_seconds": null,
+        "resistance": null,
+        "range_of_motion": null,
+        "support_required": null,
+        "supervision_required": null,
+        "notes": "Values must come from the patient's clinician-approved care plan."
+      },
+      "enabled": true
+    },
+    "hurdle_step": {
+      "exercise_id": "hurdle_step",
+      "exercise_name": "Hurdle Step",
+      "category": "lower_limb_rehabilitation",
+      "body_region": [
+        "hip",
+        "knee",
+        "ankle",
+        "trunk"
+      ],
+      "purpose": [
+        "Represent a stepping movement involving single-leg support",
+        "Support balance and lower-limb alignment analysis"
+      ],
+      "starting_position": [
+        "Stand in the setup specified by the care team",
+        "Use support when required",
+        "Maintain a stable trunk before stepping"
+      ],
+      "movement_phases": [
+        {
+          "phase": "weight_shift",
+          "description": "Body weight shifts onto the supporting leg."
+        },
+        {
+          "phase": "step_over",
+          "description": "The moving leg lifts and passes over the obstacle."
+        },
+        {
+          "phase": "placement",
+          "description": "The foot is placed while balance is maintained."
+        },
+        {
+          "phase": "return",
+          "description": "The user returns to the starting position with control."
+        }
+      ],
+      "observable_metrics": [
+        "hip_angle",
+        "knee_angle",
+        "ankle_angle",
+        "trunk_lean",
+        "pelvic_stability",
+        "support_leg_alignment",
+        "foot_clearance",
+        "duration",
+        "symmetry",
+        "balance"
+      ],
+      "common_execution_errors": [
+        {
+          "error": "support_leg_misalignment",
+          "observable_signals": [
+            "hip, knee, or ankle moving out of vertical alignment"
+          ],
+          "safe_explanation": "The supporting leg may not have remained aligned during the step."
+        },
+        {
+          "error": "trunk_sway",
+          "observable_signals": [
+            "large lateral trunk movement"
+          ],
+          "safe_explanation": "The trunk may have moved sideways to compensate for balance."
+        },
+        {
+          "error": "insufficient_clearance",
+          "observable_signals": [
+            "low foot clearance relative to obstacle"
+          ],
+          "safe_explanation": "The moving foot may not have cleared the obstacle by the configured margin."
+        },
+        {
+          "error": "loss_of_balance",
+          "observable_signals": [
+            "rapid corrective movements",
+            "unexpected foot placement"
+          ],
+          "safe_explanation": "The movement may have required an unexpected balance correction."
+        }
+      ],
+      "patient_friendly_guidance": [
+        "Use support when assigned.",
+        "Move slowly and keep the supporting leg stable.",
+        "Lift the stepping foot only as high as required.",
+        "Return to the starting position with control."
+      ],
+      "safety_notes": [
+        "The obstacle height and support requirements must come from the care plan.",
+        "This exercise may create a fall risk and should not be attempted without required supervision.",
+        "Stop after a near-fall, fall, severe pain, or sudden weakness."
+      ],
+      "evidence_sources": [
+        "ui_prmd"
+      ],
+      "clinical_review_status": "pending",
+      "media": {
+        "youtube_url": "https://www.youtube.com/watch?v=5qrLHE6cKk0",
+        "video_title": "How to perform Hurdle Step",
+        "video_source": "BSR Physical Therapy",
+        "media_review_status": "pending",
+        "images": [
+          {
+            "image_path": "assets/hurdle_step/hurdle_step_demo.jpeg",
+            "caption": "Hurdle step demonstration",
+            "alt_text": "Hurdle step demonstration",
+            "display_order": 1
+          },
+          {
+            "image_path": "assets/hurdle_step/Hurdle_Step.jpg",
+            "caption": "Hurdle step exercise position",
+            "alt_text": "Hurdle step exercise position",
+            "display_order": 2
+          }
+        ]
+      },
+      "care_plan_parameters": {
+        "sets": null,
+        "repetitions": null,
+        "hold_seconds": null,
+        "rest_seconds": null,
+        "resistance": null,
+        "range_of_motion": null,
+        "support_required": null,
+        "supervision_required": null,
+        "notes": "Values must come from the patient's clinician-approved care plan."
+      },
+      "enabled": true
+    },
+    "seated_knee_extension": {
+      "exercise_id": "seated_knee_extension",
+      "exercise_name": "Seated Knee Extension",
+      "category": "lower_limb_rehabilitation",
+      "body_region": [
+        "knee",
+        "thigh",
+        "lower_leg"
+      ],
+      "purpose": [
+        "Represent controlled knee-extension movement for dashboard explanations",
+        "Support repetition and posture analysis",
+        "Describe observable movement phases without prescribing treatment"
+      ],
+      "starting_position": [
+        "Sit in a stable chair with the back supported when appropriate",
+        "Keep the thigh supported and the trunk steady",
+        "Begin with the knee flexed and the foot in a comfortable resting position",
+        "Follow the range and duration configured by the care team"
+      ],
+      "movement_phases": [
+        {
+          "phase": "rest",
+          "description": "The leg remains near the starting position before movement begins."
+        },
+        {
+          "phase": "lift",
+          "description": "The lower leg moves forward and upward as the knee extends."
+        },
+        {
+          "phase": "hold",
+          "description": "The target position is maintained for the configured duration, when a hold is part of the care plan."
+        },
+        {
+          "phase": "lower",
+          "description": "The lower leg returns gradually to the starting position."
+        }
+      ],
+      "observable_metrics": [
+        "knee_angle",
+        "shin_lift_angle",
+        "lift_duration",
+        "hold_duration",
+        "lower_duration",
+        "angular_velocity",
+        "jerk_score",
+        "left_right_symmetry",
+        "trunk_lean",
+        "thigh_stability"
+      ],
+      "common_execution_errors": [
+        {
+          "error": "insufficient_extension",
+          "observable_signals": [
+            "reduced knee angle",
+            "reduced shin lift angle"
+          ],
+          "safe_explanation": "The lower leg may not have reached the configured target position."
+        },
+        {
+          "error": "movement_too_fast_or_abrupt",
+          "observable_signals": [
+            "high angular velocity",
+            "short lift duration",
+            "high jerk score"
+          ],
+          "safe_explanation": "The movement may have been performed faster or less smoothly than expected."
+        },
+        {
+          "error": "short_hold",
+          "observable_signals": [
+            "hold duration below configured target"
+          ],
+          "safe_explanation": "The raised position was not maintained for the configured duration."
+        },
+        {
+          "error": "trunk_or_hip_compensation",
+          "observable_signals": [
+            "increased trunk lean",
+            "thigh movement",
+            "hip lift from chair"
+          ],
+          "safe_explanation": "The upper body or thigh may have moved to compensate during the exercise."
+        }
+      ],
+      "patient_friendly_guidance": [
+        "Sit upright and keep the thigh steady.",
+        "Raise the lower leg smoothly.",
+        "Use only the range and hold time assigned by the care team.",
+        "Lower the leg slowly and with control."
+      ],
+      "safety_notes": [
+        "This guide is educational and does not prescribe a patient-specific range of motion.",
+        "Stop and seek appropriate help for severe pain, sudden weakness, dizziness, a fall, or loss of balance.",
+        "Target angles, repetitions, resistance, and hold times must come from the care plan or clinician."
+      ],
+      "evidence_sources": [
+        "wlu_rehabilitation_posture",
+        "knee_rehabilitation_exercises_wearables",
+        "intelligent_knee_sleeves",
+        "knee_range_of_motion"
+      ],
+      "clinical_review_status": "pending",
+      "media": {
+        "youtube_url": "https://www.youtube.com/watch?v=h8UPMnv_BOA",
+        "video_title": "How to perform Seated Knee Extension",
+        "video_source": "Bonestrong Labs",
+        "media_review_status": "pending",
+        "images": [
+          {
+            "image_path": "assets/seated_knee_extension/seated_knee_extension_with_band.jpg",
+            "caption": "Seated knee extension with resistance band",
+            "alt_text": "Seated knee extension with resistance band",
+            "display_order": 1
+          },
+          {
+            "image_path": "assets/seated_knee_extension/seated_knee_extension.jpg",
+            "caption": "Seated knee extension demonstration",
+            "alt_text": "Seated knee extension demonstration",
+            "display_order": 2
+          }
+        ]
+      },
+      "care_plan_parameters": {
+        "sets": null,
+        "repetitions": null,
+        "hold_seconds": null,
+        "rest_seconds": null,
+        "resistance": null,
+        "range_of_motion": null,
+        "support_required": null,
+        "supervision_required": null,
+        "notes": "Values must come from the patient's clinician-approved care plan."
+      },
+      "enabled": true
+    },
+    "side_lunge": {
+      "exercise_id": "side_lunge",
+      "exercise_name": "Side Lunge",
+      "category": "lower_limb_rehabilitation",
+      "body_region": [
+        "hip",
+        "knee",
+        "ankle",
+        "trunk"
+      ],
+      "purpose": [
+        "Represent controlled lateral stepping and lowering",
+        "Support alignment, symmetry, and balance analysis"
+      ],
+      "starting_position": [
+        "Stand using the stance specified by the care team",
+        "Keep the trunk controlled",
+        "Use support when required"
+      ],
+      "movement_phases": [
+        {
+          "phase": "lateral_step",
+          "description": "One foot steps to the side."
+        },
+        {
+          "phase": "lower",
+          "description": "The body lowers toward the stepping side as the hip and knee flex."
+        },
+        {
+          "phase": "push_return",
+          "description": "The user pushes through the stepping leg and returns to the starting position."
+        }
+      ],
+      "observable_metrics": [
+        "step_width",
+        "knee_angle",
+        "hip_angle",
+        "trunk_lean",
+        "knee_alignment",
+        "foot_orientation",
+        "duration",
+        "angular_velocity",
+        "jerk_score",
+        "symmetry"
+      ],
+      "common_execution_errors": [
+        {
+          "error": "knee_misalignment",
+          "observable_signals": [
+            "knee moving inward or away from foot alignment"
+          ],
+          "safe_explanation": "The knee may not have remained aligned with the foot."
+        },
+        {
+          "error": "excessive_trunk_lean",
+          "observable_signals": [
+            "large lateral or forward trunk angle"
+          ],
+          "safe_explanation": "The trunk may have leaned more than expected during the movement."
+        },
+        {
+          "error": "limited_lateral_control",
+          "observable_signals": [
+            "abrupt step",
+            "high jerk score",
+            "unstable return"
+          ],
+          "safe_explanation": "The side step or return may have been less controlled than expected."
+        }
+      ],
+      "patient_friendly_guidance": [
+        "Use only the step width and depth assigned by the care team.",
+        "Keep the knee aligned with the foot.",
+        "Keep the trunk controlled.",
+        "Return to the starting position smoothly."
+      ],
+      "safety_notes": [
+        "Use required support or supervision.",
+        "The chatbot must not prescribe step width, depth, or repetition count.",
+        "Stop for severe pain, sudden weakness, dizziness, or loss of balance."
+      ],
+      "evidence_sources": [
+        "ui_prmd"
+      ],
+      "clinical_review_status": "pending",
+      "media": {
+        "youtube_url": "https://www.youtube.com/watch?v=rvqLVxYqEvo",
+        "video_title": "How to perform Side Lunge",
+        "video_source": "Health",
+        "media_review_status": "pending",
+        "images": [
+          {
+            "image_path": "assets/side_lunge/side_lunge.jpg",
+            "caption": "Side lunge demonstration",
+            "alt_text": "Side lunge demonstration",
+            "display_order": 1
+          },
+          {
+            "image_path": "assets/side_lunge/Side_lunges_side_movement.jpg",
+            "caption": "Side lunge side-movement sequence",
+            "alt_text": "Side lunge side-movement sequence",
+            "display_order": 2
+          }
+        ]
+      },
+      "care_plan_parameters": {
+        "sets": null,
+        "repetitions": null,
+        "hold_seconds": null,
+        "rest_seconds": null,
+        "resistance": null,
+        "range_of_motion": null,
+        "support_required": null,
+        "supervision_required": null,
+        "notes": "Values must come from the patient's clinician-approved care plan."
+      },
+      "enabled": true
+    },
+    "sit_to_stand": {
+      "exercise_id": "sit_to_stand",
+      "exercise_name": "Sit to Stand",
+      "category": "lower_limb_rehabilitation",
+      "body_region": [
+        "hip",
+        "knee",
+        "ankle",
+        "trunk"
+      ],
+      "purpose": [
+        "Represent the transition between sitting and standing",
+        "Support posture, balance, and repetition analysis",
+        "Describe observable movement features for chatbot explanations"
+      ],
+      "starting_position": [
+        "Sit on a stable chair using the setup specified by the care team",
+        "Place the feet in a stable position",
+        "Keep the trunk controlled before initiating the movement"
+      ],
+      "movement_phases": [
+        {
+          "phase": "preparation",
+          "description": "The user prepares to rise while maintaining a stable seated position."
+        },
+        {
+          "phase": "forward_transfer",
+          "description": "The trunk moves forward to shift body weight over the feet."
+        },
+        {
+          "phase": "rise",
+          "description": "The hips and knees extend as the body rises from the chair."
+        },
+        {
+          "phase": "standing",
+          "description": "The user reaches a stable upright position."
+        },
+        {
+          "phase": "descent",
+          "description": "The hips and knees flex as the user returns to the chair with control."
+        }
+      ],
+      "observable_metrics": [
+        "knee_angle",
+        "hip_angle",
+        "trunk_lean",
+        "duration",
+        "angular_velocity",
+        "jerk_score",
+        "left_right_symmetry",
+        "foot_pressure",
+        "balance"
+      ],
+      "common_execution_errors": [
+        {
+          "error": "knee_misalignment",
+          "observable_signals": [
+            "knees moving inward or outward relative to feet"
+          ],
+          "safe_explanation": "The knees may not have remained aligned with the feet during the movement."
+        },
+        {
+          "error": "excessive_trunk_compensation",
+          "observable_signals": [
+            "large trunk lean",
+            "rapid trunk motion"
+          ],
+          "safe_explanation": "The upper body may have moved more than expected to assist the transition."
+        },
+        {
+          "error": "asymmetric_weight_transfer",
+          "observable_signals": [
+            "uneven left-right pressure",
+            "uneven joint motion"
+          ],
+          "safe_explanation": "More weight may have been placed on one side than the other."
+        },
+        {
+          "error": "uncontrolled_descent",
+          "observable_signals": [
+            "high descent velocity",
+            "high jerk score",
+            "short descent duration"
+          ],
+          "safe_explanation": "The return to the chair may have been faster or less controlled than expected."
+        }
+      ],
+      "patient_friendly_guidance": [
+        "Use the chair and foot placement assigned by the care team.",
+        "Shift forward in a controlled way before standing.",
+        "Keep the knees aligned with the feet.",
+        "Return to the chair slowly and with control."
+      ],
+      "safety_notes": [
+        "Use support or supervision when required by the care plan.",
+        "Do not perform the exercise if the environment is unstable or unsafe.",
+        "Stop and seek help after a fall, severe pain, sudden weakness, dizziness, or loss of balance."
+      ],
+      "evidence_sources": [
+        "wlu_rehabilitation_posture",
+        "ui_prmd"
+      ],
+      "clinical_review_status": "pending",
+      "media": {
+        "youtube_url": "https://www.youtube.com/watch?v=eutszbtbJM8",
+        "video_title": "How to perform Sit to Stand",
+        "video_source": "Wellen",
+        "media_review_status": "pending",
+        "images": [
+          {
+            "image_path": "assets/sit_to_stand/sit_to_stand_steps.jpg",
+            "caption": "Sit-to-stand step-by-step demonstration",
+            "alt_text": "Sit-to-stand step-by-step demonstration",
+            "display_order": 1
+          },
+          {
+            "image_path": "assets/sit_to_stand/sit_to_stand.jpg",
+            "caption": "Sit-to-stand demonstration",
+            "alt_text": "Sit-to-stand demonstration",
+            "display_order": 2
+          }
+        ]
+      },
+      "care_plan_parameters": {
+        "sets": null,
+        "repetitions": null,
+        "hold_seconds": null,
+        "rest_seconds": null,
+        "resistance": null,
+        "range_of_motion": null,
+        "support_required": null,
+        "supervision_required": null,
+        "notes": "Values must come from the patient's clinician-approved care plan."
+      },
+      "enabled": true
+    }
+  }
+}

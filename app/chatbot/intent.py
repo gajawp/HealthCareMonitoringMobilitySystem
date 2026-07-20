@@ -14,6 +14,27 @@ class IntentResult:
 
 
 INTENT_PATTERNS: dict[str, tuple[str, ...]] = {
+    "exercise_recommendation": (
+        "suggest exercise",
+        "suggest exercises",
+        "suggested exercise",
+        "suggested exercises",
+        "recommend exercise",
+        "recommend exercises",
+        "recommended exercise",
+        "recommended exercises",
+        "what exercise should i do",
+        "what exercises should i do",
+        "which exercise should i do",
+        "which exercises should i do",
+        "show my exercises",
+        "show suggested exercises",
+        "show recommended exercises",
+        "exercise recommendation",
+        "exercise recommendations",
+        "assigned exercises",
+        "my exercise plan",
+    ),
     "session_summary": (
         "summarize my session",
         "summarize session",
@@ -195,6 +216,21 @@ def detect_intent(question: str) -> IntentResult:
         return IntentResult(
             name="empty",
             confidence=1.0,
+        )
+
+    exercise_recommendation_phrases = INTENT_PATTERNS[
+        "exercise_recommendation"
+    ]
+    exercise_matches = tuple(
+        phrase
+        for phrase in exercise_recommendation_phrases
+        if phrase in normalized
+    )
+    if exercise_matches:
+        return IntentResult(
+            name="exercise_recommendation",
+            confidence=0.98,
+            matched_phrases=exercise_matches,
         )
 
     session_keyword_result = (
