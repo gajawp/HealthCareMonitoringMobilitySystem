@@ -14,12 +14,47 @@ class IntentResult:
 
 
 INTENT_PATTERNS: dict[str, tuple[str, ...]] = {
+    "exercise_recommendation": (
+        "suggest exercise",
+        "suggest exercises",
+        "suggested exercise",
+        "suggested exercises",
+        "recommend exercise",
+        "recommend exercises",
+        "recommended exercise",
+        "recommended exercises",
+        "what exercise should i do",
+        "what exercises should i do",
+        "which exercise should i do",
+        "which exercises should i do",
+        "show my exercises",
+        "show suggested exercises",
+        "show recommended exercises",
+        "exercise recommendation",
+        "exercise recommendations",
+        "assigned exercises",
+        "my exercise plan",
+    ),
     "session_summary": (
         "summarize my session",
         "summarize session",
+        "summarize my latest session",
+        "summarize latest session",
+        "summarize my mobility session",
+        "summarize mobility session",
+        "summarize my latest mobility session",
+        "summarize latest mobility session",
         "latest session",
+        "latest mobility session",
+        "my latest session",
+        "my latest mobility session",
+        "recent session",
+        "recent mobility session",
+        "recorded session",
+        "recorded mobility session",
         "how did i do",
         "session summary",
+        "mobility session summary",
         "today's session",
         "today session",
         "session result",
@@ -108,33 +143,130 @@ INTENT_PATTERNS: dict[str, tuple[str, ...]] = {
 
 def normalize_text(text: str) -> str:
     """Normalize text for deterministic keyword-based intent detection."""
+
     normalized = text.lower().strip()
     normalized = re.sub(r"[^a-z0-9\s'-]", " ", normalized)
+
     return re.sub(r"\s+", " ", normalized)
 
 
-def detect_intent(question: str) -> IntentResult:
-    """Detect the most likely chatbot intent.
-
-    The initial implementation is deterministic and testable. It can later be
-    replaced by an ML classifier without changing the orchestrator interface.
+def _detect_session_summary_by_keywords(
+    normalized: str,
+) -> IntentResult | None:
     """
+    Detect session-summary requests even when extra words appear between
+    phrases, such as 'summarize my latest mobility session'.
+    """
+
+    session_terms = (
+        "session",
+        "mobility session",
+        "recorded session",
+    )
+
+    summary_terms = (
+        "summarize",
+        "summary",
+        "latest",
+        "recent",
+        "today",
+        "how did i do",
+        "performance",
+        "result",
+    )
+
+    matched_session_terms = tuple(
+        term
+        for term in session_terms
+        if term in normalized
+    )
+
+    matched_summary_terms = tuple(
+        term
+        for term in summary_terms
+        if term in normalized
+    )
+
+    if matched_session_terms and matched_summary_terms:
+        matched = (
+            matched_session_terms
+            + matched_summary_terms
+        )
+
+        return IntentResult(
+            name="session_summary",
+            confidence=0.90,
+            matched_phrases=matched,
+        )
+
+    return None
+
+
+def detect_intent(question: str) -> IntentResult:
+    """
+    Detect the most likely chatbot intent.
+
+    The implementation uses deterministic phrase matching with an additional
+    keyword-combination rule for session summaries.
+    """
+
     normalized = normalize_text(question)
 
     if not normalized:
-        return IntentResult("empty", 1.0)
+        return IntentResult(
+            name="empty",
+            confidence=1.0,
+        )
+
+    exercise_recommendation_phrases = INTENT_PATTERNS[
+        "exercise_recommendation"
+    ]
+    exercise_matches = tuple(
+        phrase
+        for phrase in exercise_recommendation_phrases
+        if phrase in normalized
+    )
+    if exercise_matches:
+        return IntentResult(
+            name="exercise_recommendation",
+            confidence=0.98,
+            matched_phrases=exercise_matches,
+        )
+
+    session_keyword_result = (
+        _detect_session_summary_by_keywords(
+            normalized
+        )
+    )
+
+    if session_keyword_result is not None:
+        return session_keyword_result
 
     best_intent = "general_help"
     best_matches: tuple[str, ...] = ()
     best_score = 0.0
 
     for intent, phrases in INTENT_PATTERNS.items():
-        matches = tuple(phrase for phrase in phrases if phrase in normalized)
+        matches = tuple(
+            phrase
+            for phrase in phrases
+            if phrase in normalized
+        )
+
         if not matches:
             continue
 
-        phrase_coverage = sum(len(match.split()) for match in matches)
-        score = min(0.55 + (0.08 * phrase_coverage) + (0.04 * len(matches)), 0.99)
+        phrase_coverage = sum(
+            len(match.split())
+            for match in matches
+        )
+
+        score = min(
+            0.55
+            + (0.08 * phrase_coverage)
+            + (0.04 * len(matches)),
+            0.99,
+        )
 
         if score > best_score:
             best_intent = intent
@@ -142,6 +274,13 @@ def detect_intent(question: str) -> IntentResult:
             best_score = score
 
     if best_intent == "general_help":
-        return IntentResult("general_help", 0.35)
+        return IntentResult(
+            name="general_help",
+            confidence=0.35,
+        )
 
-    return IntentResult(best_intent, round(best_score, 2), best_matches)
+    return IntentResult(
+        name=best_intent,
+        confidence=round(best_score, 2),
+        matched_phrases=best_matches,
+    )
