@@ -18,6 +18,7 @@ import datetime
 import os
 
 from app.chatbot_ui import render_chatbot
+from app.messaging import MessagingService
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Healthcare Mobility Monitoring", layout="wide")
@@ -364,6 +365,7 @@ USERS = {
     "P1001": {
         "role": "Patient",
         "name": "John Smith",
+        "email": "p1001@example.com",
         "caregiver": "C2001",
         "clinician": "D3001",
         "condition": "knee_rehabilitation",
@@ -371,6 +373,7 @@ USERS = {
     "P1002": {
         "role": "Patient",
         "name": "Mary Johnson",
+        "email": "p1002@example.com",
         "caregiver": "C2001",
         "clinician": "D3001",
         "condition": "balance_and_stepping",
@@ -378,6 +381,7 @@ USERS = {
     "P1003": {
         "role": "Patient",
         "name": "Robert Davis",
+        "email": "p1003@example.com",
         "caregiver": "C2002",
         "clinician": "D3001",
         "condition": "lower_limb_strength_and_control",
@@ -385,6 +389,7 @@ USERS = {
     "P1004": {
         "role": "Patient",
         "name": "Linda Wilson",
+        "email": "p1004@example.com",
         "caregiver": "C2002",
         "clinician": "D3002",
         "condition": "lateral_mobility",
@@ -392,6 +397,7 @@ USERS = {
     "P1005": {
         "role": "Patient",
         "name": "James Brown",
+        "email": "p1005@example.com",
         "caregiver": "C2003",
         "clinician": "D3002",
         "condition": "squat_movement_training",
@@ -400,29 +406,34 @@ USERS = {
     "C2001": {
         "role": "Caregiver",
         "name": "Alice Martin",
+        "email": "c2001@example.com",
         "clinician": "D3001",
         "patients": ["P1001", "P1002"],
     },
     "C2002": {
         "role": "Caregiver",
         "name": "Bob Taylor",
+        "email": "c2002@example.com",
         "clinician": "D3001",
         "patients": ["P1003", "P1004"],
     },
     "C2003": {
         "role": "Caregiver",
         "name": "Carol White",
+        "email": "c2003@example.com",
         "clinician": "D3002",
         "patients": ["P1005"],
     },
     "D3001": {
         "role": "Clinician",
         "name": "Dr. Sarah Lee",
+        "email": "d3001@example.com",
         "caregivers": ["C2001", "C2002"],
     },
     "D3002": {
         "role": "Clinician",
         "name": "Dr. Michael Chen",
+        "email": "d3002@example.com",
         "caregivers": ["C2003"],
     },
     }
@@ -1219,15 +1230,105 @@ def render_download_button(patient_id: str):
     )
 
 
+def _get_messaging_service() -> MessagingService:
+    """Build the messaging service (reads EMAIL_BACKEND from the environment)."""
+    return MessagingService()
+
+
 def render_send_feedback(sender_id: str, target_id: str, label: str = "patient"):
-    with st.expander(f"Send Feedback / Alert to {label} {target_id}"):
-        fb_type = st.selectbox("Type", ["Feedback", "Alert"], key=f"fb_type_{target_id}")
-        fb_msg = st.text_area("Message", key=f"fb_msg_{target_id}")
-        if st.button("Send", key=f"fb_send_{target_id}"):
-            if fb_msg.strip():
-                st.success(f"{fb_type} sent to {target_id} successfully!")
-            else:
-                st.warning("Please enter a message.")
+    """Compose an in-app message to another user and email them a notification."""
+    sender = USERS.get(sender_id, {})
+    target = USERS.get(target_id, {})
+    target_name = target.get("name", target_id)
+    sender_role = sender.get("role") or st.session_state.get("role", "")
+
+    # Patients send plain messages; care-team members can tag Feedback/Alert.
+    if sender_role == "Patient":
+        type_options = ["Message", "Question"]
+    else:
+        type_options = ["Feedback", "Alert", "Message"]
+
+    form_key = f"msg_form_{sender_id}_{target_id}"
+    with st.form(key=form_key, clear_on_submit=True):
+        st.markdown(f"**✉️ Send a message to {label} {target_name} ({target_id})**")
+        msg_type = st.selectbox("Type", type_options, key=f"{form_key}_type")
+        body = st.text_area("Message", key=f"{form_key}_body")
+        submitted = st.form_submit_button("Send")
+
+    if not submitted:
+        return
+
+    if not body.strip():
+        st.warning("Please enter a message.")
+        return
+
+    outcome = _get_messaging_service().send_message(
+        sender_id=sender_id,
+        sender_name=sender.get("name", sender_id),
+        sender_role=sender_role,
+        recipient_id=target_id,
+        recipient_name=target_name,
+        recipient_role=target.get("role", ""),
+        recipient_email=target.get("email"),
+        body=body.strip(),
+        message_type=msg_type,
+    )
+
+    if outcome.email.success:
+        st.success(
+            f"{msg_type} sent to {target_name}. "
+            f"Email notification delivered via '{outcome.email.backend}'."
+        )
+    else:
+        st.success(f"{msg_type} sent to {target_name} and saved in the app.")
+        st.warning(f"Email notification was not delivered: {outcome.email.detail}")
+
+    if outcome.email.preview:
+        with st.expander("📧 Email notification preview", expanded=True):
+            st.code(outcome.email.preview)
+
+
+def render_message_thread(user_a: str, user_b: str, me_id: str):
+    """Show the two-way conversation between two users, oldest first."""
+    messages = _get_messaging_service().thread(user_a, user_b)
+    if not messages:
+        st.caption("No messages yet.")
+        return
+
+    me_key = str(me_id).strip().casefold()
+    for message in messages:
+        sender_id = message.get("sender_id", "")
+        is_me = str(sender_id).strip().casefold() == me_key
+        who = "You" if is_me else message.get("sender_name", sender_id)
+        role = message.get("sender_role", "")
+        when = str(message.get("timestamp", ""))[:16].replace("T", " ")
+        mtype = message.get("message_type", "Message")
+        role_suffix = f" ({role})" if role and not is_me else ""
+        header = f"**{who}**{role_suffix} · _{when}_ · {mtype}"
+        body = message.get("body", "")
+        if is_me:
+            st.info(f"{header}\n\n{body}")
+        else:
+            st.success(f"{header}\n\n{body}")
+
+
+def render_inbox(user_id: str, title: str = "📨 Messages received"):
+    """List all messages received by ``user_id``, most recent first."""
+    messages = list(reversed(_get_messaging_service().inbox(user_id)))
+    st.subheader(title)
+    if not messages:
+        st.caption("No messages received yet.")
+        return
+
+    for message in messages:
+        when = str(message.get("timestamp", ""))[:16].replace("T", " ")
+        st.markdown(
+            f"**{message.get('sender_name', '')}** "
+            f"({message.get('sender_role', '')}) — _{when}_ · "
+            f"{message.get('message_type', 'Message')}"
+        )
+        st.write(message.get("body", ""))
+        st.divider()
 
 
 # =====================================================================
@@ -1324,7 +1425,8 @@ def patient_dashboard():
         st.rerun()
 
     menu = st.sidebar.radio("Navigation",
-                            ["Home", "Daily Goals", "Reports", "Doctor Feedback", "AI Assistant"])
+                            ["Home", "Daily Goals", "Reports", "Doctor Feedback",
+                             "Messages", "AI Assistant"])
 
     if menu == "Home":
         hdr_left, hdr_right = st.columns([5, 1])
@@ -1536,6 +1638,35 @@ def patient_dashboard():
             st.caption("No caregiver feedback yet.")
 
 
+    elif menu == "Messages":
+        st.title("✉️ Messages")
+        st.caption(
+            "Send a message to your care team. They also receive an email "
+            "notification, and every message is kept here so you can read the "
+            "full history."
+        )
+
+        clinician_id = USERS.get(uid, {}).get("clinician")
+        caregiver_id = USERS.get(uid, {}).get("caregiver")
+
+        st.subheader("Contact your care team")
+        if clinician_id:
+            render_send_feedback(uid, clinician_id, label="clinician")
+        if caregiver_id:
+            render_send_feedback(uid, caregiver_id, label="caregiver")
+        if not clinician_id and not caregiver_id:
+            st.info("No care-team members are assigned to your account yet.")
+
+        st.divider()
+        if clinician_id:
+            clinician_name = USERS.get(clinician_id, {}).get("name", clinician_id)
+            st.subheader(f"🩺 Conversation with {clinician_name}")
+            render_message_thread(uid, clinician_id, uid)
+        if caregiver_id:
+            caregiver_name = USERS.get(caregiver_id, {}).get("name", caregiver_id)
+            st.subheader(f"🤝 Conversation with {caregiver_name}")
+            render_message_thread(uid, caregiver_id, uid)
+
     elif menu == "AI Assistant":
         render_chatbot(
             user_id=uid,
@@ -1582,6 +1713,9 @@ def caregiver_dashboard():
             render_alerts(pid)
         with tab3:
             render_send_feedback(uid, pid, label="patient")
+            st.divider()
+            st.subheader("💬 Conversation")
+            render_message_thread(uid, pid, uid)
         with tab4:
             render_chatbot(
                 user_id=uid,
@@ -1619,6 +1753,9 @@ def caregiver_dashboard():
             for a in high_alerts:
                 source_tag = f" [{a.get('source', '')}]" if a.get("source") else ""
                 st.error(f"**{pname} ({pid})** -- {a['time']}{source_tag}: {a['message']}")
+
+    st.divider()
+    render_inbox(uid, title="📨 Messages from your patients")
 
 
 # =====================================================================
@@ -1666,6 +1803,9 @@ def clinician_dashboard():
             cg_id = USERS[pid].get("caregiver")
             if cg_id:
                 render_send_feedback(uid, cg_id, label="caregiver")
+            st.divider()
+            st.subheader("💬 Conversation with patient")
+            render_message_thread(uid, pid, uid)
         with tab4:
             authorized_patients = []
             for caregiver_id in caregiver_ids:
@@ -1721,6 +1861,8 @@ def clinician_dashboard():
             st.session_state.selected_caregiver = cg_id
             st.rerun()
         st.divider()
+
+    render_inbox(uid, title="📨 Messages from patients and caregivers")
 
 
 # =====================================================================

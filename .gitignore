@@ -25,3 +25,7 @@ certs/
 reports/assets/*
 *.log
 *.zip
+
+# Runtime messaging artifacts (in-app messages + simulated emails)
+logs/emails/
+data/messages/
