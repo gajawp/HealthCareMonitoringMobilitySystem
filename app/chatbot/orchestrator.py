@@ -877,17 +877,27 @@ class HealthcareChatbotOrchestrator:
                 "metrics",
             )
         )
+        
 
         mentions_trend = any(
             phrase in normalized_question
             for phrase in (
                 "improving",
-                "improvement",
-                "trend",
-                "changed",
-                "change over time",
-                "progress",
-                "compare",
+            "improvement",
+            "improved",
+            "have i improved",
+            "has my balance improved",
+            "has my mobility improved",
+            "has my movement improved",
+            "getting better",
+            "getting worse",
+            "trend",
+            "changed",
+            "change over time",
+            "progress",
+            "compare",
+            "better than",
+            "worse than",
             )
         )
 
@@ -902,7 +912,7 @@ class HealthcareChatbotOrchestrator:
         elif mentions_care_team_feedback:
             effective_intent = "care_team_feedback"
 
-        elif has_date_filter and mentions_trend:
+        elif mentions_trend:
             effective_intent = "trend_analysis"
 
         elif has_date_filter and mentions_mobility_history:
