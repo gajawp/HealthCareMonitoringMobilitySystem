@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 try:
     from gtts import gTTS
@@ -865,6 +866,8 @@ def _render_sources(
 def _render_exercise_recommendations(
     exercise_data: dict[str, Any],
     labels: dict[str, str],
+    *,
+    compact: bool = False,
 ) -> None:
     profile_name = exercise_data.get(
         "profile_name",
@@ -876,8 +879,9 @@ def _render_exercise_recommendations(
     )
     exercises = exercise_data.get("exercises", [])
 
+    heading = "###" if compact else "##"
     st.markdown(
-        f"## {labels['suggested_exercises_heading']}: "
+        f"{heading} {labels['suggested_exercises_heading']}: "
         f"{profile_name}"
     )
 
@@ -895,7 +899,9 @@ def _render_exercise_recommendations(
         )
 
         with st.container(border=True):
-            st.markdown(f"### {exercise_name}")
+            st.markdown(
+                f"{'####' if compact else '###'} {exercise_name}"
+            )
 
             media = exercise.get("media", {})
             images = media.get("images", [])
@@ -948,11 +954,13 @@ def _render_exercise_recommendations(
                         safe_caption = html.escape(caption)
                         safe_alt_text = html.escape(alt_text)
 
+                        image_height = "210px" if compact else "360px"
+
                         st.markdown(
                             f"""
                             <div style="
                                 width: 100%;
-                                height: 360px;
+                                height: {image_height};
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
@@ -1039,7 +1047,7 @@ def _render_exercise_recommendations(
         st.info(safety_message)
 
 
-def render_chatbot(
+def _render_chatbot_content(
     *,
     user_id: str,
     user_name: str,
@@ -1053,15 +1061,27 @@ def render_chatbot(
     selected_date_range: str | None = None,
     visible_metrics: dict[str, Any] | None = None,
     active_alert: dict[str, Any] | None = None,
+    compact: bool = False,
 ) -> None:
     language_service = get_language_service()
 
-    language_name = st.selectbox(
-        "Chat language / चैट भाषा / చాట్ భాష",
-        options=list(LANGUAGE_OPTIONS.keys()),
-        index=0,
-        key=f"chat_language::{user_id}::{patient_id}",
-    )
+    language_key = f"chat_language::{user_id}::{patient_id}"
+
+    if compact:
+        with st.expander("🌐 Language and settings", expanded=False):
+            language_name = st.selectbox(
+                "Chat language / चैट भाषा / చాట్ భాష",
+                options=list(LANGUAGE_OPTIONS.keys()),
+                index=0,
+                key=language_key,
+            )
+    else:
+        language_name = st.selectbox(
+            "Chat language / चैट भाषा / చాట్ భాష",
+            options=list(LANGUAGE_OPTIONS.keys()),
+            index=0,
+            key=language_key,
+        )
     selected_language = LANGUAGE_OPTIONS[language_name]
 
     language_state_key = (
@@ -1081,14 +1101,17 @@ def render_chatbot(
     ui_language = resolved_language
     labels = _labels(ui_language)
 
-    st.title(labels["title"])
-    st.info(labels["notice"])
+    if compact:
+        st.caption(labels["notice"])
+    else:
+        st.title(labels["title"])
+        st.info(labels["notice"])
 
-    st.caption(
-        f"{labels['signed_in']} **{user_name}** · "
-        f"{labels['role']}: **{role}** · "
-        f"{labels['selected_patient']}: **{patient_id}**"
-    )
+        st.caption(
+            f"{labels['signed_in']} **{user_name}** · "
+            f"{labels['role']}: **{role}** · "
+            f"{labels['selected_patient']}: **{patient_id}**"
+        )
 
     history_language_key = (
         selected_language
@@ -1112,9 +1135,10 @@ def render_chatbot(
             )
         ]
 
-    st.markdown(
-        f"### {labels['suggested_questions']}"
-    )
+    if compact:
+        st.markdown(f"**{labels['suggested_questions']}**")
+    else:
+        st.markdown(f"### {labels['suggested_questions']}")
 
     selected_exercise: str | None = None
 
@@ -1186,7 +1210,10 @@ def render_chatbot(
         role,
         selected_exercise,
     )
-    columns = st.columns(2)
+    if compact:
+        suggestions = suggestions[:2]
+
+    columns = st.columns(1 if compact else 2)
     selected_prompt: str | None = None
 
     for index, (english_label, english_prompt) in enumerate(
@@ -1198,7 +1225,7 @@ def render_chatbot(
             language_code=ui_language,
         )
 
-        with columns[index % 2]:
+        with columns[index % len(columns)]:
             if st.button(
                 localized_label,
                 key=(
@@ -1237,81 +1264,141 @@ def render_chatbot(
                 _render_exercise_recommendations(
                     message.get("exercise_data", {}),
                     labels,
+                    compact=compact,
                 )
 
     voice_labels = _voice_labels(ui_language)
     voice_prompt: str | None = None
 
-    st.markdown(f"### 🎙️ {voice_labels['heading']}")
+    recorded_audio = None
 
-    if mic_recorder is None:
-        st.info(voice_labels["unavailable"])
+    if compact:
+        input_col, voice_col, send_col = st.columns(
+            [7, 1, 1],
+            vertical_alignment="bottom",
+            gap="small",
+        )
+
+        with input_col:
+            typed_prompt = st.text_input(
+                labels["chat_input"],
+                key=(
+                    f"floating_chat_text::{user_id}::"
+                    f"{patient_id}::{ui_language}"
+                ),
+                label_visibility="collapsed",
+                placeholder=labels["chat_input"],
+            )
+
+        with voice_col:
+            if mic_recorder is None:
+                st.button(
+                    "🎙️",
+                    key=(
+                        f"voice_unavailable::{user_id}::"
+                        f"{patient_id}::{ui_language}"
+                    ),
+                    help=voice_labels["unavailable"],
+                    disabled=True,
+                    use_container_width=True,
+                )
+            else:
+                recorded_audio = mic_recorder(
+                    start_prompt="🎙️",
+                    stop_prompt="⏹️",
+                    just_once=True,
+                    use_container_width=True,
+                    key=(
+                        f"voice_recorder::{user_id}::"
+                        f"{patient_id}::{ui_language}"
+                    ),
+                )
+
+        with send_col:
+            send_clicked = st.button(
+                "➤",
+                key=(
+                    f"floating_chat_send::{user_id}::"
+                    f"{patient_id}::{ui_language}"
+                ),
+                help="Send message",
+                use_container_width=True,
+            )
+
+        if not send_clicked:
+            typed_prompt = None
+
     else:
-        recorded_audio = mic_recorder(
-            start_prompt=voice_labels["start"],
-            stop_prompt=voice_labels["stop"],
-            just_once=True,
-            use_container_width=True,
-            key=(
-                f"voice_recorder::{user_id}::"
-                f"{patient_id}::{ui_language}"
-            ),
+        st.markdown(f"### 🎙️ {voice_labels['heading']}")
+
+        if mic_recorder is None:
+            st.info(voice_labels["unavailable"])
+        else:
+            recorded_audio = mic_recorder(
+                start_prompt=voice_labels["start"],
+                stop_prompt=voice_labels["stop"],
+                just_once=True,
+                use_container_width=True,
+                key=(
+                    f"voice_recorder::{user_id}::"
+                    f"{patient_id}::{ui_language}"
+                ),
+            )
+
+        typed_prompt = st.chat_input(
+            labels["chat_input"]
+        )
+
+    if (
+        recorded_audio
+        and recorded_audio.get("bytes")
+    ):
+        audio_signature = hash(
+            recorded_audio["bytes"]
+        )
+        processed_audio_key = (
+            f"processed_voice::{user_id}::"
+            f"{patient_id}::{ui_language}"
         )
 
         if (
-            recorded_audio
-            and recorded_audio.get("bytes")
-        ):
-            audio_signature = hash(
-                recorded_audio["bytes"]
+            st.session_state.get(
+                processed_audio_key
             )
-            processed_audio_key = (
-                f"processed_voice::{user_id}::"
+            != audio_signature
+        ):
+            try:
+                with st.spinner(
+                    voice_labels["processing"]
+                ):
+                    voice_prompt = _transcribe_audio(
+                        recorded_audio["bytes"],
+                        ui_language,
+                    )
+
+                st.session_state[
+                    processed_audio_key
+                ] = audio_signature
+                st.session_state[
+                    f"voice_text::{user_id}::"
+                    f"{patient_id}::{ui_language}"
+                ] = voice_prompt
+
+            except Exception as exc:
+                st.error(
+                    f"{voice_labels['error']} {exc}"
+                )
+        else:
+            voice_prompt = st.session_state.get(
+                f"voice_text::{user_id}::"
                 f"{patient_id}::{ui_language}"
             )
 
-            if (
-                st.session_state.get(
-                    processed_audio_key
-                )
-                != audio_signature
-            ):
-                try:
-                    with st.spinner(
-                        voice_labels["processing"]
-                    ):
-                        voice_prompt = _transcribe_audio(
-                            recorded_audio["bytes"],
-                            ui_language,
-                        )
-
-                    st.session_state[
-                        processed_audio_key
-                    ] = audio_signature
-                    st.session_state[
-                        f"voice_text::{user_id}::"
-                        f"{patient_id}::{ui_language}"
-                    ] = voice_prompt
-
-                except Exception as exc:
-                    st.error(
-                        f"{voice_labels['error']} {exc}"
-                    )
-            else:
-                voice_prompt = st.session_state.get(
-                    f"voice_text::{user_id}::"
-                    f"{patient_id}::{ui_language}"
-                )
-
-            if voice_prompt:
-                st.success(
-                    f"{voice_labels['heard']}: "
-                    f"{voice_prompt}"
-                )
-
-    typed_prompt = st.chat_input(
-        labels["chat_input"]
-    )
+        if voice_prompt:
+            st.success(
+                f"{voice_labels['heard']}: "
+                f"{voice_prompt}"
+            )
 
     displayed_prompt = typed_prompt or voice_prompt
     english_prompt = selected_prompt
@@ -1421,6 +1508,7 @@ def render_chatbot(
                     _render_exercise_recommendations(
                         localized_exercise_data,
                         labels,
+                        compact=compact,
                     )
 
                 if response.escalation_required:
@@ -1471,26 +1559,405 @@ def render_chatbot(
         )
         st.rerun()
 
-    st.divider()
-    clear_col, status_col = st.columns([1, 3])
+    if compact:
+        with st.expander("Chat options", expanded=False):
+            if st.button(
+                labels["clear"],
+                key=(
+                    f"clear::{user_id}::{patient_id}::"
+                    f"{ui_language}"
+                ),
+                use_container_width=True,
+            ):
+                st.session_state[key] = [
+                    _initial_message(
+                        user_name,
+                        role,
+                        ui_language,
+                        language_service,
+                    )
+                ]
+                st.rerun()
+            st.caption(labels["session_storage"])
+    else:
+        st.divider()
+        clear_col, status_col = st.columns([1, 3])
 
-    with clear_col:
-        if st.button(
-            labels["clear"],
-            key=(
-                f"clear::{user_id}::{patient_id}::"
-                f"{ui_language}"
-            ),
-        ):
-            st.session_state[key] = [
-                _initial_message(
-                    user_name,
-                    role,
-                    ui_language,
-                    language_service,
+        with clear_col:
+            if st.button(
+                labels["clear"],
+                key=(
+                    f"clear::{user_id}::{patient_id}::"
+                    f"{ui_language}"
+                ),
+            ):
+                st.session_state[key] = [
+                    _initial_message(
+                        user_name,
+                        role,
+                        ui_language,
+                        language_service,
+                    )
+                ]
+                st.rerun()
+
+        with status_col:
+            st.caption(labels["session_storage"])
+
+
+
+def _enable_all_side_chat_resize() -> None:
+    """Enable resizing from every edge and corner of the chat panel."""
+
+    components.html(
+        """
+        <script>
+        (() => {
+            const parentWindow = window.parent;
+            const parentDocument = parentWindow.document;
+            const selector = ".st-key-healthbridge_chat_panel";
+            const storageWidth = "healthbridge-chat-width";
+            const storageHeight = "healthbridge-chat-height";
+
+            function initializeResize() {
+                const panel = parentDocument.querySelector(selector);
+
+                if (!panel || panel.dataset.allSideResizeReady === "true") {
+                    return;
+                }
+
+                panel.dataset.allSideResizeReady = "true";
+                panel.style.boxSizing = "border-box";
+                panel.style.position = "fixed";
+
+                const savedWidth = parentWindow.localStorage.getItem(storageWidth);
+                const savedHeight = parentWindow.localStorage.getItem(storageHeight);
+
+                if (savedWidth) {
+                    panel.style.setProperty("width", savedWidth, "important");
+                }
+                if (savedHeight) {
+                    panel.style.setProperty("height", savedHeight, "important");
+                }
+
+                const handles = {
+                    top: {
+                        cursor: "ns-resize", top: "-5px", left: "12px",
+                        right: "12px", height: "10px"
+                    },
+                    bottom: {
+                        cursor: "ns-resize", bottom: "-5px", left: "12px",
+                        right: "12px", height: "10px"
+                    },
+                    left: {
+                        cursor: "ew-resize", left: "-5px", top: "12px",
+                        bottom: "12px", width: "10px"
+                    },
+                    right: {
+                        cursor: "ew-resize", right: "-5px", top: "12px",
+                        bottom: "12px", width: "10px"
+                    },
+                    topLeft: {
+                        cursor: "nwse-resize", top: "-7px", left: "-7px",
+                        width: "16px", height: "16px"
+                    },
+                    topRight: {
+                        cursor: "nesw-resize", top: "-7px", right: "-7px",
+                        width: "16px", height: "16px"
+                    },
+                    bottomLeft: {
+                        cursor: "nesw-resize", bottom: "-7px", left: "-7px",
+                        width: "16px", height: "16px"
+                    },
+                    bottomRight: {
+                        cursor: "nwse-resize", bottom: "-7px", right: "-7px",
+                        width: "18px", height: "18px"
+                    }
+                };
+
+                Object.entries(handles).forEach(([direction, styles]) => {
+                    const handle = parentDocument.createElement("div");
+                    handle.className = `healthbridge-resize-handle ${direction}`;
+                    handle.dataset.resizeDirection = direction;
+                    handle.style.position = "absolute";
+                    handle.style.zIndex = "1000002";
+                    handle.style.touchAction = "none";
+                    handle.style.userSelect = "none";
+                    Object.assign(handle.style, styles);
+
+                    if (direction === "bottomRight") {
+                        handle.style.borderRight =
+                            "3px solid rgba(190,190,190,0.8)";
+                        handle.style.borderBottom =
+                            "3px solid rgba(190,190,190,0.8)";
+                        handle.style.borderRadius = "0 0 5px 0";
+                    }
+
+                    panel.appendChild(handle);
+
+                    handle.addEventListener("pointerdown", (event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        handle.setPointerCapture?.(event.pointerId);
+
+                        const startX = event.clientX;
+                        const startY = event.clientY;
+                        const startRect = panel.getBoundingClientRect();
+                        const startRight = parentWindow.innerWidth - startRect.right;
+                        const startBottom = parentWindow.innerHeight - startRect.bottom;
+
+                        const minWidth = 420;
+                        const minHeight = 450;
+                        const maxWidth = parentWindow.innerWidth - 32;
+                        const maxHeight = parentWindow.innerHeight - 95;
+
+                        function resize(moveEvent) {
+                            const deltaX = moveEvent.clientX - startX;
+                            const deltaY = moveEvent.clientY - startY;
+
+                            let width = startRect.width;
+                            let height = startRect.height;
+
+                            if (direction === "right" || direction.includes("Right")) {
+                                width = startRect.width + deltaX;
+                            }
+                            if (direction === "left" || direction.includes("Left")) {
+                                width = startRect.width - deltaX;
+                            }
+                            if (direction === "bottom" || direction.includes("Bottom")) {
+                                height = startRect.height + deltaY;
+                            }
+                            if (direction === "top" || direction.includes("Top")) {
+                                height = startRect.height - deltaY;
+                            }
+
+                            width = Math.max(minWidth, Math.min(width, maxWidth));
+                            height = Math.max(minHeight, Math.min(height, maxHeight));
+
+                            panel.style.setProperty("width", `${width}px`, "important");
+                            panel.style.setProperty("height", `${height}px`, "important");
+                            panel.style.setProperty("right", `${startRight}px`, "important");
+                            panel.style.setProperty("bottom", `${startBottom}px`, "important");
+                        }
+
+                        function stopResize() {
+                            parentWindow.localStorage.setItem(storageWidth, panel.style.width);
+                            parentWindow.localStorage.setItem(storageHeight, panel.style.height);
+                            parentDocument.removeEventListener("pointermove", resize);
+                            parentDocument.removeEventListener("pointerup", stopResize);
+                            parentDocument.removeEventListener("pointercancel", stopResize);
+                        }
+
+                        parentDocument.addEventListener("pointermove", resize);
+                        parentDocument.addEventListener("pointerup", stopResize);
+                        parentDocument.addEventListener("pointercancel", stopResize);
+                    });
+                });
+            }
+
+            initializeResize();
+
+            const observer = new MutationObserver(() => initializeResize());
+            observer.observe(parentDocument.body, {childList: true, subtree: true});
+        })();
+        </script>
+        """,
+        height=0,
+        width=0,
+    )
+
+def render_floating_chatbot(
+    *,
+    user_id: str,
+    user_name: str,
+    role: str,
+    patient_id: str,
+    patient_condition: str | None = None,
+    authorized_patient_ids: list[str] | None = None,
+    current_page: str = "Dashboard",
+    selected_session_id: str | None = None,
+    selected_exercise_id: str | None = None,
+    selected_date_range: str | None = None,
+    visible_metrics: dict[str, Any] | None = None,
+    active_alert: dict[str, Any] | None = None,
+) -> None:
+    """Render a persistent bottom-right chatbot launcher and panel."""
+
+    open_key = f"floating_chat_open::{user_id}::{patient_id}"
+    if open_key not in st.session_state:
+        st.session_state[open_key] = False
+
+    st.markdown(
+        """
+        <style>
+        .st-key-healthbridge_chat_launcher {
+            position: fixed;
+            right: 24px;
+            bottom: 20px;
+            width: 138px;
+            z-index: 1000000;
+        }
+        .st-key-healthbridge_chat_launcher button {
+            border-radius: 999px !important;
+            min-height: 54px !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+        .st-key-healthbridge_chat_panel {
+            position: fixed;
+            right: 24px;
+            bottom: 88px;
+
+            /* Default size */
+            width: min(650px, calc(100vw - 32px));
+            height: min(820px, calc(100vh - 95px));
+
+            /* Allowed resize limits */
+            min-width: 420px;
+            min-height: 450px;
+            max-width: calc(100vw - 32px);
+            max-height: calc(100vh - 95px);
+
+            /* Resizing is handled by JavaScript handles on all sides. */
+            overflow: auto;
+            box-sizing: border-box;
+            display: flex !important;
+            flex-direction: column !important;
+
+            overscroll-behavior: contain;
+            z-index: 999999;
+            padding: 14px 14px 18px 14px;
+            border: 1px solid rgba(128, 128, 128, 0.38);
+            border-radius: 16px;
+            background: var(--background-color, #0e1117);
+            box-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+        }
+        .st-key-healthbridge_chat_panel p,
+        .st-key-healthbridge_chat_panel span,
+        .st-key-healthbridge_chat_panel label,
+        .st-key-healthbridge_chat_panel .stMarkdown {
+            font-size: 0.96rem !important;
+            line-height: 1.45 !important;
+        }
+        .healthbridge-chat-title {
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+            margin: 0;
+        }
+        .healthbridge-chat-subtitle {
+            opacity: 0.75;
+            font-size: 0.82rem;
+            margin-top: 2px;
+        }
+        .st-key-healthbridge_chat_panel [data-testid="stTextInput"] input {
+            min-height: 48px !important;
+        }
+        .st-key-healthbridge_chat_panel [data-testid="stButton"] button {
+            min-height: 48px !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        .st-key-healthbridge_chat_panel
+        [data-testid="stVerticalBlockBorderWrapper"] {
+            height: 100% !important;
+        }
+        .st-key-healthbridge_chat_panel
+        [data-testid="stVerticalBlockBorderWrapper"] > div {
+            height: 100% !important;
+        }
+        .st-key-healthbridge_chat_panel
+        div[data-testid="stHorizontalBlock"]:has(
+            [data-testid="stTextInput"]
+        ) {
+            position: sticky !important;
+            bottom: 0 !important;
+            z-index: 30 !important;
+            margin-top: auto !important;
+            padding-top: 10px !important;
+            padding-bottom: 6px !important;
+            background: var(--background-color, #0e1117) !important;
+            border-top: 1px solid rgba(128, 128, 128, 0.25);
+        }
+        @media (max-width: 600px) {
+            .st-key-healthbridge_chat_launcher {
+                right: 12px;
+                bottom: 12px;
+                width: 128px;
+            }
+
+            .st-key-healthbridge_chat_panel {
+                right: 10px;
+                bottom: 78px;
+                width: calc(100vw - 20px);
+                height: calc(100vh - 96px);
+                min-width: 0;
+                min-height: 0;
+                resize: none;
+            }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if st.session_state[open_key]:
+        with st.container(key="healthbridge_chat_panel"):
+            title_col, close_col = st.columns(
+                [6, 1],
+                vertical_alignment="center",
+            )
+            with title_col:
+                st.markdown(
+                    """
+                    <div class="healthbridge-chat-title">HEALTHBRIDGE AI</div>
+                    <div class="healthbridge-chat-subtitle">Mobility Assistant</div>
+                    """,
+                    unsafe_allow_html=True,
                 )
-            ]
+            with close_col:
+                if st.button(
+                    "✕",
+                    key=f"floating_chat_close::{user_id}::{patient_id}",
+                    help="Close chat",
+                ):
+                    st.session_state[open_key] = False
+                    st.rerun()
+
+            st.divider()
+            _render_chatbot_content(
+                user_id=user_id,
+                user_name=user_name,
+                role=role,
+                patient_id=patient_id,
+                patient_condition=patient_condition,
+                authorized_patient_ids=authorized_patient_ids,
+                current_page=current_page,
+                selected_session_id=selected_session_id,
+                selected_exercise_id=selected_exercise_id,
+                selected_date_range=selected_date_range,
+                visible_metrics=visible_metrics,
+                active_alert=active_alert,
+                compact=True,
+            )
+
+        _enable_all_side_chat_resize()
+
+    with st.container(key="healthbridge_chat_launcher"):
+        button_label = (
+            "Chat ⌄"
+            if st.session_state[open_key]
+            else "Chat 💬"
+        )
+        if st.button(
+            button_label,
+            key=f"floating_chat_toggle::{user_id}::{patient_id}",
+            use_container_width=True,
+            type="primary",
+        ):
+            st.session_state[open_key] = not st.session_state[open_key]
             st.rerun()
 
-    with status_col:
-        st.caption(labels["session_storage"])
+
+# Backward-compatible alias for any older imports.
+def render_chatbot(**kwargs: Any) -> None:
+    _render_chatbot_content(**kwargs)

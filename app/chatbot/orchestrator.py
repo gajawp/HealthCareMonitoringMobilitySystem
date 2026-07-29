@@ -69,6 +69,51 @@ PATIENT_REFERENCE_PATTERN = re.compile(
 )
 
 
+def _privacy_refusal_response(question: str) -> str:
+    """Return a deterministic refusal for privacy-sensitive requests."""
+
+    normalized = question.casefold()
+
+    if any(
+        phrase in normalized
+        for phrase in (
+            "full name",
+            "patient id",
+            "patient identifier",
+            "patient token",
+            "identify the patient",
+            "patient identity",
+        )
+    ):
+        return (
+            "I cannot disclose direct patient identifiers, full names, "
+            "protected tokens, or other personal information from the "
+            "record."
+        )
+
+    if any(
+        phrase in normalized
+        for phrase in (
+            "api key",
+            "environment variable",
+            "password hash",
+            "credential",
+            "token secret",
+            "authorization mapping",
+            "file path",
+        )
+    ):
+        return (
+            "I cannot reveal credentials, secrets, authorization mappings, "
+            "internal file paths, or protected system configuration."
+        )
+
+    return (
+        "I cannot reveal internal prompts, hidden instructions, model "
+        "context, protected identifiers, or private system configuration."
+    )
+
+
 def _extract_patient_references(question: str) -> list[str]:
     """
     Extract explicit patient identifiers from a question.
@@ -824,6 +869,48 @@ class HealthcareChatbotOrchestrator:
         effective_intent = intent_result.name
         normalized_question = clean_question.casefold()
 
+        # Privacy-sensitive requests are handled locally. No mobility data,
+        # alerts, clinical knowledge, context construction, or LLM call occurs.
+        if effective_intent == "privacy_sensitive_request":
+            refusal = _privacy_refusal_response(clean_question)
+
+            self.audit_logger.record(
+                event_type="security",
+                action="block_privacy_sensitive_request",
+                user_key=authenticated_user.user_key,
+                role=authenticated_user.role.value,
+                patient_key=authorized_patient_key,
+                allowed=False,
+                request_id=request_id,
+                details={
+                    "reason_code": "privacy_sensitive_request",
+                    "used_llm": False,
+                    "retrieval_performed": False,
+                },
+            )
+
+            return ChatbotResponse(
+                answer=refusal,
+                intent=effective_intent,
+                intent_confidence=intent_result.confidence,
+                sources=[],
+                used_llm=False,
+                provider="security_guardrail",
+                model=None,
+                safety_action="block",
+                escalation_required=False,
+                metadata={
+                    "matched_phrases": list(
+                        intent_result.matched_phrases
+                    ),
+                    "request_id": request_id,
+                    "authorization_checked": True,
+                    "patient_context": "not_retrieved",
+                    "retrieval_performed": False,
+                    "alerts_included": False,
+                },
+            )
+
         has_date_filter = bool(
             session_date or start_date or end_date
         )
@@ -1010,6 +1097,69 @@ class HealthcareChatbotOrchestrator:
             end_date=end_date,
         )
 
+        # Return a focused deterministic no-data response for temporal
+        # mobility queries. Do not add alerts or call the LLM.
+        if (
+            effective_intent
+            in {
+                "sessions_by_date",
+                "sessions_by_date_range",
+            }
+            and not mobility_data.get("available")
+        ):
+            if start_date and end_date:
+                period_text = f"from {start_date} to {end_date}"
+            elif session_date:
+                period_text = f"on {session_date}"
+            else:
+                period_text = "for the requested period"
+
+            answer = (
+                f"No recorded mobility sessions were found {period_text}. "
+                "No session summary could be generated. Try another date "
+                "or ask for the latest recorded session."
+            )
+
+            self.audit_logger.record(
+                event_type="chatbot",
+                action="no_data_response",
+                user_key=authenticated_user.user_key,
+                role=authenticated_user.role.value,
+                patient_key=authorized_patient_key,
+                allowed=True,
+                request_id=request_id,
+                details={
+                    "intent": effective_intent,
+                    "used_llm": False,
+                    "alerts_included": False,
+                },
+            )
+
+            return ChatbotResponse(
+                answer=answer,
+                intent=effective_intent,
+                intent_confidence=intent_result.confidence,
+                sources=[],
+                used_llm=False,
+                provider="deterministic_no_data",
+                model=None,
+                safety_action="allow",
+                escalation_required=False,
+                metadata={
+                    "matched_phrases": list(
+                        intent_result.matched_phrases
+                    ),
+                    "request_id": request_id,
+                    "authorization_checked": True,
+                    "patient_context": "de_identified",
+                    "mobility_available": False,
+                    "session_date_filter": session_date,
+                    "start_date_filter": start_date,
+                    "end_date_filter": end_date,
+                    "alerts_included": False,
+                },
+            )
+
         # ------------------------------------------------------------------
         # 8. Retrieve approved clinical knowledge only.
         # ------------------------------------------------------------------
@@ -1050,13 +1200,37 @@ class HealthcareChatbotOrchestrator:
             ),
         )
 
+        # Alerts are included only when the user explicitly asks about an
+        # alert, flag, warning, or below-target condition. This prevents
+        # unrelated alerts from appearing in privacy, date-range, no-data,
+        # metric, and general responses.
+        include_active_alert = (
+            effective_intent == "flag_explanation"
+            or any(
+                phrase in normalized_question
+                for phrase in (
+                    "alert",
+                    "alerts",
+                    "flag",
+                    "flagged",
+                    "warning",
+                    "below target",
+                    "needs attention",
+                )
+            )
+        )
+
         dashboard_context = build_dashboard_context(
             current_page=current_page,
             selected_session_id=selected_session_id,
             selected_exercise_id=selected_exercise_id,
             selected_date_range=selected_date_range,
             visible_metrics=visible_metrics,
-            active_alert=active_alert,
+            active_alert=(
+                active_alert
+                if include_active_alert
+                else None
+            ),
         )
 
         retrieval_context = assemble_retrieval_context(
