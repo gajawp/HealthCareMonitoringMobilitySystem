@@ -17,7 +17,7 @@ import numpy as np
 import datetime
 import os
 
-from app.chatbot_ui import render_chatbot
+from app.chatbot_ui import render_floating_chatbot
 from app.messaging import MessagingService
 
 # --- PAGE CONFIGURATION ---
@@ -1420,13 +1420,12 @@ def patient_dashboard():
 
     st.sidebar.title(f"👤 {name}")
     st.sidebar.caption(f"Patient ID: {uid}")
-    if st.sidebar.button("Logout"):
-        do_logout()
-        st.rerun()
+    render_top_right_logout()
 
-    menu = st.sidebar.radio("Navigation",
-                            ["Home", "Daily Goals", "Reports", "Doctor Feedback",
-                             "Messages", "AI Assistant"])
+    menu = st.sidebar.radio(
+        "Navigation",
+        ["Home", "Daily Goals", "Reports", "Doctor Feedback", "Messages"],
+    )
 
     if menu == "Home":
         hdr_left, hdr_right = st.columns([5, 1])
@@ -1667,20 +1666,22 @@ def patient_dashboard():
             st.subheader(f"🤝 Conversation with {caregiver_name}")
             render_message_thread(uid, caregiver_id, uid)
 
-    elif menu == "AI Assistant":
-        render_chatbot(
-            user_id=uid,
-            user_name=name,
-            role="Patient",
-            patient_id=uid,
-            patient_condition=USERS.get(uid, {}).get(
-                "condition",
-                "general_lower_limb_mobility",
-            ),
-            authorized_patient_ids=[uid],
-            current_page=menu,
-            active_alert={"alerts": get_alerts(uid)},
-        )
+    # The assistant is rendered below as a persistent floating widget.
+
+    render_floating_chatbot(
+        user_id=uid,
+        user_name=name,
+        role="Patient",
+        patient_id=uid,
+        patient_condition=USERS.get(uid, {}).get(
+            "condition",
+            "general_lower_limb_mobility",
+        ),
+        authorized_patient_ids=[uid],
+        current_page=menu,
+        active_alert={"alerts": get_alerts(uid)},
+    )
+
 
 
 # =====================================================================
@@ -1695,9 +1696,7 @@ def caregiver_dashboard():
 
     st.sidebar.title(f"👤 {name}")
     st.sidebar.caption(f"Caregiver ID: {uid}")
-    if st.sidebar.button("Logout"):
-        do_logout()
-        st.rerun()
+    render_top_right_logout()
 
     if st.session_state.selected_patient:
         pid = st.session_state.selected_patient
@@ -1706,7 +1705,7 @@ def caregiver_dashboard():
             st.session_state.selected_patient = None
             st.rerun()
         st.title(f"Patient: {pname} ({pid})")
-        tab1, tab2, tab3, tab4 = st.tabs(["Reports", "Alerts", "Feedback", "AI Assistant"])
+        tab1, tab2, tab3 = st.tabs(["Reports", "Alerts", "Feedback"])
         with tab1:
             render_reports(pid)
         with tab2:
@@ -1716,20 +1715,20 @@ def caregiver_dashboard():
             st.divider()
             st.subheader("💬 Conversation")
             render_message_thread(uid, pid, uid)
-        with tab4:
-            render_chatbot(
-                user_id=uid,
-                user_name=name,
-                role="Caregiver",
-                patient_id=pid,
-                patient_condition=USERS.get(pid, {}).get(
-                    "condition",
-                    "general_lower_limb_mobility",
-                ),
-                authorized_patient_ids=patient_ids,
-                current_page="Patient Details / AI Assistant",
-                active_alert={"alerts": get_alerts(pid)},
-            )
+
+        render_floating_chatbot(
+            user_id=uid,
+            user_name=name,
+            role="Caregiver",
+            patient_id=pid,
+            patient_condition=USERS.get(pid, {}).get(
+                "condition",
+                "general_lower_limb_mobility",
+            ),
+            authorized_patient_ids=patient_ids,
+            current_page="Patient Details",
+            active_alert={"alerts": get_alerts(pid)},
+        )
         return
 
     st.title("My Patients")
@@ -1762,6 +1761,49 @@ def caregiver_dashboard():
 # CLINICIAN FRONTEND
 # =====================================================================
 
+def render_top_right_logout() -> None:
+    """Render a persistent logout button in the top-right corner."""
+
+    st.markdown(
+        """
+        <style>
+        .st-key-top_right_logout {
+            position: fixed;
+            top: 72px;
+            right: 28px;
+            width: 115px;
+            z-index: 1000001;
+        }
+
+        .st-key-top_right_logout button {
+            width: 100% !important;
+            min-height: 44px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .st-key-top_right_logout {
+                top: 66px;
+                right: 12px;
+                width: 100px;
+            }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    with st.container(key="top_right_logout"):
+        if st.button(
+            "Logout",
+            key="top_right_logout_button",
+            use_container_width=True,
+        ):
+            do_logout()
+            st.rerun()
+
 def clinician_dashboard():
     uid = st.session_state.user_id
     name = st.session_state.name
@@ -1770,9 +1812,7 @@ def clinician_dashboard():
 
     st.sidebar.title(f"👤 {name}")
     st.sidebar.caption(f"Clinician ID: {uid}")
-    if st.sidebar.button("Logout"):
-        do_logout()
-        st.rerun()
+    render_top_right_logout()
 
     st.sidebar.divider()
     st.sidebar.subheader("🔍 Search Patient")
@@ -1793,7 +1833,7 @@ def clinician_dashboard():
             st.session_state.selected_caregiver = None
             st.rerun()
         st.title(f"Patient: {pname} ({pid})")
-        tab1, tab2, tab3, tab4 = st.tabs(["Reports", "Alerts", "Feedback", "AI Assistant"])
+        tab1, tab2, tab3 = st.tabs(["Reports", "Alerts", "Feedback"])
         with tab1:
             render_reports(pid)
         with tab2:
@@ -1806,25 +1846,26 @@ def clinician_dashboard():
             st.divider()
             st.subheader("💬 Conversation with patient")
             render_message_thread(uid, pid, uid)
-        with tab4:
-            authorized_patients = []
-            for caregiver_id in caregiver_ids:
-                authorized_patients.extend(
-                    USERS.get(caregiver_id, {}).get("patients", [])
-                )
-            render_chatbot(
-                user_id=uid,
-                user_name=name,
-                role="Clinician",
-                patient_id=pid,
-                patient_condition=USERS.get(pid, {}).get(
-                    "condition",
-                    "general_lower_limb_mobility",
-                ),
-                authorized_patient_ids=authorized_patients,
-                current_page="Patient Details / AI Assistant",
-                active_alert={"alerts": get_alerts(pid)},
+
+        authorized_patients = []
+        for caregiver_id in caregiver_ids:
+            authorized_patients.extend(
+                USERS.get(caregiver_id, {}).get("patients", [])
             )
+
+        render_floating_chatbot(
+            user_id=uid,
+            user_name=name,
+            role="Clinician",
+            patient_id=pid,
+            patient_condition=USERS.get(pid, {}).get(
+                "condition",
+                "general_lower_limb_mobility",
+            ),
+            authorized_patient_ids=authorized_patients,
+            current_page="Patient Details",
+            active_alert={"alerts": get_alerts(pid)},
+        )
         return
 
     if st.session_state.selected_caregiver:
