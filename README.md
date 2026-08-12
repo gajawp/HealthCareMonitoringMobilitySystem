@@ -1,6 +1,13 @@
+<div align="center">
+
 HealthBridge AI
 
 An Inclusive and Secure Conversational Assistant for Remote Patient Mobility Monitoring
+
+CS 5100 — Foundations of Artificial Intelligence
+Northeastern University | 2026
+
+</div>
 
 HealthBridge AI is a retrieval-augmented conversational prototype that helps patients, caregivers, and clinicians understand longitudinal mobility-monitoring records through natural-language questions.
 
@@ -24,7 +31,7 @@ Project Structure
 
 Data
 
-Getting Started
+Exact Steps to Run the Project
 
 Using the Application
 
@@ -231,8 +238,6 @@ HealthCareMonitoringMobilitySystem/
 ├── tests/                     # Component and integration tests
 └── data/                      # Structured mobility and approved knowledge data
 
-Some filenames or directories may vary between branches. Use the corresponding repository file when a branch uses a suffixed or renamed entry point.
-
 Data
 
 The prototype uses local structured mobility-session records produced by the monitoring dashboard and synthetic user-to-patient assignments for evaluation. No public clinical dataset or pretrained patient model is required.
@@ -257,7 +262,7 @@ Preprocessing validates required fields, parses timestamps, normalizes numeric v
 
 All bundled demonstration data should be synthetic or de-identified. Do not commit protected health information (PHI) or real patient credentials.
 
-Getting Started
+Exact Steps to Run the Project
 
 Prerequisites
 
@@ -265,51 +270,158 @@ Python 3.10 or later
 
 pip
 
-An API key for the LLM provider configured by the project
+OpenAI API key
+
+Git
 
 A microphone and audio output device for optional voice features
 
-1. Clone the repository
+Step 1 — Clone the repository
 
 git clone https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git
+
+Step 2 — Open the project directory
+
 cd HealthCareMonitoringMobilitySystem
 
-2. Create a virtual environment
+Step 3 — Create a virtual environment
 
-macOS or Linux:
+macOS or Linux
 
 python3 -m venv venv
-source venv/bin/activate
 
-Windows PowerShell:
+Windows PowerShell
 
 python -m venv venv
+
+Step 4 — Activate the virtual environment
+
+macOS or Linux
+
+source venv/bin/activate
+
+Windows PowerShell
+
 .\venv\Scripts\Activate.ps1
 
-3. Install dependencies
+After activation, the terminal prompt should begin with (venv).
 
-python -m pip install --upgrade pip
+Step 5 — Install all required dependencies
+
+python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 
-4. Configure environment variables
+On Windows, use python instead of python3 if necessary.
 
-Create a .env file in the project root. Add only the variables used by your selected model and voice providers. For example:
+Step 6 — Create the environment file
 
-OPENAI_API_KEY=replace_with_your_api_key
+Create a file named .env in the project root—the same directory that contains main.py and requirements.txt.
 
-If the repository contains .env.example, copy it and populate the required values:
+Add the following line:
 
-cp .env.example .env
+OPENAI_API_KEY=your_actual_openai_api_key
 
-Never commit .env, API keys, passwords, tokens, or production patient data.
+The project should now contain:
 
-5. Run the application
+HealthCareMonitoringMobilitySystem/
+├── .env
+├── main.py
+├── requirements.txt
+└── ...
+
+Security warning: Never commit the .env file, API keys, passwords, tokens, or patient information to GitHub.
+
+Step 7 — Start the Streamlit application
 
 streamlit run main.py
 
-Streamlit will display a local URL, typically http://localhost:8501.
+If the streamlit command is not recognized, run:
 
-If your branch uses a different Streamlit entry point, replace main.py with that filename.
+python3 -m streamlit run main.py
+
+On Windows:
+
+python -m streamlit run main.py
+
+Step 8 — Open the application
+
+Streamlit should open the application automatically. If it does not, open this address in a browser:
+
+http://localhost:8501
+
+Step 9 — Sign in and use the assistant
+
+Sign in using one of the synthetic accounts configured in demo_users.py.
+
+Select an authorized patient if the signed-in role supports patient selection.
+
+Select a language.
+
+Open the assistant panel.
+
+Type a mobility question or select the microphone button.
+
+Review the grounded response or enable audio playback.
+
+Step 10 — Stop the application
+
+Return to the terminal and press:
+
+Ctrl + C
+
+Quick Start — macOS or Linux
+
+git clone https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git
+cd HealthCareMonitoringMobilitySystem
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install --upgrade pip
+pip install -r requirements.txt
+streamlit run main.py
+
+Before the final command, create .env in the project root and add OPENAI_API_KEY=your_actual_openai_api_key.
+
+Quick Start — Windows PowerShell
+
+git clone https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git
+cd HealthCareMonitoringMobilitySystem
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+streamlit run main.py
+
+Before the final command, create .env in the project root and add OPENAI_API_KEY=your_actual_openai_api_key.
+
+Common Setup Problems
+
+Problem
+
+Solution
+
+python3: command not found
+
+Use python instead of python3.
+
+streamlit: command not found
+
+Activate venv, reinstall requirements.txt, or use python -m streamlit run main.py.
+
+ModuleNotFoundError
+
+Confirm the virtual environment is active and rerun pip install -r requirements.txt.
+
+OpenAI authentication error
+
+Confirm .env is in the project root and OPENAI_API_KEY contains a valid key without quotes.
+
+Microphone is unavailable
+
+Allow microphone permission in the browser and confirm an input device is connected.
+
+Port 8501 is already in use
+
+Run streamlit run main.py --server.port 8502.
 
 Using the Application
 
@@ -342,7 +454,7 @@ The same types of questions can be asked in the languages supported by the confi
 
 Testing and Evaluation
 
-Component tests
+Component Tests
 
 From the project root, run:
 
@@ -362,7 +474,7 @@ No-data fallbacks
 
 Privacy-sensitive and unsupported requests
 
-Automated CSV evaluation
+Automated CSV Evaluation
 
 Run the repository's evaluation script against the included test-case CSV. For example:
 
@@ -378,7 +490,7 @@ Mean latency = sum of end-to-end response times / total test cases
 
 Results
 
-Overall automated evaluation
+Overall Automated Evaluation
 
 Measure
 
@@ -408,7 +520,7 @@ Non-English language accuracy
 
 100% in each of five evaluated language groups
 
-Factual accuracy by category
+Factual Accuracy by Category
 
 Category
 
@@ -448,7 +560,7 @@ Summary
 
 The three factual errors were concentrated in date interpretation and paraphrase handling rather than direct structured-data lookup.
 
-Component and security validation
+Component and Security Validation
 
 Test area
 
@@ -478,7 +590,7 @@ Privacy-sensitive requests
 
 Protected or out-of-scope requests were blocked
 
-Formative user study
+Formative User Study
 
 The prototype was evaluated by six participants:
 
