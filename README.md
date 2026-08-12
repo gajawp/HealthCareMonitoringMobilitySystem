@@ -711,15 +711,6 @@ Do not push real patient records, API credentials, raw authentication logs, or e
 
 This project was developed for CS 5100 – Foundations of Artificial Intelligence at Northeastern University under the guidance of Dr. Sarita Singh.
 
-<strong>Citation</strong>
 
-If you reference this academic prototype, you may cite it as:
-
-@software{healthbridge_ai_2026,
-  author = {Gajawada, Preethi and Cherukuri, Madhu Babu},
-  title = {HealthBridge AI: An Inclusive and Secure Conversational Assistant for Remote Patient Mobility Monitoring},
-  year = {2026},
-  url = {https://github.com/gajawp/HealthCareMonitoringMobilitySystem}
-}
 
 For questions, issues, or improvement proposals, open an issue in the repository.
