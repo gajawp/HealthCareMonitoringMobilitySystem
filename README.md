@@ -1,76 +1,613 @@
-# HealthCareMobilityMonitoringSystem
+HealthBridge AI
 
-A unified Streamlit healthcare mobility dashboard with an integrated,
-retrieval-grounded AI assistant for patients, caregivers, and clinicians.
+An Inclusive and Secure Conversational Assistant for Remote Patient Mobility Monitoring
 
-## Structure
+HealthBridge AI is a retrieval-augmented conversational prototype that helps patients, caregivers, and clinicians understand longitudinal mobility-monitoring records through natural-language questions.
 
-```text
-app/                 Dashboard and chatbot backend
-knowledge_base/      Exercises, metrics, safety rules, sources, generated chunks
-data/                Mobility and tremor sample data
-scripts/             Knowledge-base, report, and MQTT utilities
-tests/               Unit and integration tests
-docs/references/     Research references
-reports/             Generated reports and assets
-```
+The system combines deterministic authentication, patient-level authorization, structured data retrieval, identifier protection, multilingual large-language-model (LLM) generation, optional voice interaction, and safety validation. Patient-specific measurements are retrieved from stored records rather than generated from the model's memory.
 
-## Setup
+Important: HealthBridge AI is an academic prototype. It explains recorded mobility information and approved exercise guidance; it does not diagnose conditions, prescribe treatment, replace clinical judgment, or claim production HIPAA compliance.
 
-```bash
+Table of Contents
+
+Key Features
+
+System Architecture
+
+How a Request Is Processed
+
+Authorization Model
+
+Technology Stack
+
+Project Structure
+
+Data
+
+Getting Started
+
+Using the Application
+
+Testing and Evaluation
+
+Results
+
+Security and Privacy Design
+
+Limitations
+
+Future Improvements
+
+Team Contributions
+
+Repository Practices
+
+Acknowledgments
+
+Key Features
+
+Natural-language access to recorded mobility-session data
+
+Exact retrieval of repetitions, laterality, duration, movement-quality statistics, and flagged events
+
+Support for latest-session, previous-session, date-specific, summary, and paraphrased questions
+
+Role-based access for patients, caregivers, and clinicians
+
+Patient-level assignment checks before data retrieval
+
+Retrieval-augmented responses grounded in structured records
+
+Separate retrieval of allow-listed exercise guidance
+
+Patient-identifier tokenization before model-facing context is built
+
+Multilingual questions and responses
+
+Optional speech-to-text and text-to-speech interaction
+
+Resizable Streamlit chat interface with synchronized text and audio
+
+Deterministic responses for authorization failures, missing data, and protected requests
+
+Audit-friendly modular architecture
+
+Automated factual, multilingual, authorization, and latency evaluation
+
+System Architecture
+
+flowchart TD
+    UI["Streamlit UI<br/>Text or voice"] --> AUTH["Authentication and<br/>patient-scope authorization"]
+    AUTH -->|Denied| DENY["Deterministic denial"]
+    AUTH -->|Allowed| INTENT["Intent and temporal<br/>query resolution"]
+    INTENT --> MR["Structured mobility<br/>retrieval"]
+    INTENT --> KR["Approved knowledge<br/>retrieval"]
+    MR --> CTX["Minimal de-identified<br/>context builder"]
+    KR --> CTX
+    CTX --> LLM["Grounded multilingual<br/>LLM generation"]
+    LLM --> SAFE["Privacy and safety<br/>validation"]
+    SAFE --> OUT["Text response and<br/>optional speech"]
+
+The architecture intentionally separates deterministic responsibilities from generative behavior:
+
+Application code decides whether access is permitted.
+
+Structured retrieval selects patient-specific facts.
+
+The context builder minimizes and de-identifies evidence.
+
+The LLM explains authorized evidence in the selected language.
+
+Guardrails validate the response before it reaches the user.
+
+How a Request Is Processed
+
+The interface receives the question, selected language, authenticated user, role, and selected patient.
+
+The session is validated.
+
+The authorization service verifies that the user may access the selected patient.
+
+The intent module identifies the request type and resolves expressions such as latest, previous, or a specific date.
+
+The mobility retriever loads exact values from structured records.
+
+When appropriate, the knowledge retriever loads only approved exercise information.
+
+Direct identifiers are replaced with internal tokens, and a minimal evidence context is constructed.
+
+The LLM converts the evidence into a concise response in the selected language.
+
+Privacy and safety checks validate the response.
+
+The interface returns text and, when enabled, synthesized speech.
+
+Authorization failures, unavailable records, and protected requests use deterministic response templates instead of relying on the LLM.
+
+Authorization Model
+
+Role
+
+Permitted scope
+
+Typical capabilities
+
+Patient
+
+Own record only
+
+Ask about personal mobility sessions and summaries
+
+Caregiver
+
+Explicitly assigned patients
+
+View assigned patient records and approved guidance
+
+Clinician
+
+Patients within configured scope
+
+Review authorized patient records and approved guidance
+
+Role permission alone is not sufficient. Caregiver and clinician requests must also pass the patient-assignment check. Authorization occurs before retrieval, preventing unauthorized patient data from entering model-facing context.
+
+Technology Stack
+
+Component
+
+Technology
+
+Purpose
+
+User interface
+
+Python, Streamlit
+
+Dashboard integration, chat widget, language selection, and voice controls
+
+Application logic
+
+Modular Python services
+
+Intent detection, orchestration, retrieval, context construction, and guardrails
+
+Generative AI
+
+Configured LLM API
+
+Grounded explanation and multilingual response generation
+
+Authentication
+
+bcrypt and session services
+
+Password hashing and authenticated sessions
+
+Authorization
+
+Role-based and patient-scope checks
+
+Record-level access enforcement
+
+Data
+
+Structured local JSON/session records
+
+Mobility measurements and demo assignments
+
+Voice
+
+Speech recognition and synthesis services
+
+Optional spoken input and output
+
+Evaluation
+
+Python test runner and CSV suite
+
+Component tests, factual accuracy, authorization accuracy, and latency
+
+Project Structure
+
+The main application modules are organized by responsibility:
+
+HealthCareMonitoringMobilitySystem/
+├── main.py                    # Streamlit application entry point
+├── chatbot_ui.py              # Chat panel, multilingual UI, voice, and resizing
+├── orchestrator.py            # Coordinates the complete request workflow
+├── intent.py                  # Intent classification and query interpretation
+├── mobility_retriever.py      # Date-specific and aggregate mobility retrieval
+├── context_builder.py         # Minimal de-identified prompt context
+├── llm_service.py             # LLM request and grounded response generation
+├── guardrails.py              # Privacy, safety, and unsupported-request checks
+├── login_security.py          # Login and credential-security helpers
+├── service.py                 # Authentication, authorization, and audit services
+├── session.py                 # Session-state management
+├── models.py                  # Application data models
+├── demo_users.py              # Synthetic users and role assignments
+├── config.py                  # Application configuration
+├── requirements.txt           # Python dependencies
+├── tests/                     # Component and integration tests
+└── data/                      # Structured mobility and approved knowledge data
+
+Some filenames or directories may vary between branches. Use the corresponding repository file when a branch uses a suffixed or renamed entry point.
+
+Data
+
+The prototype uses local structured mobility-session records produced by the monitoring dashboard and synthetic user-to-patient assignments for evaluation. No public clinical dataset or pretrained patient model is required.
+
+A session record can include:
+
+Session identifier and timestamp
+
+Total repetitions
+
+Left- and right-side repetition counts
+
+Frame count
+
+Flagged movement events
+
+Duration statistics
+
+Movement-quality or jerk statistics
+
+Preprocessing validates required fields, parses timestamps, normalizes numeric values, orders sessions chronologically, computes or loads summaries, and maps patient identifiers to internal tokens.
+
+All bundled demonstration data should be synthetic or de-identified. Do not commit protected health information (PHI) or real patient credentials.
+
+Getting Started
+
+Prerequisites
+
+Python 3.10 or later
+
+pip
+
+An API key for the LLM provider configured by the project
+
+A microphone and audio output device for optional voice features
+
+1. Clone the repository
+
+git clone https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git
+cd HealthCareMonitoringMobilitySystem
+
+2. Create a virtual environment
+
+macOS or Linux:
+
 python3 -m venv venv
 source venv/bin/activate
+
+Windows PowerShell:
+
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+
+3. Install dependencies
+
 python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
+
+4. Configure environment variables
+
+Create a .env file in the project root. Add only the variables used by your selected model and voice providers. For example:
+
+OPENAI_API_KEY=replace_with_your_api_key
+
+If the repository contains .env.example, copy it and populate the required values:
+
 cp .env.example .env
-```
 
-For no-cost local fallback:
+Never commit .env, API keys, passwords, tokens, or production patient data.
 
-```env
-USE_LLM=false
-```
+5. Run the application
 
-For OpenAI:
+streamlit run main.py
 
-```env
-OPENAI_API_KEY=your_new_key
-OPENAI_MODEL=gpt-5-mini
-USE_LLM=true
-```
+Streamlit will display a local URL, typically http://localhost:8501.
 
-Never commit `.env`.
+If your branch uses a different Streamlit entry point, replace main.py with that filename.
 
-## Validate and test
+Using the Application
 
-```bash
-python scripts/validate_knowledge_base.py
-python scripts/build_knowledge_base.py
-python -m pytest
-```
+Open the Streamlit URL in a browser.
 
-## Run
+Sign in with a configured synthetic demo account.
 
-```bash
-python run_app.py
-```
+Select an authorized patient when the role permits patient selection.
 
-Or:
+Choose the chat language.
 
-```bash
-python -m streamlit run app/main.py
-```
+Enter a question or select the microphone icon for voice input.
 
-## Demo users
+Enable spoken output if desired.
 
-Password for all demo accounts: `pass123`
+Review the grounded answer and any no-data, safety, or authorization message.
 
-- Patient: `P1001`
-- Caregiver: `C2001`
-- Clinician: `D3001`
+Example questions:
 
-## Safety scope
+How many repetitions were completed in the latest session?
+How many were on the left and right sides?
+Show the session from March 14, 2026.
+Compare the latest session with the previous session.
+Were any movements flagged?
+Summarize the patient's recent mobility progress.
+Is there data for January 20, 2026?
+What approved exercise information is available?
 
-The chatbot explains recorded mobility information and approved exercise
-material. It does not diagnose conditions, prescribe medication, or change
-a patient-specific care plan.
+The same types of questions can be asked in the languages supported by the configured interface and model.
+
+Testing and Evaluation
+
+Component tests
+
+From the project root, run:
+
+pytest -v
+
+The component tests cover areas such as:
+
+Mobility retrieval
+
+Latest, previous, and date-specific temporal behavior
+
+Patient-scope authorization
+
+Identifier protection
+
+No-data fallbacks
+
+Privacy-sensitive and unsupported requests
+
+Automated CSV evaluation
+
+Run the repository's evaluation script against the included test-case CSV. For example:
+
+python evaluate.py
+
+If the evaluation script in your branch has a different filename, run that script from the project root. The evaluation CSV records the prompt, expected source values, category, language, authorization expectation, response, correctness, and end-to-end latency.
+
+The metrics are calculated as:
+
+Factual accuracy = correct factual cases / total factual cases × 100
+Authorization accuracy = correct allow-or-deny decisions / authorization cases × 100
+Mean latency = sum of end-to-end response times / total test cases
+
+Results
+
+Overall automated evaluation
+
+Measure
+
+Result
+
+Total test cases
+
+100
+
+Execution errors
+
+0
+
+Factual accuracy
+
+87/90 (96.67%)
+
+Authorization accuracy
+
+10/10 (100.00%)
+
+Mean end-to-end latency
+
+4.033 seconds
+
+Non-English language accuracy
+
+100% in each of five evaluated language groups
+
+Factual accuracy by category
+
+Category
+
+Correct / Total
+
+Accuracy
+
+Date-specific
+
+14/15
+
+93.33%
+
+Direct factual
+
+20/20
+
+100.00%
+
+Multilingual
+
+30/30
+
+100.00%
+
+Paraphrase
+
+13/15
+
+86.67%
+
+Summary
+
+10/10
+
+100.00%
+
+The three factual errors were concentrated in date interpretation and paraphrase handling rather than direct structured-data lookup.
+
+Component and security validation
+
+Test area
+
+Observed result
+
+Mobility retrieval
+
+Exact values returned for latest, date-specific, and summary queries
+
+Authorization
+
+Nine component scenarios and ten end-to-end cases passed
+
+Identifier protection
+
+Direct patient identifiers excluded from model-facing prompts
+
+Temporal handling
+
+Specific dates and relative references resolved to stored sessions
+
+No-data behavior
+
+Stable deterministic response returned when records were unavailable
+
+Privacy-sensitive requests
+
+Protected or out-of-scope requests were blocked
+
+Formative user study
+
+The prototype was evaluated by six participants:
+
+Voice interaction achieved a construct median of 5.0.
+
+Response clarity, accessibility, and language experience each achieved a median of 4.0.
+
+Response speed achieved a mean and median of 4.5.
+
+Error and no-data messaging achieved a mean and median of 4.5.
+
+Microphone discoverability scored lower at a mean and median of 3.5, identifying a clear interface improvement.
+
+Overall helpfulness ratings ranged from 4 to 5.
+
+These results demonstrate technical and usability feasibility; they do not establish clinical effectiveness.
+
+Security and Privacy Design
+
+HealthBridge AI uses defense in depth:
+
+Passwords are hashed with bcrypt.
+
+Authentication is required before protected workflows.
+
+Role and patient-assignment checks run before retrieval.
+
+Access decisions are made by application code, not the LLM.
+
+Retrieval is limited to structured records and approved knowledge sources.
+
+Direct patient identifiers are replaced with internal tokens.
+
+Model context is minimized to the facts needed for the request.
+
+Privacy and safety filters validate generated responses.
+
+Unauthorized, missing-data, and protected states use deterministic templates.
+
+Sensitive actions can be recorded through audit logging.
+
+For a production deployment, additional work would be required, including formal threat modeling, encrypted storage and transport, secrets management, penetration testing, monitoring, retention policies, clinical governance, and legal/compliance review.
+
+Limitations
+
+The formative user study included only six participants.
+
+Evaluation used a local prototype dataset and synthetic role assignments.
+
+External clinical datasets and real deployment conditions were not evaluated.
+
+Speech recognition and synthesis were not benchmarked using word-error rate or standardized audio tests.
+
+Prompt-injection testing primarily covered direct attacks; paraphrased, multilingual, indirect, and multi-turn attacks require a larger adversarial set.
+
+Grounding was evaluated through agreement with source values rather than full manual annotation of every response claim.
+
+The system is an informational prototype and not a medical device.
+
+Future Improvements
+
+Add grammar-based temporal parsing and a larger paraphrase corpus.
+
+Display evidence citations that link responses to session and metric sources.
+
+Expand multilingual clinical-safety and accessibility evaluation.
+
+Conduct a larger study with patients, caregivers, and clinicians.
+
+Benchmark speech recognition and synthesis formally.
+
+Add streaming responses, caching, and asynchronous speech synthesis.
+
+Expand red-team testing for prompt injection and sensitive-data disclosure.
+
+Add production-grade key management, encryption, monitoring, and compliance review.
+
+Team Contributions
+
+Contributor
+
+Primary contributions
+
+Preethi Gajawada
+
+System integration; secure RAG architecture; intent, retrieval, privacy, and guardrail workflow; multilingual and voice interface; automated evaluation; analysis; documentation
+
+Madhu Babu Cherukuri
+
+Dashboard and mobility-data integration; implementation support; test-case review; interface validation; results review; presentation and documentation support
+
+Dr. Sarita Singh
+
+Faculty guidance, project review, academic feedback, and evaluation direction
+
+Repository Practices
+
+Before pushing changes, confirm that the repository does not contain secrets or sensitive data:
+
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+
+Recommended checks:
+
+git status
+git diff --cached
+
+Do not push real patient records, API credentials, raw authentication logs, or exported audio containing sensitive information.
+
+Acknowledgments
+
+This project was developed for CS 5100 – Foundations of Artificial Intelligence at Northeastern University under the guidance of Dr. Sarita Singh.
+
+Citation
+
+If you reference this academic prototype, you may cite it as:
+
+@software{healthbridge_ai_2026,
+  author = {Gajawada, Preethi and Cherukuri, Madhu Babu},
+  title = {HealthBridge AI: An Inclusive and Secure Conversational Assistant for Remote Patient Mobility Monitoring},
+  year = {2026},
+  url = {https://github.com/gajawp/HealthCareMonitoringMobilitySystem}
+}
+
+For questions, issues, or improvement proposals, open an issue in the repository.
