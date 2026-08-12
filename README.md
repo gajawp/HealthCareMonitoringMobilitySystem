@@ -1,8 +1,8 @@
 <div align="center">
 
-HealthBridge AI
+<strong>HealthBridge AI</strong>
 
-An Inclusive and Secure Conversational Assistant for Remote Patient Mobility Monitoring
+<strong>An Inclusive and Secure Conversational Assistant for Remote Patient Mobility Monitoring</strong>
 
 CS 5100 — Foundations of Artificial Intelligence
 Northeastern University | 2026
@@ -15,7 +15,7 @@ The system combines deterministic authentication, patient-level authorization, s
 
 Important: HealthBridge AI is an academic prototype. It explains recorded mobility information and approved exercise guidance; it does not diagnose conditions, prescribe treatment, replace clinical judgment, or claim production HIPAA compliance.
 
-Table of Contents
+<strong>Table of Contents</strong>
 
 Key Features
 
@@ -51,7 +51,7 @@ Repository Practices
 
 Acknowledgments
 
-Key Features
+<strong>Key Features</strong>
 
 Natural-language access to recorded mobility-session data
 
@@ -81,7 +81,7 @@ Audit-friendly modular architecture
 
 Automated factual, multilingual, authorization, and latency evaluation
 
-System Architecture
+<strong>System Architecture</strong>
 
 flowchart TD
     UI["Streamlit UI<br/>Text or voice"] --> AUTH["Authentication and<br/>patient-scope authorization"]
@@ -107,7 +107,7 @@ The LLM explains authorized evidence in the selected language.
 
 Guardrails validate the response before it reaches the user.
 
-How a Request Is Processed
+<strong>How a Request Is Processed</strong>
 
 The interface receives the question, selected language, authenticated user, role, and selected patient.
 
@@ -131,7 +131,7 @@ The interface returns text and, when enabled, synthesized speech.
 
 Authorization failures, unavailable records, and protected requests use deterministic response templates instead of relying on the LLM.
 
-Authorization Model
+<strong>Authorization Model</strong>
 
 Role
 
@@ -159,7 +159,7 @@ Review authorized patient records and approved guidance
 
 Role permission alone is not sufficient. Caregiver and clinician requests must also pass the patient-assignment check. Authorization occurs before retrieval, preventing unauthorized patient data from entering model-facing context.
 
-Technology Stack
+<strong>Technology Stack</strong>
 
 Component
 
@@ -215,7 +215,7 @@ Python test runner and CSV suite
 
 Component tests, factual accuracy, authorization accuracy, and latency
 
-Project Structure
+<strong>Project Structure</strong>
 
 The main application modules are organized by responsibility:
 
@@ -238,7 +238,7 @@ HealthCareMonitoringMobilitySystem/
 ├── tests/                     # Component and integration tests
 └── data/                      # Structured mobility and approved knowledge data
 
-Data
+<strong>Data</strong>
 
 The prototype uses local structured mobility-session records produced by the monitoring dashboard and synthetic user-to-patient assignments for evaluation. No public clinical dataset or pretrained patient model is required.
 
@@ -262,9 +262,9 @@ Preprocessing validates required fields, parses timestamps, normalizes numeric v
 
 All bundled demonstration data should be synthetic or de-identified. Do not commit protected health information (PHI) or real patient credentials.
 
-Exact Steps to Run the Project
+<strong>Exact Steps to Run the Project</strong>
 
-Prerequisites
+<strong>Prerequisites</strong>
 
 Python 3.10 or later
 
@@ -276,44 +276,44 @@ Git
 
 A microphone and audio output device for optional voice features
 
-Step 1 — Clone the repository
+<strong>Step 1 — Clone the repository</strong>
 
 git clone https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git
 
-Step 2 — Open the project directory
+<strong>Step 2 — Open the project directory</strong>
 
 cd HealthCareMonitoringMobilitySystem
 
-Step 3 — Create a virtual environment
+<strong>Step 3 — Create a virtual environment</strong>
 
-macOS or Linux
+<strong>macOS or Linux</strong>
 
 python3 -m venv venv
 
-Windows PowerShell
+<strong>Windows PowerShell</strong>
 
 python -m venv venv
 
-Step 4 — Activate the virtual environment
+<strong>Step 4 — Activate the virtual environment</strong>
 
-macOS or Linux
+<strong>macOS or Linux</strong>
 
 source venv/bin/activate
 
-Windows PowerShell
+<strong>Windows PowerShell</strong>
 
 .\venv\Scripts\Activate.ps1
 
 After activation, the terminal prompt should begin with (venv).
 
-Step 5 — Install all required dependencies
+<strong>Step 5 — Install all required dependencies</strong>
 
 python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 
 On Windows, use python instead of python3 if necessary.
 
-Step 6 — Create the environment file
+<strong>Step 6 — Create the environment file</strong>
 
 Create a file named .env in the project root—the same directory that contains main.py and requirements.txt.
 
@@ -331,7 +331,7 @@ HealthCareMonitoringMobilitySystem/
 
 Security warning: Never commit the .env file, API keys, passwords, tokens, or patient information to GitHub.
 
-Step 7 — Start the Streamlit application
+<strong>Step 7 — Start the Streamlit application</strong>
 
 streamlit run main.py
 
@@ -343,13 +343,13 @@ On Windows:
 
 python -m streamlit run main.py
 
-Step 8 — Open the application
+<strong>Step 8 — Open the application</strong>
 
 Streamlit should open the application automatically. If it does not, open this address in a browser:
 
 http://localhost:8501
 
-Step 9 — Sign in and use the assistant
+<strong>Step 9 — Sign in and use the assistant</strong>
 
 Sign in using one of the synthetic accounts configured in demo_users.py.
 
@@ -363,13 +363,13 @@ Type a mobility question or select the microphone button.
 
 Review the grounded response or enable audio playback.
 
-Step 10 — Stop the application
+<strong>Step 10 — Stop the application</strong>
 
 Return to the terminal and press:
 
 Ctrl + C
 
-Quick Start — macOS or Linux
+<strong>Quick Start — macOS or Linux</strong>
 
 git clone https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git
 cd HealthCareMonitoringMobilitySystem
@@ -381,7 +381,7 @@ streamlit run main.py
 
 Before the final command, create .env in the project root and add OPENAI_API_KEY=your_actual_openai_api_key.
 
-Quick Start — Windows PowerShell
+<strong>Quick Start — Windows PowerShell</strong>
 
 git clone https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git
 cd HealthCareMonitoringMobilitySystem
@@ -393,7 +393,7 @@ streamlit run main.py
 
 Before the final command, create .env in the project root and add OPENAI_API_KEY=your_actual_openai_api_key.
 
-Common Setup Problems
+<strong>Common Setup Problems</strong>
 
 Problem
 
@@ -423,7 +423,7 @@ Port 8501 is already in use
 
 Run streamlit run main.py --server.port 8502.
 
-Using the Application
+<strong>Using the Application</strong>
 
 Open the Streamlit URL in a browser.
 
@@ -452,9 +452,9 @@ What approved exercise information is available?
 
 The same types of questions can be asked in the languages supported by the configured interface and model.
 
-Testing and Evaluation
+<strong>Testing and Evaluation</strong>
 
-Component Tests
+<strong>Component Tests</strong>
 
 From the project root, run:
 
@@ -474,7 +474,7 @@ No-data fallbacks
 
 Privacy-sensitive and unsupported requests
 
-Automated CSV Evaluation
+<strong>Automated CSV Evaluation</strong>
 
 Run the repository's evaluation script against the included test-case CSV. For example:
 
@@ -488,9 +488,9 @@ Factual accuracy = correct factual cases / total factual cases × 100
 Authorization accuracy = correct allow-or-deny decisions / authorization cases × 100
 Mean latency = sum of end-to-end response times / total test cases
 
-Results
+<strong>Results</strong>
 
-Overall Automated Evaluation
+<strong>Overall Automated Evaluation</strong>
 
 Measure
 
@@ -520,7 +520,7 @@ Non-English language accuracy
 
 100% in each of five evaluated language groups
 
-Factual Accuracy by Category
+<strong>Factual Accuracy by Category</strong>
 
 Category
 
@@ -560,7 +560,7 @@ Summary
 
 The three factual errors were concentrated in date interpretation and paraphrase handling rather than direct structured-data lookup.
 
-Component and Security Validation
+<strong>Component and Security Validation</strong>
 
 Test area
 
@@ -590,7 +590,7 @@ Privacy-sensitive requests
 
 Protected or out-of-scope requests were blocked
 
-Formative User Study
+<strong>Formative User Study</strong>
 
 The prototype was evaluated by six participants:
 
@@ -608,7 +608,7 @@ Overall helpfulness ratings ranged from 4 to 5.
 
 These results demonstrate technical and usability feasibility; they do not establish clinical effectiveness.
 
-Security and Privacy Design
+<strong>Security and Privacy Design</strong>
 
 HealthBridge AI uses defense in depth:
 
@@ -634,7 +634,7 @@ Sensitive actions can be recorded through audit logging.
 
 For a production deployment, additional work would be required, including formal threat modeling, encrypted storage and transport, secrets management, penetration testing, monitoring, retention policies, clinical governance, and legal/compliance review.
 
-Limitations
+<strong>Limitations</strong>
 
 The formative user study included only six participants.
 
@@ -650,7 +650,7 @@ Grounding was evaluated through agreement with source values rather than full ma
 
 The system is an informational prototype and not a medical device.
 
-Future Improvements
+<strong>Future Improvements</strong>
 
 Add grammar-based temporal parsing and a larger paraphrase corpus.
 
@@ -668,7 +668,7 @@ Expand red-team testing for prompt injection and sensitive-data disclosure.
 
 Add production-grade key management, encryption, monitoring, and compliance review.
 
-Team Contributions
+<strong>Team Contributions</strong>
 
 Contributor
 
@@ -686,7 +686,7 @@ Dr. Sarita Singh
 
 Faculty guidance, project review, academic feedback, and evaluation direction
 
-Repository Practices
+<strong>Repository Practices</strong>
 
 Before pushing changes, confirm that the repository does not contain secrets or sensitive data:
 
@@ -707,11 +707,11 @@ git diff --cached
 
 Do not push real patient records, API credentials, raw authentication logs, or exported audio containing sensitive information.
 
-Acknowledgments
+<strong>Acknowledgments</strong>
 
 This project was developed for CS 5100 – Foundations of Artificial Intelligence at Northeastern University under the guidance of Dr. Sarita Singh.
 
-Citation
+<strong>Citation</strong>
 
 If you reference this academic prototype, you may cite it as:
 
