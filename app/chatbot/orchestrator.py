@@ -23,8 +23,8 @@ import re
 from datetime import date, timedelta
 
 from dateutil import parser as date_parser
-from dataclasses import asdict, dataclass, is_dataclass
-from typing import Any
+from dataclasses import asdict, dataclass, field, is_dataclass
+from typing import Any, Callable, Literal
 
 from app.auth.models import AuthenticatedUser, UserRole
 from app.security.audit import AuditLogger
@@ -39,15 +39,32 @@ from .context_builder import (
 )
 from .guardrails import HealthcareGuardrails
 from .exercise_recommender import ExerciseRecommendationService
-from .intent import detect_intent
+from .intent import closest_sessions, describe_interpretation, detect_intent
 from .knowledge_retriever import ClinicalKnowledgeRetriever
 from .llm_service import LLMService
 from .mobility_retriever import MobilityRetriever
 
 
+ResponseKind = Literal["answer", "denied", "no_data", "blocked"]
+
+# Called between pipeline stages with a short, user-facing status message.
+ProgressReporter = Callable[[str], None]
+
+
 @dataclass(frozen=True)
 class ChatbotResponse:
-    """Standard response returned by the chatbot."""
+    """
+    Standard response returned by the chatbot.
+
+    kind:            "answer", "denied", "no_data" or "blocked".
+    interpretation:  how dates/"latest" were resolved, e.g.
+                     "Latest session (Mar 14, 2026)".
+    session_sources: sessions and metrics the answer was built from, using
+                     internal session tokens only (never patient identifiers).
+    chart_data:      left/right laterality series for summary and compare
+                     intents: {"title", "metric", "chart_kind", "rows"}.
+    nearby_dates:    closest recorded session dates for a no-data response.
+    """
 
     answer: str
     intent: str
@@ -61,6 +78,46 @@ class ChatbotResponse:
     metadata: dict[str, Any]
     response_type: str = "text"
     exercise_data: dict[str, Any] | None = None
+    kind: ResponseKind = "answer"
+    interpretation: str | None = None
+    session_sources: list[dict[str, Any]] = field(default_factory=list)
+    chart_data: dict[str, Any] | None = None
+    nearby_dates: list[str] = field(default_factory=list)
+
+    @property
+    def text(self) -> str:
+        return self.answer
+
+
+ChatResult = ChatbotResponse
+
+
+CHART_INTENTS = {
+    "session_summary",
+    "sessions_by_date",
+    "sessions_by_date_range",
+    "trend_analysis",
+}
+
+CHART_METRIC_LABELS: dict[str, str] = {
+    "shin_lift_angle_deg": "Shin lift angle (°)",
+    "hold_duration_s": "Hold duration (s)",
+    "duration_s": "Repetition duration (s)",
+    "peak_angular_velocity": "Peak angular velocity",
+    "jerk_score": "Jerk score",
+    "tof_symmetry": "Toe-off symmetry",
+}
+
+CHART_METRIC_KEYWORDS: tuple[tuple[str, str], ...] = (
+    ("hold", "hold_duration_s"),
+    ("jerk", "jerk_score"),
+    ("smooth", "jerk_score"),
+    ("velocity", "peak_angular_velocity"),
+    ("speed", "peak_angular_velocity"),
+    ("symmetry", "tof_symmetry"),
+    ("duration", "duration_s"),
+    ("angle", "shin_lift_angle_deg"),
+)
 
 
 PATIENT_REFERENCE_PATTERN = re.compile(
@@ -537,6 +594,87 @@ def _sanitize_sources(
     return safe_sources
 
 
+def _session_label(session_datetime: Any) -> str:
+    """Return the ISO date of a session so charts sort chronologically."""
+
+    return str(session_datetime or "")[:10] or "unknown"
+
+
+def _build_chart_data(
+    *,
+    intent: str,
+    question: str,
+    mobility_data: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Build a left/right laterality series for summary and compare intents."""
+
+    if intent not in CHART_INTENTS or not mobility_data.get("available"):
+        return None
+
+    normalized = question.casefold()
+    metric = next(
+        (
+            column
+            for keyword, column in CHART_METRIC_KEYWORDS
+            if keyword in normalized
+        ),
+        "shin_lift_angle_deg",
+    )
+
+    if isinstance(mobility_data.get("sessions"), list):
+        records = [
+            (
+                _session_label(record.get("session_datetime")),
+                record.get("metric_means_by_leg") or {},
+            )
+            for record in mobility_data["sessions"]
+            if isinstance(record, dict)
+        ]
+    else:
+        records = [
+            (
+                _session_label(mobility_data.get("session_datetime")),
+                mobility_data.get("metrics_by_leg") or {},
+            )
+        ]
+
+    rows: list[dict[str, Any]] = []
+    for label, by_leg in records:
+        row: dict[str, Any] = {"session": label}
+        for leg in ("Left", "Right"):
+            value = (by_leg.get(leg) or {}).get(metric)
+            if value is not None:
+                row[leg] = value
+        if len(row) > 1:
+            rows.append(row)
+
+    if not rows:
+        return None
+
+    metric_label = CHART_METRIC_LABELS.get(metric, metric)
+    return {
+        "title": f"{metric_label}: left vs right",
+        "metric": metric,
+        "chart_kind": "line" if len(rows) >= 3 else "bar",
+        "rows": rows,
+    }
+
+
+def _resolved_session_dates(
+    session_sources: list[dict[str, Any]],
+) -> list[str]:
+    return [
+        str(entry["session_date"])
+        for entry in session_sources
+        if entry.get("session_date")
+    ]
+
+
+def _report(report: ProgressReporter | None, message: str) -> None:
+    if report is not None:
+        report(message)
+
+
 class HealthcareChatbotOrchestrator:
     """
     Coordinates the secure healthcare chatbot workflow.
@@ -621,6 +759,7 @@ class HealthcareChatbotOrchestrator:
         selected_date_range: str | None = None,
         visible_metrics: dict[str, Any] | None = None,
         active_alert: dict[str, Any] | None = None,
+        report: ProgressReporter | None = None,
     ) -> ChatbotResponse:
         """
         Answer a question using an authorized, de-identified context.
@@ -628,6 +767,9 @@ class HealthcareChatbotOrchestrator:
         patient_id is accepted temporarily for compatibility with the current
         Streamlit application. It is converted to an opaque patient key before
         authorization and is never included in the LLM context.
+
+        report, when given, is called with a short status message between
+        pipeline stages so the UI can show progress.
         """
 
         clean_question = question.strip()
@@ -651,6 +793,8 @@ class HealthcareChatbotOrchestrator:
         # ------------------------------------------------------------------
         # 1. Apply input guardrails before retrieving patient data.
         # ------------------------------------------------------------------
+
+        _report(report, "Checking your question…")
 
         input_decision = self.guardrails.check_input(
             clean_question
@@ -678,6 +822,7 @@ class HealthcareChatbotOrchestrator:
                 metadata={
                     "safety_reason": input_decision.reason,
                 },
+                kind="blocked",
             )
 
         # ------------------------------------------------------------------
@@ -707,9 +852,12 @@ class HealthcareChatbotOrchestrator:
                 metadata={
                     "safety_reason": str(exc),
                 },
+                kind="denied",
             )
 
         request_id = self.audit_logger.create_request_id()
+
+        _report(report, "Verifying access…")
 
         # ------------------------------------------------------------------
         # 3. Convert selected patient ID to an opaque key.
@@ -735,6 +883,7 @@ class HealthcareChatbotOrchestrator:
                 metadata={
                     "safety_reason": str(exc),
                 },
+                kind="denied",
             )
 
         # ------------------------------------------------------------------
@@ -782,6 +931,7 @@ class HealthcareChatbotOrchestrator:
                 metadata={
                     "safety_reason": access_decision.reason,
                 },
+                kind="denied",
             )
 
         authorized_patient_key = (
@@ -840,6 +990,7 @@ class HealthcareChatbotOrchestrator:
                     "reason": patient_reference_reason,
                     "authorization_checked": True,
                 },
+                kind="denied",
             )
 
         # Values that must never appear in the LLM prompt or answer.
@@ -909,6 +1060,7 @@ class HealthcareChatbotOrchestrator:
                     "retrieval_performed": False,
                     "alerts_included": False,
                 },
+                kind="blocked",
             )
 
         has_date_filter = bool(
@@ -960,8 +1112,22 @@ class HealthcareChatbotOrchestrator:
                 "mobility",
                 "report",
                 "summary",
-                "repetitions",
+                "metric",
                 "metrics",
+                "repetition",
+                "repetitions",
+                "rep",
+                "reps",
+                "frame",
+                "frames",
+                "jerk",
+                "duration",
+                "angle",
+                "symmetry",
+                "velocity",
+                "flag",
+                "flagged",
+                "unflagged",
             )
         )
         
@@ -1086,6 +1252,8 @@ class HealthcareChatbotOrchestrator:
         # 7. Retrieve mobility data only after authorization.
         # ------------------------------------------------------------------
 
+        _report(report, "Retrieving session data…")
+
         mobility_data = self._retrieve_mobility_data(
             intent=effective_intent,
             patient_id=patient_id,
@@ -1097,6 +1265,33 @@ class HealthcareChatbotOrchestrator:
             end_date=end_date,
         )
 
+        # Provenance holds internal session tokens and metric names only;
+        # drop any entry that would still expose a prohibited value.
+        session_sources = [
+            entry
+            for entry in mobility_data.pop("provenance", None) or []
+            if isinstance(entry, dict)
+            and not any(
+                str(value).casefold() in str(entry).casefold()
+                for value in prohibited_values
+            )
+        ]
+
+        interpretation = describe_interpretation(
+            intent=effective_intent,
+            session_date=session_date,
+            start_date=start_date,
+            end_date=end_date,
+            selected_session_id=selected_session_id,
+            resolved_dates=_resolved_session_dates(session_sources),
+        )
+
+        # A date query can succeed technically yet match zero sessions.
+        date_query_has_no_sessions = (
+            isinstance(mobility_data.get("sessions"), list)
+            and not mobility_data["sessions"]
+        )
+
         # Return a focused deterministic no-data response for temporal
         # mobility queries. Do not add alerts or call the LLM.
         if (
@@ -1105,7 +1300,10 @@ class HealthcareChatbotOrchestrator:
                 "sessions_by_date",
                 "sessions_by_date_range",
             }
-            and not mobility_data.get("available")
+            and (
+                not mobility_data.get("available")
+                or date_query_has_no_sessions
+            )
         ):
             if start_date and end_date:
                 period_text = f"from {start_date} to {end_date}"
@@ -1118,6 +1316,11 @@ class HealthcareChatbotOrchestrator:
                 f"No recorded mobility sessions were found {period_text}. "
                 "No session summary could be generated. Try another date "
                 "or ask for the latest recorded session."
+            )
+
+            nearby_dates = closest_sessions(
+                session_date or start_date or end_date,
+                self._session_dates(patient_id),
             )
 
             self.audit_logger.record(
@@ -1158,6 +1361,9 @@ class HealthcareChatbotOrchestrator:
                     "end_date_filter": end_date,
                     "alerts_included": False,
                 },
+                kind="no_data",
+                interpretation=interpretation,
+                nearby_dates=nearby_dates,
             )
 
         # ------------------------------------------------------------------
@@ -1174,6 +1380,7 @@ class HealthcareChatbotOrchestrator:
         clinical_knowledge: list[Any] = []
 
         if effective_intent in knowledge_query_intents:
+            _report(report, "Looking up approved guidance…")
             clinical_knowledge = (
                 self.knowledge_retriever.search(
                     clean_question,
@@ -1274,6 +1481,8 @@ class HealthcareChatbotOrchestrator:
         # 11. Generate the answer.
         # ------------------------------------------------------------------
 
+        _report(report, "Writing response…")
+
         generation = self.llm_service.generate(
             safe_generation_context
         )
@@ -1283,6 +1492,8 @@ class HealthcareChatbotOrchestrator:
         # ------------------------------------------------------------------
         # 12. Apply medical output guardrails.
         # ------------------------------------------------------------------
+
+        _report(report, "Reviewing response safety…")
 
         sufficient_evidence = bool(
             getattr(
@@ -1297,10 +1508,17 @@ class HealthcareChatbotOrchestrator:
             sufficient_evidence=sufficient_evidence,
         )
 
+        kind: ResponseKind = "answer"
+
         if output_decision.action == "replace":
             answer = (
                 output_decision.safe_response
                 or generated_text
+            )
+            kind = (
+                "no_data"
+                if output_decision.reason == "insufficient_evidence"
+                else "blocked"
             )
         else:
             answer = generated_text
@@ -1426,7 +1644,75 @@ class HealthcareChatbotOrchestrator:
                 "authorization_checked": True,
                 "approved_knowledge_only": True,
             },
+            kind=kind,
+            interpretation=interpretation,
+            session_sources=session_sources,
+            chart_data=(
+                _build_chart_data(
+                    intent=effective_intent,
+                    question=clean_question,
+                    mobility_data=mobility_data,
+                )
+                if kind == "answer"
+                else None
+            ),
         )
+
+    def _session_dates(self, patient_id: str) -> list[str]:
+        """Return recorded session dates for an already-authorized patient."""
+
+        get_session_dates = getattr(
+            self.mobility_retriever,
+            "get_session_dates",
+            None,
+        )
+        if get_session_dates is None:
+            return []
+
+        return list(get_session_dates(patient_id=patient_id))
+
+    def list_session_dates(
+        self,
+        *,
+        user_id: str,
+        user_name: str,
+        role: str,
+        patient_id: str,
+    ) -> list[str]:
+        """
+        Return the selected patient's session dates for the UI date picker.
+
+        The same authorization check as answer() runs first; an unauthorized
+        request returns an empty list.
+        """
+
+        try:
+            authenticated_user = _create_authenticated_user(
+                user_id=user_id,
+                user_name=user_name,
+                role=role,
+            )
+            patient_key = self.identity_service.create_patient_key(
+                patient_id
+            )
+        except ValueError:
+            return []
+
+        access_decision = (
+            self.authorization_service
+            .authorize_patient_access(
+                authenticated_user,
+                patient_key,
+            )
+        )
+
+        if (
+            not access_decision.allowed
+            or access_decision.patient_key is None
+        ):
+            return []
+
+        return self._session_dates(patient_id)
 
     def _retrieve_mobility_data(
         self,
@@ -1509,6 +1795,7 @@ class HealthcareChatbotOrchestrator:
 def answer_question(
     question: str,
     context: dict[str, Any],
+    report: ProgressReporter | None = None,
 ) -> dict[str, Any]:
     """
     Convenience function used by the current Streamlit chatbot UI.
@@ -1547,6 +1834,7 @@ def answer_question(
             metadata={
                 "missing_fields": missing_fields,
             },
+            kind="denied",
         )
 
         return asdict(response)
@@ -1593,6 +1881,7 @@ def answer_question(
         active_alert=context.get(
             "active_alert"
         ),
+        report=report,
     )
 
     return asdict(response)

@@ -1,0 +1,30 @@
+{
+  "name": "healthcaremobilitymonitoringsystem",
+  "version": "1.0.0",
+  "description": "A unified Streamlit healthcare mobility dashboard with an integrated, retrieval-grounded AI assistant for patients, caregivers, and clinicians.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+  "cy:open": "cypress open",
+  "cy:run": "cypress run --browser chrome",
+  "test": "cypress run --browser chrome"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gajawp/HealthCareMonitoringMobilitySystem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/gajawp/HealthCareMonitoringMobilitySystem/issues"
+  },
+  "homepage": "https://github.com/gajawp/HealthCareMonitoringMobilitySystem#readme",
+  "devDependencies": {
+    "cypress": "^15.21.0"
+  }
+}

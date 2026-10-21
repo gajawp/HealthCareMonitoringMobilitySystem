@@ -23,7 +23,7 @@ from app.messaging import MessagingService
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Healthcare Mobility Monitoring", layout="wide")
 
-# --- ELDER-FRIENDLY STYLING + REAL DATA BADGE ---
+# --- ELDER-FRIENDLY STYLING ---
 st.markdown("""
 <style>
     /* ============================================
@@ -46,6 +46,11 @@ st.markdown("""
     h2 { font-size: 1.8rem !important; line-height: 1.35 !important; }
     h3 { font-size: 1.5rem !important; line-height: 1.4 !important; }
     h4 { font-size: 1.3rem !important; line-height: 1.4 !important; }
+
+    /* Streamlit wraps heading text in a <span>; without this the span rule
+       below shrinks every st.title/st.subheader to body size. */
+    h1 span, h2 span, h3 span, h4 span { font-size: inherit !important; }
+    [data-testid="stSidebar"] h1 { font-size: 1.5rem !important; }
 
     /* Body text — 1.5x+ line height, adequate spacing (WCAG 1.4.12) */
     p, span, label, .stMarkdown, .stCaption p {
@@ -126,20 +131,6 @@ st.markdown("""
         outline-offset: 2px !important;
     }
 
-    /* Real Data badge — WCAG AA contrast compliant
-       #0b6e2f on white: 7.5:1 contrast ratio (passes AA + AAA)
-       white on #0b6e2f: 7.5:1 contrast ratio (passes AA + AAA) */
-    .real-data-badge {
-        background: #0b6e2f;
-        color: #ffffff;
-        padding: 3px 10px;
-        border-radius: 4px;
-        font-size: 0.85rem !important;
-        font-weight: 700;
-        margin-left: 8px;
-        vertical-align: middle;
-        letter-spacing: 0.5px;
-    }
     .real-data-section {
         border-left: 4px solid #0b6e2f;
         padding-left: 12px;
@@ -147,12 +138,8 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
-    /* Dark theme override for badge contrast (WCAG 1.4.3) */
+    /* Dark theme override for the section border (WCAG 1.4.11) */
     @media (prefers-color-scheme: dark) {
-        .real-data-badge {
-            background: #2ecc71;
-            color: #000000;
-        }
         .real-data-section {
             border-left-color: #2ecc71;
         }
@@ -177,7 +164,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-REAL_DATA_BADGE = '<span class="real-data-badge">Real Data</span>'
 from app.auth.login_security import (
     check_login_allowed,
     record_failed_login,
@@ -194,6 +180,8 @@ from app.auth.session import (
 )
 from app.config import SESSION_TIMEOUT_MINUTES
 from app.security.audit import AuditLogger
+from app.security.authorization import AuthorizationService
+from app.security.patient_identity import PatientIdentityService
 
 # =====================================================================
 # DATA SOURCE CONFIGURATION
@@ -215,35 +203,49 @@ if DATA_SOURCE == "aws":
         DATA_SOURCE = "mock"
 
 # =====================================================================
-# LOAD REAL DATA FILES
+# LOAD RECORDED DATA
+#
+# The dashboard reads the same recorded sessions as the chatbot, through
+# MobilityRetriever, so charts, alerts and assistant answers agree.
 # =====================================================================
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-CHAIR_REPS_PATH = os.path.join(
-    BASE_DIR, "Hongpeng Data Files", "Raw Data attributes",
-    "session_20260314_131518_reps.csv")
-
-GLOVE_TREMOR_PATH = os.path.join(
-    BASE_DIR, "An Data Files", "tremor_validation_master.csv")
+from app import dashboard_data as dd
+from app.chatbot.mobility_retriever import MobilityRetriever
+from app.ui_enhancements import render_chart
 
 
-@st.cache_data
-def load_chair_reps():
-    """Load Hongpeng's chair session reps CSV."""
-    if not os.path.exists(CHAIR_REPS_PATH):
-        return None
-    df = pd.read_csv(CHAIR_REPS_PATH)
-    return df
+@st.cache_resource
+def get_mobility_retriever() -> MobilityRetriever:
+    return MobilityRetriever()
+
+
+# The glove validation recordings belong to the real hardware patient.
+GLOVE_PERSON_ID = os.environ.get("GLOVE_PERSON_ID", "person_1")
+GLOVE_PATIENT_ID = (
+    os.environ.get("GLOVE_REAL_PATIENT_ID")
+    or get_mobility_retriever().real_patient_id
+)
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def get_patient_sessions(patient_id: str) -> list[dict]:
+    """All recorded chair sessions for one patient, oldest first."""
+    return dd.patient_sessions(get_mobility_retriever(), patient_id)
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def get_latest_session_reps(patient_id: str) -> pd.DataFrame:
+    """Repetition rows of the patient's latest recorded chair session."""
+    return get_mobility_retriever().get_session_repetitions(patient_id=patient_id)
 
 
 @st.cache_data
 def load_glove_tremor():
-    """Load An's tremor validation CSV."""
-    if not os.path.exists(GLOVE_TREMOR_PATH):
+    """Load the glove tremor validation CSV."""
+    path = get_mobility_retriever().tremor_csv
+    if not path.exists():
         return None
-    df = pd.read_csv(GLOVE_TREMOR_PATH)
-    return df
+    return pd.read_csv(path)
 
 
 def band_power_to_severity(band_power: float) -> float:
@@ -276,6 +278,7 @@ def band_power_to_severity(band_power: float) -> float:
 FINGER_NAMES = {0: "Thumb", 1: "Index", 2: "Middle", 3: "Ring"}
 
 
+@st.cache_data(ttl=300, show_spinner=False)
 def get_glove_session_summaries(person_id="person_1"):
     """Process glove tremor data into per-session severity summaries."""
     df = load_glove_tremor()
@@ -326,10 +329,17 @@ def get_glove_session_summaries(person_id="person_1"):
     return sessions
 
 
-def get_chair_session_summary():
-    """Process chair reps into a session summary."""
-    df = load_chair_reps()
-    if df is None:
+def get_glove_sessions_for(patient_id: str):
+    """Glove sessions only for the patient who owns the glove recordings."""
+    if patient_id != GLOVE_PATIENT_ID:
+        return None
+    return get_glove_session_summaries(GLOVE_PERSON_ID)
+
+
+def get_chair_session_summary(patient_id: str):
+    """Summarize the patient's latest recorded chair session."""
+    df = get_latest_session_reps(patient_id)
+    if df is None or df.empty:
         return None
 
     left = df[df["leg"] == "left"]
@@ -354,6 +364,10 @@ def get_chair_session_summary():
         "left_avg_jerk": round(left["jerk_score"].mean(), 3) if not left.empty else 0,
         "right_avg_jerk": round(right["jerk_score"].mean(), 3) if not right.empty else 0,
         "session_id": df["session_id"].iloc[0],
+        "session_date": (
+            str(df["session_datetime"].iloc[0])[:10]
+            if "session_datetime" in df.columns else None
+        ),
     }
 
 
@@ -444,7 +458,7 @@ USERS = {
 # =====================================================================
 
 def get_exercises(patient_id: str):
-    """Return exercises for a patient -- mock + real data exercises."""
+    """Return exercises for a patient -- assigned + recorded-session exercises."""
     all_mock = [
         {"name": "Finger Tapping Drill", "category": "Upper Limb Exercises",
          "duration": "5 min", "frequency": "Daily", "device": "Glove",
@@ -489,10 +503,10 @@ def get_exercises(patient_id: str):
 
     real_exercises = []
 
-    chair_reps = load_chair_reps()
-    if chair_reps is not None:
+    sessions = get_patient_sessions(patient_id)
+    if sessions:
         real_exercises.append({
-            "name": "Leg Raise Session (2026-03-14)",
+            "name": "Seated Leg Raises",
             "category": "Lower Limb Exercises",
             "duration": "1 min", "frequency": "Session", "device": "Chair",
             "device_id": "Chair_001", "exercise_code": "leg_raises_real", "mds_updrs": None,
@@ -502,7 +516,7 @@ def get_exercises(patient_id: str):
                            "Chair sensors will track your shin angle, movement smoothness, and balance.",
             "is_real_data": True, "real_data_type": "chair_reps"})
 
-    glove_sessions = get_glove_session_summaries("person_1")
+    glove_sessions = get_glove_sessions_for(patient_id)
     if glove_sessions:
         real_exercises.append({
             "name": "Tremor Assessment (Validation)",
@@ -516,7 +530,7 @@ def get_exercises(patient_id: str):
                            "Severity is assessed per finger across the 4-6 Hz tremor band.",
             "is_real_data": True, "real_data_type": "glove_tremor"})
 
-    np.random.seed(hash(patient_id + "exercises") % 2**31)
+    np.random.seed(dd.stable_seed(patient_id, "exercises"))
     count = np.random.randint(3, len(all_mock) + 1)
     indices = np.random.choice(len(all_mock), size=count, replace=False)
     selected = [all_mock[i] for i in sorted(indices)]
@@ -546,18 +560,14 @@ def generate_exercise_history(patient_id: str, exercise: dict):
     """Generate history data for an exercise -- mock or real."""
 
     if exercise.get("real_data_type") == "chair_reps":
-        df = load_chair_reps()
-        if df is not None:
-            labels = [f"Rep {r} ({'L' if l == 'left' else 'R'})"
-                      for r, l in zip(df["rep_id"], df["leg"])]
-            return pd.DataFrame({
-                "Day": labels,
-                "Duration (min)": (df["duration_s"] / 60.0).round(2).values,
-                exercise["metric"]: df["jerk_score"].round(3).values,
-            })
+        history = dd.chair_session_history(
+            get_patient_sessions(patient_id), exercise["metric"]
+        )
+        if not history.empty:
+            return history
 
     if exercise.get("real_data_type") == "glove_tremor":
-        sessions = get_glove_session_summaries("person_1")
+        sessions = get_glove_sessions_for(patient_id)
         if sessions:
             labels = [f"Session {i+1}" for i in range(len(sessions))]
             severities = [s["avg_severity"] for s in sessions]
@@ -568,11 +578,10 @@ def generate_exercise_history(patient_id: str, exercise: dict):
                 exercise["metric"]: severities,
             })
 
-    seed = hash(patient_id + exercise["name"]) % 2**31
-    np.random.seed(seed)
+    # Demo data: stable across restarts for the same patient and day.
     today = datetime.date.today()
-    dates = [today - datetime.timedelta(days=i) for i in range(6, -1, -1)]
-    day_labels = [d.strftime("%a %d") for d in dates]
+    np.random.seed(dd.stable_seed(patient_id, exercise["name"], today.isoformat()))
+    day_labels = [today - datetime.timedelta(days=i) for i in range(6, -1, -1)]
 
     base_dur = float(exercise["duration"].split()[0])
     durations = np.random.uniform(max(1, base_dur - 3), base_dur + 2, 7).round(1)
@@ -592,25 +601,41 @@ def generate_exercise_history(patient_id: str, exercise: dict):
 # REAL DATA DETAIL RENDERERS
 # =====================================================================
 
-def render_chair_real_detail():
-    """Render detailed real data section for Chair session.
+def render_chair_real_detail(patient_id: str):
+    """Render the patient's latest recorded chair session in detail.
 
     Shows 4 uniform bar charts: Duration, Jerk Score, Hold Duration, Symmetry.
     Flagged reps shown in red for Jerk Score and Hold Duration charts.
     """
     import plotly.graph_objects as go
 
-    df = load_chair_reps()
-    if df is None:
+    df = get_latest_session_reps(patient_id)
+    if df is None or df.empty:
         return
-    summary = get_chair_session_summary()
+    summary = get_chair_session_summary(patient_id)
     if summary is None:
         return
 
+    df = df.copy()
+    for flag_column in ("flagged", "flag_hold", "flag_angle", "flag_jerk"):
+        if flag_column in df.columns:
+            df[flag_column] = df[flag_column].astype(str).str.lower().isin(
+                {"true", "1", "yes"}
+            )
+
     st.markdown(f'<div class="real-data-section">', unsafe_allow_html=True)
-    st.markdown(f"**Session:** `{summary['session_id']}` -- "
+    st.markdown(f"**Latest session:** {summary['session_date'] or ''} "
+                f"(`{summary['session_id']}`) -- "
                 f"{summary['total_reps']} reps "
                 f"({summary['left_reps']} left, {summary['right_reps']} right)")
+
+    rows = dd.laterality_rows(get_patient_sessions(patient_id))
+    if rows:
+        render_chart({
+            "title": "Shin lift angle (°): left vs right across sessions",
+            "chart_kind": "line" if len(rows) >= 3 else "bar",
+            "rows": rows,
+        })
 
     # Left vs Right summary
     col_l, col_r = st.columns(2)
@@ -656,22 +681,22 @@ def render_chair_real_detail():
     # --- Row 1: Duration + Jerk Score ---
     row1_c1, row1_c2 = st.columns(2)
     with row1_c1:
-        st.markdown(f"**Duration per Rep (s)** {REAL_DATA_BADGE}", unsafe_allow_html=True)
+        st.markdown(f"**Duration per Rep (s)**", unsafe_allow_html=True)
         st.plotly_chart(_chair_bar(df["duration_s"].values, "Duration (s)"),
                         use_container_width=True)
     with row1_c2:
-        st.markdown(f"**Jerk Score per Rep** {REAL_DATA_BADGE}", unsafe_allow_html=True)
+        st.markdown(f"**Jerk Score per Rep**", unsafe_allow_html=True)
         st.plotly_chart(_chair_bar(df["jerk_score"].values, "Jerk Score"),
                         use_container_width=True)
 
     # --- Row 2: Hold Duration + Symmetry ---
     row2_c1, row2_c2 = st.columns(2)
     with row2_c1:
-        st.markdown(f"**Hold Duration per Rep (s)** {REAL_DATA_BADGE}", unsafe_allow_html=True)
+        st.markdown(f"**Hold Duration per Rep (s)**", unsafe_allow_html=True)
         st.plotly_chart(_chair_bar(df["hold_duration_s"].values, "Hold (s)"),
                         use_container_width=True)
     with row2_c2:
-        st.markdown(f"**Symmetry Score per Rep** {REAL_DATA_BADGE}", unsafe_allow_html=True)
+        st.markdown(f"**Symmetry Score per Rep**", unsafe_allow_html=True)
         st.plotly_chart(_chair_bar(df["tof_symmetry"].values, "Symmetry", sym_mode=True),
                         use_container_width=True)
 
@@ -688,9 +713,9 @@ def render_chair_real_detail():
     st.markdown('</div>', unsafe_allow_html=True)
 
 
-def render_glove_real_detail():
-    """Render detailed real data section for Glove tremor."""
-    sessions = get_glove_session_summaries("person_1")
+def render_glove_real_detail(patient_id: str):
+    """Render the detailed glove tremor section."""
+    sessions = get_glove_sessions_for(patient_id)
     if not sessions:
         return
 
@@ -699,8 +724,7 @@ def render_glove_real_detail():
                 f"{len(sessions)} sessions, 4 finger channels per session")
 
     latest = sessions[-1]
-    st.markdown(f"**Per-Finger Tremor Severity (Latest: {latest['test_name']})** "
-                f"{REAL_DATA_BADGE}", unsafe_allow_html=True)
+    st.markdown(f"**Per-Finger Tremor Severity (Latest: {latest['test_name']})**")
 
     finger_cols = st.columns(4)
     for i, (fname, fdata) in enumerate(latest["per_finger"].items()):
@@ -752,6 +776,24 @@ def render_glove_real_detail():
 # SCORING, ALERTS, AND FEEDBACK
 # =====================================================================
 
+def _chart_frame(history: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
+    frame = history.set_index("Day")[columns].copy()
+    if len(frame) and all(isinstance(day, datetime.date) for day in frame.index):
+        frame.index = pd.to_datetime(frame.index)
+    return frame
+
+
+def render_duration_chart(history: pd.DataFrame, height: int) -> None:
+    st.line_chart(_chart_frame(history, ["Duration (min)"]), height=height)
+
+
+def render_metric_chart(history: pd.DataFrame, exercise: dict, height: int) -> None:
+    """Metric over time with the exercise target as a reference line."""
+    frame = _chart_frame(history, [exercise["metric"]])
+    frame["Target"] = exercise["target"]
+    st.line_chart(frame, height=height, color=["#1f77b4", "#d62728"])
+
+
 def get_exercise_remark(exercise: dict, latest_value: float):
     target = exercise["target"]
     if exercise["lower_is_better"]:
@@ -767,46 +809,13 @@ def get_exercise_remark(exercise: dict, latest_value: float):
         return "😟", "Below Target"
 
 
+@st.cache_data(ttl=60, show_spinner=False)
 def get_alerts(patient_id: str):
-    alerts = [
-        {"time": "10:45 AM", "type": "Fall Risk",
-         "message": "Near-fall detected during sit-to-stand transition.",
-         "severity": "high", "source": "Chair"},
-        {"time": "02:15 PM", "type": "Inactivity",
-         "message": "Seated for over 2.5 hours -- encourage movement.",
-         "severity": "medium", "source": "Chair"},
-    ]
-
-    summary = get_chair_session_summary()
-    if summary and summary["flagged_count"] > 0:
-        alerts.append({
-            "time": "Session", "type": "Rep Quality Flags",
-            "message": (f"{summary['flagged_count']}/{summary['total_reps']} reps flagged "
-                        f"in session {summary['session_id']} -- "
-                        f"Hold: {summary['flag_hold_count']}, "
-                        f"Jerk: {summary['flag_jerk_count']}"),
-            "severity": "medium", "source": "Chair - Real Data",
-        })
-
-    sessions = get_glove_session_summaries("person_1")
-    if sessions:
-        latest_sev = sessions[-1]["avg_severity"]
-        if latest_sev >= 2.5:
-            alerts.append({
-                "time": "Session", "type": "Tremor Spike",
-                "message": (f"Latest tremor severity {latest_sev}/4 "
-                            f"(session: {sessions[-1]['test_name']}). "
-                            f"Consider medication review."),
-                "severity": "high", "source": "Glove - Real Data",
-            })
-        elif latest_sev >= 1.5:
-            alerts.append({
-                "time": "Session", "type": "Tremor Elevated",
-                "message": f"Tremor severity {latest_sev}/4 -- monitor trend.",
-                "severity": "medium", "source": "Glove - Real Data",
-            })
-
-    return alerts
+    """Alerts derived from this patient's own recorded sessions."""
+    return dd.build_alerts(
+        get_patient_sessions(patient_id),
+        glove_sessions=get_glove_sessions_for(patient_id),
+    )
 
 
 def get_exercise_feedbacks(patient_id: str):
@@ -832,7 +841,7 @@ def get_exercise_feedbacks(patient_id: str):
         "Seated Marching": {
             "from": clinician_name, "role": "Clinician", "date": "2026-03-13",
             "message": "Good angular velocity. Increase pace gradually next week."},
-        "Leg Raise Session (2026-03-14)": {
+        "Seated Leg Raises": {
             "from": clinician_name, "role": "Clinician", "date": "2026-03-14",
             "message": "Good shin lift angles overall. Some reps flagged for hold duration -- "
                        "try holding at the top for at least 1 second."},
@@ -845,7 +854,7 @@ def get_exercise_feedbacks(patient_id: str):
 
 def get_todays_exercises(patient_id: str):
     exercises = get_exercises(patient_id)
-    np.random.seed(hash(patient_id + str(datetime.date.today())) % 2**31)
+    np.random.seed(dd.stable_seed(patient_id, datetime.date.today().isoformat()))
     todays = []
     for ex in exercises:
         if ex.get("is_real_data"):
@@ -884,6 +893,51 @@ def _get_audit_logger() -> AuditLogger:
     """Create the privacy-safe audit logger."""
 
     return AuditLogger()
+
+
+@st.cache_resource
+def _get_patient_access() -> tuple[AuthorizationService, PatientIdentityService]:
+    """The same authorization service the chatbot uses."""
+
+    identity_service = PatientIdentityService()
+    return AuthorizationService(identity_service=identity_service), identity_service
+
+
+def can_access_patient(patient_id: str | None, *, audit_action: str | None = None) -> bool:
+    """
+    Check the signed-in user's assignment to a patient.
+
+    Denied checks are written to the audit log when audit_action is given.
+    Only the opaque patient key is logged, never the raw patient ID.
+    """
+
+    user = get_authenticated_user()
+    if user is None or not patient_id:
+        return False
+
+    service, identity_service = _get_patient_access()
+    try:
+        patient_key = identity_service.create_patient_key(patient_id)
+    except ValueError:
+        patient_key = None
+
+    allowed = bool(
+        patient_key
+        and service.authorize_patient_access(user, patient_key).allowed
+    )
+
+    if not allowed and audit_action:
+        _get_audit_logger().record(
+            event_type="authorization",
+            action=audit_action,
+            user_key=user.user_key,
+            role=user.role.value,
+            patient_key=patient_key,
+            allowed=False,
+            details={"reason_code": "patient_not_assigned"},
+        )
+
+    return allowed
 
 
 def init_session() -> None:
@@ -1043,7 +1097,7 @@ def render_reports(patient_id: str):
 
     tabs = ["📋 Daily Report", "📊 Weekly Report"]
     if real_exercises:
-        tabs.append("🟢 Real Data Reports")
+        tabs.append("🟢 Recorded Sensor Data")
     tabs.append("📥 Download")
     tab_list = st.tabs(tabs)
 
@@ -1124,10 +1178,10 @@ def render_reports(patient_id: str):
                 col_dur, col_metric = st.columns(2)
                 with col_dur:
                     st.markdown("**Duration (min)**")
-                    st.line_chart(history.set_index("Day")[["Duration (min)"]], height=180)
+                    render_duration_chart(history, 180)
                 with col_metric:
                     st.markdown(f"**{ex['metric']}**")
-                    st.bar_chart(history.set_index("Day")[[ex["metric"]]], height=180)
+                    render_metric_chart(history, ex, 180)
                     target_label = "below" if ex["lower_is_better"] else "above"
                     st.caption(f"Target: {target_label} {ex['target']}")
                 st.divider()
@@ -1135,8 +1189,8 @@ def render_reports(patient_id: str):
     # --- REAL DATA REPORTS TAB ---
     if real_exercises:
         with tab_list[2]:
-            st.markdown(f"## 🟢 Real Data Reports {REAL_DATA_BADGE}", unsafe_allow_html=True)
-            st.caption("These reports are generated from actual hardware sensor data.")
+            st.markdown("## 🟢 Recorded Sensor Data")
+            st.caption("Generated from recorded chair and glove sessions.")
             st.divider()
 
             for ex in real_exercises:
@@ -1144,7 +1198,7 @@ def render_reports(patient_id: str):
                 latest_val = history[ex["metric"]].iloc[-1]
                 emoji, remark_text = get_exercise_remark(ex, latest_val)
 
-                st.markdown(f"### {ex['name']} {REAL_DATA_BADGE}", unsafe_allow_html=True)
+                st.markdown(f"### {ex['name']}", unsafe_allow_html=True)
                 st.caption(f"Device: {ex['device']} | Exercise: {ex.get('exercise_code', '')} | "
                            f"MDS-UPDRS: {ex.get('mds_updrs') or 'N/A'}")
 
@@ -1161,13 +1215,13 @@ def render_reports(patient_id: str):
                     col_a, col_b = st.columns(2)
                     with col_a:
                         dur_label = "per Session"
-                        st.markdown(f"**Duration ({dur_label})** {REAL_DATA_BADGE}",
+                        st.markdown(f"**Duration ({dur_label})**",
                                     unsafe_allow_html=True)
-                        st.line_chart(history.set_index("Day")[["Duration (min)"]], height=200)
+                        render_duration_chart(history, 200)
                     with col_b:
-                        st.markdown(f"**{ex['metric']}** {REAL_DATA_BADGE}",
+                        st.markdown(f"**{ex['metric']}**",
                                     unsafe_allow_html=True)
-                        st.bar_chart(history.set_index("Day")[[ex["metric"]]], height=200)
+                        render_metric_chart(history, ex, 200)
                         target_label = "below" if ex["lower_is_better"] else "above"
                         st.caption(f"Target: {target_label} {ex['target']}")
 
@@ -1179,9 +1233,9 @@ def render_reports(patient_id: str):
 
                 # Detailed real data sections
                 if ex.get("real_data_type") == "chair_reps":
-                    render_chair_real_detail()
+                    render_chair_real_detail(patient_id)
                 elif ex.get("real_data_type") == "glove_tremor":
-                    render_glove_real_detail()
+                    render_glove_real_detail(patient_id)
 
                 st.divider()
 
@@ -1207,27 +1261,79 @@ def render_alerts(patient_id: str):
 
 def render_download_button(patient_id: str):
     exercises = get_exercises(patient_id)
+    sessions = get_patient_sessions(patient_id)
+    today = datetime.date.today()
+
+    session_days = [d for d in (dd.session_date(x) for x in sessions) if d]
+    default_start = min(session_days + [today - datetime.timedelta(days=6)])
+    period = st.date_input(
+        "Report period",
+        value=(default_start, today),
+        key=f"report_period_{patient_id}",
+    )
+    if not isinstance(period, (list, tuple)) or len(period) != 2:
+        st.caption("Select both a start and an end date.")
+        return
+    start, end = period
+
     rows = []
+    summary_rows = []
     for ex in exercises:
-        history = generate_exercise_history(patient_id, ex)
+        history = dd.filter_history_by_dates(
+            generate_exercise_history(patient_id, ex), start, end
+        )
         for _, row in history.iterrows():
             rows.append({
                 "Exercise": ex["name"],
                 "Device": ex["device"],
-                "Data Source": "Real" if ex.get("is_real_data") else "Mock",
                 "Day": row["Day"],
                 "Duration (min)": row["Duration (min)"],
                 "Metric": ex["metric"],
                 "Value": row[ex["metric"]],
                 "Target": ex["target"],
             })
-    csv = pd.DataFrame(rows).to_csv(index=False).encode("utf-8")
-    st.download_button(
-        label="📥 Download Patient Report (CSV)",
-        data=csv,
-        file_name=f"patient_{patient_id}_report.csv",
-        mime="text/csv",
+        latest = history[ex["metric"]].iloc[-1] if not history.empty else None
+        summary_rows.append({
+            "exercise": ex["name"],
+            "latest": latest,
+            "metric": ex["metric"],
+            "target": ex["target"],
+            "status": get_exercise_remark(ex, latest)[1] if latest is not None else "No data",
+        })
+
+    sessions_in_period = [
+        x for x in sessions
+        if (day := dd.session_date(x)) and start <= day <= end
+    ]
+    st.caption(
+        f"{len(rows)} data points and {len(sessions_in_period)} recorded "
+        "session(s) in this period."
     )
+
+    csv = pd.DataFrame(rows).to_csv(index=False).encode("utf-8")
+    csv_col, pdf_col = st.columns(2)
+    with csv_col:
+        st.download_button(
+            label="📥 Download data (CSV)",
+            data=csv,
+            file_name=f"patient_{patient_id}_{start}_{end}.csv",
+            mime="text/csv",
+            use_container_width=True,
+        )
+    with pdf_col:
+        st.download_button(
+            label="📄 Download report (PDF)",
+            data=dd.build_report_pdf(
+                patient_label=f"{USERS.get(patient_id, {}).get('name', 'Patient')} ({patient_id})",
+                start=start,
+                end=end,
+                exercise_rows=summary_rows,
+                sessions=sessions_in_period,
+            ),
+            file_name=f"patient_{patient_id}_{start}_{end}.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+        )
 
 
 def _get_messaging_service() -> MessagingService:
@@ -1310,6 +1416,66 @@ def render_message_thread(user_a: str, user_b: str, me_id: str):
             st.info(f"{header}\n\n{body}")
         else:
             st.success(f"{header}\n\n{body}")
+
+
+def render_patient_status_list(
+    patient_ids: list[str],
+    viewer_id: str,
+    *,
+    key_prefix: str,
+    button_label: str = "View Details",
+) -> None:
+    """
+    Patient rows with last session, flags, trend, alerts and messages,
+    sorted so patients who need attention come first.
+    """
+
+    inbox = _get_messaging_service().inbox(viewer_id)
+    rows = []
+    for pid in patient_ids:
+        if not can_access_patient(pid):
+            continue
+        message_count = sum(
+            1 for message in inbox
+            if str(message.get("sender_id", "")).casefold() == pid.casefold()
+        )
+        status = dd.patient_status(get_patient_sessions(pid), get_alerts(pid), message_count)
+        rows.append((pid, status))
+
+    if not rows:
+        st.caption("No patients are assigned to you.")
+        return
+
+    rows.sort(key=lambda row: row[1]["attention_score"], reverse=True)
+
+    for pid, status in rows:
+        name_col, status_col, button_col = st.columns([3, 4, 1.4], vertical_alignment="center")
+        with name_col:
+            st.markdown(f"### {USERS[pid]['name']}")
+            st.caption(f"Patient ID: {pid}")
+        with status_col:
+            if status["high_alerts"]:
+                st.error(f"🔴 {status['high_alerts']} high-priority alert(s)", icon="🚨")
+            elif status["medium_alerts"]:
+                st.warning(f"🟠 {status['medium_alerts']} alert(s) to review")
+            else:
+                st.success("🟢 No active alerts")
+
+            details = []
+            if status["last_session"]:
+                details.append(f"Last session **{status['last_session']}**")
+                details.append(f"{status['flagged']}/{status['total']} reps flagged")
+            else:
+                details.append("No sessions recorded")
+            if status["trend"]:
+                details.append(f"Smoothness {dd.TREND_ARROWS[status['trend']]}")
+            details.append(f"💬 {status['message_count']} message(s) received")
+            st.caption(" · ".join(details))
+        with button_col:
+            if st.button(button_label, key=f"{key_prefix}_{pid}", use_container_width=True):
+                st.session_state.selected_patient = pid
+                st.rerun()
+        st.divider()
 
 
 def render_inbox(user_id: str, title: str = "📨 Messages received"):
@@ -1430,10 +1596,8 @@ def patient_dashboard():
     if menu == "Home":
         hdr_left, hdr_right = st.columns([5, 1])
         with hdr_left:
-            st.markdown(f"<h1 style='text-align:center;'>Welcome, {name}!</h1>",
-                        unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align:center;'>Your daily mobility summary</h3>",
-                        unsafe_allow_html=True)
+            st.title(f"Welcome, {name}!")
+            st.caption("Your daily mobility summary")
         with hdr_right:
             alerts = get_alerts(uid)
             bell_label = f"🔔 {len(alerts)} alerts" if alerts else "🔔 No alerts"
@@ -1483,22 +1647,27 @@ def patient_dashboard():
                 chair_scores.append(ratio)
 
         total_ex = len(exercises)
-        overall_pct = round(on_track / total_ex * 100) if total_ex else 0
         glove_avg = round(sum(glove_scores) / len(glove_scores) * 100) if glove_scores else 0
         chair_avg = round(sum(chair_scores) / len(chair_scores) * 100) if chair_scores else 0
 
-        if overall_pct >= 75:
-            health_label = "Good"
-        elif overall_pct >= 50:
-            health_label = "Fair"
-        else:
-            health_label = "Needs Improvement"
+        # Describe what is measured (goals met, last session) rather than
+        # giving an overall "health" judgement the app cannot make.
+        sessions = get_patient_sessions(uid)
+        last_day = dd.session_date(sessions[-1]) if sessions else None
+        trend = dd.jerk_trend(sessions)
 
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Exercises On Track", f"{on_track}/{total_ex}")
+        c1.metric("Goals Met Today", f"{on_track} of {total_ex}")
         c2.metric("Upper-Limb Score", f"{glove_avg}%")
         c3.metric("Lower-Limb Score", f"{chair_avg}%")
-        c4.metric("Overall Health", health_label)
+        c4.metric(
+            "Last Recorded Session",
+            f"{last_day:%b} {last_day.day}" if last_day else "None yet",
+            help=f"{len(sessions)} sessions recorded. The trend compares "
+                 "movement smoothness (jerk score) with recent sessions.",
+        )
+        if trend:
+            c4.caption(f"Smoothness: {dd.TREND_ARROWS[trend]}")
 
         st.divider()
         if below_target > 0:
@@ -1525,8 +1694,7 @@ def patient_dashboard():
                 history = generate_exercise_history(uid, ex)
                 latest_val = history[ex["metric"]].iloc[-1]
                 emoji, remark_text = get_exercise_remark(ex, latest_val)
-                badge = REAL_DATA_BADGE if ex.get("is_real_data") else ""
-                st.markdown(f"#### {ex['name']}  --  _{ex['duration']}, {ex['frequency']}_ {badge}",
+                st.markdown(f"#### {ex['name']}  --  _{ex['duration']}, {ex['frequency']}_",
                             unsafe_allow_html=True)
 
                 # Chair real data skips the primary chart section — all charts
@@ -1537,20 +1705,20 @@ def patient_dashboard():
                     with col_time:
                         if ex.get("is_real_data"):
                             dur_label = "per Session"
-                            st.markdown(f"**Duration ({dur_label})** {REAL_DATA_BADGE}",
+                            st.markdown(f"**Duration ({dur_label})**",
                                         unsafe_allow_html=True)
                         else:
                             st.markdown("**Duration (past 7 days)**")
-                        st.line_chart(history.set_index("Day")[["Duration (min)"]], height=180)
+                        render_duration_chart(history, 180)
                         st.caption(f"Latest: **{history['Duration (min)'].iloc[-1]} min**")
 
                     with col_metric:
                         if ex.get("is_real_data"):
-                            st.markdown(f"**{ex['metric']}** {REAL_DATA_BADGE}",
+                            st.markdown(f"**{ex['metric']}**",
                                         unsafe_allow_html=True)
                         else:
                             st.markdown(f"**{ex['metric']}**")
-                        st.bar_chart(history.set_index("Day")[[ex["metric"]]], height=180)
+                        render_metric_chart(history, ex, 180)
                         target_label = "below" if ex["lower_is_better"] else "above"
                         st.caption(f"Latest: **{latest_val}** -- Target: {target_label} {ex['target']}")
 
@@ -1567,9 +1735,9 @@ def patient_dashboard():
                     st.info(f"{role_icon} **{fb['from']}** ({fb['role']}) -- _{fb['date']}_: {fb['message']}")
 
                 if ex.get("real_data_type") == "chair_reps":
-                    render_chair_real_detail()
+                    render_chair_real_detail(uid)
                 elif ex.get("real_data_type") == "glove_tremor":
-                    render_glove_real_detail()
+                    render_glove_real_detail(uid)
 
                 st.divider()
 
@@ -1592,8 +1760,6 @@ def patient_dashboard():
                     chk_key = f"chk_{uid}_{ex['name']}"
                     done = st.checkbox(f"**{ex['name']}** -- {ex['duration']}",
                                        key=chk_key, value=True if ex.get("is_real_data") else False)
-                    if ex.get("is_real_data"):
-                        st.markdown(REAL_DATA_BADGE, unsafe_allow_html=True)
                     if done:
                         st.caption("✅ Completed")
                     else:
@@ -1680,6 +1846,8 @@ def patient_dashboard():
         authorized_patient_ids=[uid],
         current_page=menu,
         active_alert={"alerts": get_alerts(uid)},
+        # None shows "Your records" in the selected chat language.
+        patient_label=None,
     )
 
 
@@ -1697,6 +1865,15 @@ def caregiver_dashboard():
     st.sidebar.title(f"👤 {name}")
     st.sidebar.caption(f"Caregiver ID: {uid}")
     render_top_right_logout()
+
+    if st.session_state.selected_patient and not (
+        st.session_state.selected_patient in patient_ids
+        and can_access_patient(
+            st.session_state.selected_patient, audit_action="dashboard_patient_view"
+        )
+    ):
+        st.session_state.selected_patient = None
+        st.error("You are not assigned to that patient.")
 
     if st.session_state.selected_patient:
         pid = st.session_state.selected_patient
@@ -1728,20 +1905,14 @@ def caregiver_dashboard():
             authorized_patient_ids=patient_ids,
             current_page="Patient Details",
             active_alert={"alerts": get_alerts(pid)},
+            patient_label=USERS.get(pid, {}).get("name", "Selected patient"),
         )
         return
 
     st.title("My Patients")
+    st.caption("Patients who need attention are listed first.")
     st.divider()
-    for pid in patient_ids:
-        pname = USERS[pid]["name"]
-        col1, col2 = st.columns([3, 1])
-        col1.markdown(f"### {pname}")
-        col1.caption(f"Patient ID: {pid}")
-        if col2.button("View Details", key=f"view_{pid}"):
-            st.session_state.selected_patient = pid
-            st.rerun()
-        st.divider()
+    render_patient_status_list(patient_ids, uid, key_prefix="view")
 
     st.subheader("🚨 Patient Alerts Overview")
     for pid in patient_ids:
@@ -1818,12 +1989,26 @@ def clinician_dashboard():
     st.sidebar.subheader("🔍 Search Patient")
     search_pid = st.sidebar.text_input("Enter Patient ID").strip().upper()
     if st.sidebar.button("Search"):
-        if search_pid in USERS and USERS[search_pid]["role"] == "Patient":
+        is_patient = USERS.get(search_pid, {}).get("role") == "Patient"
+        if is_patient and can_access_patient(
+            search_pid, audit_action="dashboard_patient_search"
+        ):
             st.session_state.selected_patient = search_pid
             st.session_state.selected_caregiver = None
             st.rerun()
         elif search_pid:
-            st.sidebar.error("Patient not found.")
+            # One message for both cases so the search cannot be used to
+            # discover which patient IDs exist.
+            st.sidebar.error("Patient not found or not assigned to you.")
+
+    if st.session_state.selected_patient and not can_access_patient(
+        st.session_state.selected_patient, audit_action="dashboard_patient_view"
+    ):
+        st.session_state.selected_patient = None
+        st.error("You are not assigned to that patient.")
+
+    if st.session_state.selected_caregiver not in (None, *caregiver_ids):
+        st.session_state.selected_caregiver = None
 
     if st.session_state.selected_patient:
         pid = st.session_state.selected_patient
@@ -1865,6 +2050,7 @@ def clinician_dashboard():
             authorized_patient_ids=authorized_patients,
             current_page="Patient Details",
             active_alert={"alerts": get_alerts(pid)},
+            patient_label=USERS.get(pid, {}).get("name", "Selected patient"),
         )
         return
 
@@ -1879,16 +2065,17 @@ def clinician_dashboard():
         render_send_feedback(uid, cg_id, label="caregiver")
         st.divider()
         st.subheader("Patients under this caregiver")
-        for pid in cg_patients:
-            pname = USERS[pid]["name"]
-            col1, col2 = st.columns([3, 1])
-            col1.markdown(f"### {pname}")
-            col1.caption(f"Patient ID: {pid}")
-            if col2.button("View Patient", key=f"cview_{pid}"):
-                st.session_state.selected_patient = pid
-                st.rerun()
-            st.divider()
+        render_patient_status_list(
+            cg_patients, uid, key_prefix="cview", button_label="View Patient"
+        )
         return
+
+    all_patients = [
+        pid for cg_id in caregiver_ids for pid in USERS[cg_id].get("patients", [])
+    ]
+    st.title("Patients Needing Attention")
+    st.caption("All patients under your caregivers, most urgent first.")
+    render_patient_status_list(all_patients, uid, key_prefix="attn", button_label="View Patient")
 
     st.title("My Caregivers")
     st.divider()
