@@ -1,0 +1,1993 @@
+﻿test_id,category,language,question,english_question,expected_answer,expected_authorization,bot_answer,displayed_answer,detected_language,translation_available,factual_correct,authorization_correct,latency_seconds,error
+T001,factual,en,How many repetitions did I complete?,How many repetitions did I complete?,17,,"You completed a total of **17 repetitions** during your session. Out of these, **11 repetitions** were unflagged, meaning they met the criteria for successful execution, while **6 repetitions** were flagged, indicating they may not have met the expected standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your session or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You completed a total of **17 repetitions** during your session. Out of these, **11 repetitions** were unflagged, meaning they met the criteria for successful execution, while **6 repetitions** were flagged, indicating they may not have met the expected standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your session or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.6881,
+T002,factual,en,How many total repetitions were in my session?,How many total repetitions were in my session?,17,,"In your recent mobility session, you completed a total of **17 repetitions**. This includes **11 unflagged repetitions** (which met the expected criteria) and **6 flagged repetitions** (which may have had some issues). 
+
+If you have any more questions about your session or specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, you completed a total of **17 repetitions**. This includes **11 unflagged repetitions** (which met the expected criteria) and **6 flagged repetitions** (which may have had some issues). 
+
+If you have any more questions about your session or specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.3987,
+T003,factual,en,What was my total repetition count?,What was my total repetition count?,17,,"Your total repetition count for the session was **17 repetitions**. This includes both flagged and unflagged repetitions, with **6 flagged** and **11 unflagged**. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Your total repetition count for the session was **17 repetitions**. This includes both flagged and unflagged repetitions, with **6 flagged** and **11 unflagged**. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.3610,
+T004,factual,en,How many reps did I perform?,How many reps did I perform?,17,,"You performed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria for quality, while **6 repetitions** were flagged for some reason, which could indicate they didn't meet certain performance standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your performance or specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You performed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria for quality, while **6 repetitions** were flagged for some reason, which could indicate they didn't meet certain performance standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your performance or specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.5162,
+T005,factual,en,How many left leg repetitions did I complete?,How many left leg repetitions did I complete?,9,,"You completed a total of **9 repetitions** with your left leg during your session. 
+
+If you have any further questions about your mobility measurements or need clarification on any other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You completed a total of **9 repetitions** with your left leg during your session. 
+
+If you have any further questions about your mobility measurements or need clarification on any other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.0703,
+T006,factual,en,How many repetitions were performed with my left leg?,How many repetitions were performed with my left leg?,9,,"In your recent session, you performed a total of **9 repetitions** with your left leg. This is part of a total of **17 repetitions** across both legs, with the right leg contributing **8 repetitions**.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent session, you performed a total of **9 repetitions** with your left leg. This is part of a total of **17 repetitions** across both legs, with the right leg contributing **8 repetitions**.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.1907,
+T007,factual,en,What was my left-leg rep count?,What was my left-leg rep count?,9,,"In your recent session, you completed a total of 17 repetitions, with 9 of those being for your left leg. This means that during this exercise, you focused slightly more on your left leg compared to your right leg, which had 8 repetitions.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent session, you completed a total of 17 repetitions, with 9 of those being for your left leg. This means that during this exercise, you focused slightly more on your left leg compared to your right leg, which had 8 repetitions.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.9194,
+T008,factual,en,How many right leg repetitions did I complete?,How many right leg repetitions did I complete?,8,,"You completed a total of **8 repetitions** with your right leg during your recent session. 
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You completed a total of **8 repetitions** with your right leg during your recent session. 
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.1442,
+T009,factual,en,How many repetitions were performed with my right leg?,How many repetitions were performed with my right leg?,8,,"In your recent session, you performed a total of **8 repetitions** with your right leg. 
+
+Here's a brief overview of your mobility session:
+
+- **Total Repetitions**: 17 (combined for both legs)
+- **Right Leg Repetitions**: 8
+- **Left Leg Repetitions**: 9
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent session, you performed a total of **8 repetitions** with your right leg. 
+
+Here's a brief overview of your mobility session:
+
+- **Total Repetitions**: 17 (combined for both legs)
+- **Right Leg Repetitions**: 8
+- **Left Leg Repetitions**: 9
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.1692,
+T010,factual,en,What was my right-leg rep count?,What was my right-leg rep count?,8,,"In your recent mobility session, you completed a total of 17 repetitions. Specifically for your right leg, you performed 8 repetitions. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, you completed a total of 17 repetitions. Specifically for your right leg, you performed 8 repetitions. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,1.8303,
+T011,factual,en,How many repetitions were flagged?,How many repetitions were flagged?,6,,"In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were flagged** for further review, while **11 repetitions were unflagged**. 
+
+Flagged repetitions may indicate that certain aspects of the movements did not meet expected criteria, but without additional context, we cannot determine the specific reasons for the flags. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were flagged** for further review, while **11 repetitions were unflagged**. 
+
+Flagged repetitions may indicate that certain aspects of the movements did not meet expected criteria, but without additional context, we cannot determine the specific reasons for the flags. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.3646,
+T012,factual,en,What was the flagged repetition count?,What was the flagged repetition count?,6,,"In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were flagged** for further review, while **11 repetitions were unflagged**. 
+
+Flagged repetitions typically indicate that there may have been some irregularities or issues during those specific movements that warrant closer examination. 
+
+If you have any further questions about these measurements or need clarification on any specific aspect, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were flagged** for further review, while **11 repetitions were unflagged**. 
+
+Flagged repetitions typically indicate that there may have been some irregularities or issues during those specific movements that warrant closer examination. 
+
+If you have any further questions about these measurements or need clarification on any specific aspect, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.1313,
+T013,factual,en,How many reps were marked as flagged?,How many reps were marked as flagged?,6,,"In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were marked as flagged**. This means that there were some aspects of those repetitions that may have raised concerns or did not meet certain criteria.
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were marked as flagged**. This means that there were some aspects of those repetitions that may have raised concerns or did not meet certain criteria.
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.0685,
+T014,factual,en,How many repetitions were unflagged?,How many repetitions were unflagged?,11,,"In your recent mobility session, you completed a total of **17 repetitions**. Out of these, **11 repetitions were unflagged**, meaning they met the criteria for successful execution without any issues. The remaining **6 repetitions were flagged**, indicating they may have had some discrepancies or concerns during the performance.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, you completed a total of **17 repetitions**. Out of these, **11 repetitions were unflagged**, meaning they met the criteria for successful execution without any issues. The remaining **6 repetitions were flagged**, indicating they may have had some discrepancies or concerns during the performance.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.4928,
+T015,factual,en,What was the unflagged repetition count?,What was the unflagged repetition count?,11,,"The unflagged repetition count from your recent mobility session is **11**. This means that out of a total of 17 repetitions, 11 were completed without any issues that would require them to be flagged for further review. 
+
+If you have any other questions about your mobility measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","The unflagged repetition count from your recent mobility session is **11**. This means that out of a total of 17 repetitions, 11 were completed without any issues that would require them to be flagged for further review. 
+
+If you have any other questions about your mobility measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,1.9734,
+T016,factual,en,What was my average jerk score?,What was my average jerk score?,0.363,,"Your average jerk score from the recent session is **0.363**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower score generally indicates smoother, more controlled movements, while a higher score suggests more abrupt changes in motion.
+
+### Session Details:
+- **Total Repetitions**: 17
+- **Flagged Repetitions**: 6 (these may indicate irregularities in movement)
+- **Duration**: The average duration of each repetition was about **4.056 seconds**.
+
+### Additional Metrics:
+- **Lift Duration**: Average of **3.271 seconds**.
+- **Hold Duration**: Average of **0.235 seconds**.
+- **Lower Duration**: Average of **0.782 seconds**.
+- **Peak Angular Velocity**: Average of **114.626 degrees/second**.
+
+If you have any further questions about these measurements or how they relate to your mobility, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Your average jerk score from the recent session is **0.363**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower score generally indicates smoother, more controlled movements, while a higher score suggests more abrupt changes in motion.
+
+### Session Details:
+- **Total Repetitions**: 17
+- **Flagged Repetitions**: 6 (these may indicate irregularities in movement)
+- **Duration**: The average duration of each repetition was about **4.056 seconds**.
+
+### Additional Metrics:
+- **Lift Duration**: Average of **3.271 seconds**.
+- **Hold Duration**: Average of **0.235 seconds**.
+- **Lower Duration**: Average of **0.782 seconds**.
+- **Peak Angular Velocity**: Average of **114.626 degrees/second**.
+
+If you have any further questions about these measurements or how they relate to your mobility, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,4.1223,
+T017,factual,en,What was the mean jerk score?,What was the mean jerk score?,0.363,,"The mean jerk score from your recent mobility session is **0.363**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or erratic movements.
+
+### Context of Your Measurement
+- **Minimum Jerk Score:** 0.2
+- **Maximum Jerk Score:** 0.544
+- **Latest Jerk Score:** 0.432
+
+These values show that your mean jerk score falls within a range that reflects variability in movement smoothness during the session. 
+
+If you have any further questions about your mobility metrics or need clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","The mean jerk score from your recent mobility session is **0.363**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or erratic movements.
+
+### Context of Your Measurement
+- **Minimum Jerk Score:** 0.2
+- **Maximum Jerk Score:** 0.544
+- **Latest Jerk Score:** 0.432
+
+These values show that your mean jerk score falls within a range that reflects variability in movement smoothness during the session. 
+
+If you have any further questions about your mobility metrics or need clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.0545,
+T018,factual,en,What was my latest jerk score?,What was my latest jerk score?,0.432,,"Your latest jerk score is **0.432**. 
+
+The jerk score is a measure of how smoothly you move during your exercises. A lower score generally indicates smoother movements, while a higher score suggests more abrupt changes in motion. 
+
+In your recent session, the mean jerk score was **0.363**, with a range from **0.2** to **0.544**. This means your latest score is slightly above the average for that session. 
+
+If you have any further questions about your mobility measurements or need clarification on any other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Your latest jerk score is **0.432**. 
+
+The jerk score is a measure of how smoothly you move during your exercises. A lower score generally indicates smoother movements, while a higher score suggests more abrupt changes in motion. 
+
+In your recent session, the mean jerk score was **0.363**, with a range from **0.2** to **0.544**. This means your latest score is slightly above the average for that session. 
+
+If you have any further questions about your mobility measurements or need clarification on any other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.6547,
+T019,factual,en,Tell me the latest recorded jerk score.,Tell me the latest recorded jerk score.,0.432,,"The latest recorded jerk score from your mobility session is **0.432**. 
+
+The jerk score is a measure that reflects the smoothness of your movements during the exercise. A lower score generally indicates smoother movements, while a higher score may suggest more abrupt changes in motion. 
+
+If you have any further questions about this score or other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","The latest recorded jerk score from your mobility session is **0.432**. 
+
+The jerk score is a measure that reflects the smoothness of your movements during the exercise. A lower score generally indicates smoother movements, while a higher score may suggest more abrupt changes in motion. 
+
+If you have any further questions about this score or other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.4060,
+T020,factual,en,Summarize the latest repetition totals.,Summarize the latest repetition totals.,repetitions=17;left=9;right=8;flagged=6,,"Here’s a summary of your latest mobility session:
+
+- **Total Repetitions**: You completed **17 repetitions** in this session.
+- **Repetitions by Leg**: 
+  - Left leg: **9 repetitions**
+  - Right leg: **8 repetitions**
+- **Flagged Repetitions**: Out of the total, **6 repetitions** were flagged for review, while **11 were unflagged**.
+
+### Duration Metrics:
+- **Overall Duration**: The average time for each repetition was about **4.1 seconds**.
+- **Lift Duration**: On average, you spent **3.3 seconds** lifting.
+- **Hold Duration**: The average hold time was very brief, at about **0.2 seconds**.
+- **Lower Duration**: You spent an average of **0.8 seconds** lowering.
+
+### Movement Metrics:
+- **Shin Lift Angle**: The average angle of your shin during the lift was approximately **92.8 degrees**.
+- **Peak Angular Velocity**: The average peak speed of your movement was around **114.6 degrees per second**.
+- **Jerk Score**: This score, which indicates the smoothness of your movement, averaged **0.36**.
+- **Toe-off Symmetry**: Your toe-off symmetry, which measures the balance between your legs during movement, averaged **0.8**.
+
+These metrics provide insights into your mobility performance during the session. If you have any specific questions about these measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Here’s a summary of your latest mobility session:
+
+- **Total Repetitions**: You completed **17 repetitions** in this session.
+- **Repetitions by Leg**: 
+  - Left leg: **9 repetitions**
+  - Right leg: **8 repetitions**
+- **Flagged Repetitions**: Out of the total, **6 repetitions** were flagged for review, while **11 were unflagged**.
+
+### Duration Metrics:
+- **Overall Duration**: The average time for each repetition was about **4.1 seconds**.
+- **Lift Duration**: On average, you spent **3.3 seconds** lifting.
+- **Hold Duration**: The average hold time was very brief, at about **0.2 seconds**.
+- **Lower Duration**: You spent an average of **0.8 seconds** lowering.
+
+### Movement Metrics:
+- **Shin Lift Angle**: The average angle of your shin during the lift was approximately **92.8 degrees**.
+- **Peak Angular Velocity**: The average peak speed of your movement was around **114.6 degrees per second**.
+- **Jerk Score**: This score, which indicates the smoothness of your movement, averaged **0.36**.
+- **Toe-off Symmetry**: Your toe-off symmetry, which measures the balance between your legs during movement, averaged **0.8**.
+
+These metrics provide insights into your mobility performance during the session. If you have any specific questions about these measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.8541,
+T021,date_specific,en,"How many repetitions did I complete on March 14, 2026?","How many repetitions did I complete on March 14, 2026?",17,,"On March 14, 2026, you completed a total of **17 repetitions** during your mobility session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason that may require further review.
+
+Your repetitions were fairly balanced between your legs, with **9 repetitions** on the left leg and **8 on the right leg**. If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you completed a total of **17 repetitions** during your mobility session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason that may require further review.
+
+Your repetitions were fairly balanced between your legs, with **9 repetitions** on the left leg and **8 on the right leg**. If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.7812,
+T022,date_specific,en,"What was my total rep count on March 14, 2026?","What was my total rep count on March 14, 2026?",17,,"On March 14, 2026, you completed a total of **17 repetitions** during your mobility session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you completed a total of **17 repetitions** during your mobility session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.4059,
+T023,date_specific,en,"How many left leg repetitions did I complete on March 14, 2026?","How many left leg repetitions did I complete on March 14, 2026?",9,,"On March 14, 2026, you completed a total of 17 repetitions, with 9 of those being for your left leg. If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you completed a total of 17 repetitions, with 9 of those being for your left leg. If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.1399,
+T024,date_specific,en,"What was my left-leg rep count on March 14, 2026?","What was my left-leg rep count on March 14, 2026?",9,,"On March 14, 2026, your left leg had a total of **9 repetitions** during your mobility session. Overall, you completed **17 repetitions** across both legs, with the right leg contributing **8 repetitions**. 
+
+If you have any further questions about your mobility measurements or need clarification on any other details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, your left leg had a total of **9 repetitions** during your mobility session. Overall, you completed **17 repetitions** across both legs, with the right leg contributing **8 repetitions**. 
+
+If you have any further questions about your mobility measurements or need clarification on any other details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.5912,
+T025,date_specific,en,"How many right leg repetitions did I complete on March 14, 2026?","How many right leg repetitions did I complete on March 14, 2026?",8,,"On March 14, 2026, you completed a total of 17 repetitions. Specifically, for your right leg, you completed **8 repetitions**. 
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you completed a total of 17 repetitions. Specifically, for your right leg, you completed **8 repetitions**. 
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.5034,
+T026,date_specific,en,"What was my right-leg rep count on March 14, 2026?","What was my right-leg rep count on March 14, 2026?",8,,"On March 14, 2026, your right leg had a total of **8 repetitions** during your mobility session. In that session, you completed a total of **17 repetitions** across both legs, with **9 repetitions** on your left leg. 
+
+If you have any further questions about your mobility measurements or need clarification on any other details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, your right leg had a total of **8 repetitions** during your mobility session. In that session, you completed a total of **17 repetitions** across both legs, with **9 repetitions** on your left leg. 
+
+If you have any further questions about your mobility measurements or need clarification on any other details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.6185,
+T027,date_specific,en,"How many repetitions were flagged on March 14, 2026?","How many repetitions were flagged on March 14, 2026?",6,,"On March 14, 2026, there was one mobility session recorded. During this session, a total of 17 repetitions were performed. Out of these, 6 repetitions were flagged, indicating that they may not have met the expected criteria for proper execution. The remaining 11 repetitions were unflagged, suggesting they were performed correctly.
+
+If you have any further questions about these measurements or need additional information, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, there was one mobility session recorded. During this session, a total of 17 repetitions were performed. Out of these, 6 repetitions were flagged, indicating that they may not have met the expected criteria for proper execution. The remaining 11 repetitions were unflagged, suggesting they were performed correctly.
+
+If you have any further questions about these measurements or need additional information, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.1927,
+T028,date_specific,en,"What was the flagged rep count on March 14, 2026?","What was the flagged rep count on March 14, 2026?",6,,"On March 14, 2026, the flagged repetition count was 6. This means that out of a total of 17 repetitions performed during that session, 6 were identified as needing attention based on specific criteria. The remaining 11 repetitions were considered unflagged, indicating they met the expected performance standards. If you have any further questions about these measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, the flagged repetition count was 6. This means that out of a total of 17 repetitions performed during that session, 6 were identified as needing attention based on specific criteria. The remaining 11 repetitions were considered unflagged, indicating they met the expected performance standards. If you have any further questions about these measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,1.9554,
+T029,date_specific,en,"What was my average jerk score on March 14, 2026?","What was my average jerk score on March 14, 2026?",0.363,,"On March 14, 2026, your average jerk score was **0.363**. 
+
+The jerk score is a measure of how smoothly you move during your exercises. A lower score generally indicates smoother movements, while a higher score may suggest more abrupt or jerky motions. 
+
+If you have any further questions about your mobility measurements or need clarification on any other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, your average jerk score was **0.363**. 
+
+The jerk score is a measure of how smoothly you move during your exercises. A lower score generally indicates smoother movements, while a higher score may suggest more abrupt or jerky motions. 
+
+If you have any further questions about your mobility measurements or need clarification on any other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.8391,
+T030,date_specific,en,"What was the mean jerk score on March 14, 2026?","What was the mean jerk score on March 14, 2026?",0.363,,"On March 14, 2026, the mean jerk score was 0.363. 
+
+The jerk score is a measure that reflects the smoothness of movement during an exercise. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions. 
+
+In this session, there were a total of 17 repetitions, with 6 flagged for potential issues, indicating some movements may not have been performed as smoothly as desired. If you have any further questions about your mobility measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, the mean jerk score was 0.363. 
+
+The jerk score is a measure that reflects the smoothness of movement during an exercise. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions. 
+
+In this session, there were a total of 17 repetitions, with 6 flagged for potential issues, indicating some movements may not have been performed as smoothly as desired. If you have any further questions about your mobility measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.3343,
+T031,date_specific,en,"What was my latest jerk score on March 14, 2026?","What was my latest jerk score on March 14, 2026?",0.432,,"On March 14, 2026, your jerk score was 0.432. 
+
+The jerk score is a measure that reflects the smoothness of your movements during the exercise session. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions. 
+
+In your session on that date, you completed a total of 17 repetitions, with some flagged for potential irregularities. If you have any further questions about your mobility measurements or how they relate to your exercise, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, your jerk score was 0.432. 
+
+The jerk score is a measure that reflects the smoothness of your movements during the exercise session. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions. 
+
+In your session on that date, you completed a total of 17 repetitions, with some flagged for potential irregularities. If you have any further questions about your mobility measurements or how they relate to your exercise, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.9354,
+T032,date_specific,en,"Tell me the latest jerk score from March 14, 2026.","Tell me the latest jerk score from March 14, 2026.",0.432,,"On March 14, 2026, your jerk score was recorded at **0.363**. 
+
+The jerk score is a measure that reflects the smoothness of your movements during the exercise session. A lower jerk score generally indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions.
+
+In your session on that date, you completed a total of **17 repetitions**, with **6 flagged repetitions** that may have had some irregularities. The session included both left and right leg movements, with **9 repetitions** on the left and **8 on the right**.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, your jerk score was recorded at **0.363**. 
+
+The jerk score is a measure that reflects the smoothness of your movements during the exercise session. A lower jerk score generally indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions.
+
+In your session on that date, you completed a total of **17 repetitions**, with **6 flagged repetitions** that may have had some irregularities. The session included both left and right leg movements, with **9 repetitions** on the left and **8 on the right**.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,FAIL,,8.4513,
+T033,date_specific,en,"How many frames were recorded on March 14, 2026?","How many frames were recorded on March 14, 2026?",1347,,"On March 14, 2026, there was one recorded session of mobility measurements. During this session, a total of **1347 frames** were captured. 
+
+In this session, there were **17 repetitions** of the exercise, with **6 repetitions flagged** for some reason, and **11 unflagged**. The repetitions were fairly balanced between the left and right legs, with 9 repetitions on the left and 8 on the right. 
+
+If you have any further questions about the measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, there was one recorded session of mobility measurements. During this session, a total of **1347 frames** were captured. 
+
+In this session, there were **17 repetitions** of the exercise, with **6 repetitions flagged** for some reason, and **11 unflagged**. The repetitions were fairly balanced between the left and right legs, with 9 repetitions on the left and 8 on the right. 
+
+If you have any further questions about the measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,4.3354,
+T034,date_specific,en,"What was the frame count for my March 14, 2026 session?","What was the frame count for my March 14, 2026 session?",1347,,"On March 14, 2026, you had one mobility session. During this session, a total of **1347 frames** were recorded. 
+
+Here are some additional details from that session:
+
+- **Total repetitions**: 17
+- **Flagged repetitions**: 6 (these may indicate some issues during the exercise)
+- **Unflagged repetitions**: 11 (these were completed without any noted issues)
+- **Repetitions by leg**: 9 for the left leg and 8 for the right leg.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you had one mobility session. During this session, a total of **1347 frames** were recorded. 
+
+Here are some additional details from that session:
+
+- **Total repetitions**: 17
+- **Flagged repetitions**: 6 (these may indicate some issues during the exercise)
+- **Unflagged repetitions**: 11 (these were completed without any noted issues)
+- **Repetitions by leg**: 9 for the left leg and 8 for the right leg.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.0597,
+T035,date_specific,en,"Summarize my mobility session on March 14, 2026.","Summarize my mobility session on March 14, 2026.",repetitions=17;left=9;right=8;flagged=6,,"On March 14, 2026, you completed a mobility session that included a total of 17 repetitions. Here’s a summary of the key measurements from that session:
+
+- **Session Timing**: The session started at 1:15 PM.
+- **Repetitions**: Out of the 17 repetitions, 6 were flagged for some reason, while 11 were unflagged.
+- **Leg Involvement**: You performed 9 repetitions with your left leg and 8 with your right leg.
+- **Total Frames**: The session recorded a total of 1,347 frames of data.
+
+### Average Metrics:
+- **Duration**: Each repetition lasted an average of about 4.06 seconds.
+- **Lift Duration**: The time spent lifting was approximately 3.27 seconds.
+- **Hold Duration**: You held the position for about 0.24 seconds on average.
+- **Lower Duration**: Lowering took around 0.78 seconds.
+- **Shin Lift Angle**: The average angle of your shin lift was about 92.85 degrees.
+- **Peak Angular Velocity**: The highest speed reached during the movements was around 114.63 degrees per second.
+- **Jerk Score**: This score, which indicates the smoothness of your movements, was 0.36.
+- **Time of Flight Symmetry**: This metric, which reflects the balance between your legs, was 0.8.
+
+### Latest Metrics:
+For the most recent repetition:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.87
+
+This session provides a snapshot of your mobility performance, highlighting both the average and latest metrics. If you have any specific questions about these measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you completed a mobility session that included a total of 17 repetitions. Here’s a summary of the key measurements from that session:
+
+- **Session Timing**: The session started at 1:15 PM.
+- **Repetitions**: Out of the 17 repetitions, 6 were flagged for some reason, while 11 were unflagged.
+- **Leg Involvement**: You performed 9 repetitions with your left leg and 8 with your right leg.
+- **Total Frames**: The session recorded a total of 1,347 frames of data.
+
+### Average Metrics:
+- **Duration**: Each repetition lasted an average of about 4.06 seconds.
+- **Lift Duration**: The time spent lifting was approximately 3.27 seconds.
+- **Hold Duration**: You held the position for about 0.24 seconds on average.
+- **Lower Duration**: Lowering took around 0.78 seconds.
+- **Shin Lift Angle**: The average angle of your shin lift was about 92.85 degrees.
+- **Peak Angular Velocity**: The highest speed reached during the movements was around 114.63 degrees per second.
+- **Jerk Score**: This score, which indicates the smoothness of your movements, was 0.36.
+- **Time of Flight Symmetry**: This metric, which reflects the balance between your legs, was 0.8.
+
+### Latest Metrics:
+For the most recent repetition:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.87
+
+This session provides a snapshot of your mobility performance, highlighting both the average and latest metrics. If you have any specific questions about these measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,5.1367,
+T036,paraphrase,en,How many reps did I do?,How many reps did I do?,17,,"You completed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason, which could indicate they didn't meet certain movement standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any more questions about your session or need further details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You completed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason, which could indicate they didn't meet certain movement standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any more questions about your session or need further details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.2788,
+T037,paraphrase,en,Tell me my rep total.,Tell me my rep total.,17,,"You completed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any specific questions about your performance or the metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You completed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any specific questions about your performance or the metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.4347,
+T038,paraphrase,en,What's my total number of reps?,What's my total number of reps?,17,,"You completed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the criteria for successful execution, while **6 repetitions** were flagged, indicating they may not have met the expected standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You completed a total of **17 repetitions** during your session on March 14, 2026. Out of these, **11 repetitions** were unflagged, meaning they met the criteria for successful execution, while **6 repetitions** were flagged, indicating they may not have met the expected standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.5734,
+T039,paraphrase,en,Give me the number of repetitions I completed.,Give me the number of repetitions I completed.,17,,"You completed a total of **17 repetitions** during your session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason that may need further review. 
+
+If you have any other questions about your session or the measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","You completed a total of **17 repetitions** during your session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged for some reason that may need further review. 
+
+If you have any other questions about your session or the measurements, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.2444,
+T040,paraphrase,en,How many did I complete with the left leg?,How many did I complete with the left leg?,9,,"I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,FAIL,,4.0307,
+T041,paraphrase,en,Give me my left side repetition count.,Give me my left side repetition count.,9,,"In your recent mobility session, you completed a total of **17 repetitions**. Specifically, for your left side, you performed **9 repetitions**. 
+
+Here’s a brief overview of some additional metrics from your session:
+
+- **Duration of each repetition**: The average time for each repetition was about **4.1 seconds**, with the shortest being **3.2 seconds** and the longest **7.4 seconds**.
+- **Lift duration**: On average, you spent about **3.3 seconds** lifting your leg.
+- **Hold duration**: The average hold time was very brief, around **0.2 seconds**.
+- **Lower duration**: You spent about **0.8 seconds** lowering your leg on average.
+- **Shin lift angle**: The average angle of your shin during the lift was approximately **92.8 degrees**.
+- **Peak angular velocity**: This measures how quickly your leg moved, with an average of **114.6 degrees per second**.
+- **Jerk score**: This indicates the smoothness of your movement, with an average score of **0.36**.
+- **Toe-off symmetry**: This metric, which reflects the balance between your legs, averaged **0.8**.
+
+If you have any further questions about these metrics or need more information, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, you completed a total of **17 repetitions**. Specifically, for your left side, you performed **9 repetitions**. 
+
+Here’s a brief overview of some additional metrics from your session:
+
+- **Duration of each repetition**: The average time for each repetition was about **4.1 seconds**, with the shortest being **3.2 seconds** and the longest **7.4 seconds**.
+- **Lift duration**: On average, you spent about **3.3 seconds** lifting your leg.
+- **Hold duration**: The average hold time was very brief, around **0.2 seconds**.
+- **Lower duration**: You spent about **0.8 seconds** lowering your leg on average.
+- **Shin lift angle**: The average angle of your shin during the lift was approximately **92.8 degrees**.
+- **Peak angular velocity**: This measures how quickly your leg moved, with an average of **114.6 degrees per second**.
+- **Jerk score**: This indicates the smoothness of your movement, with an average score of **0.36**.
+- **Toe-off symmetry**: This metric, which reflects the balance between your legs, averaged **0.8**.
+
+If you have any further questions about these metrics or need more information, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.5786,
+T042,paraphrase,en,How many did I do with the right leg?,How many did I do with the right leg?,8,,"I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,FAIL,,1.9332,
+T043,paraphrase,en,Give me my right side repetition count.,Give me my right side repetition count.,8,,"In your recent session, you completed a total of 17 repetitions. Specifically, for your right side, you performed 8 repetitions. 
+
+Here’s a brief overview of some additional metrics from your session:
+
+- **Duration**: The average time for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest 7.4 seconds.
+- **Lift Duration**: On average, you spent approximately 3.3 seconds lifting, with a maximum of 6.1 seconds.
+- **Hold Duration**: You had a very brief hold time, averaging just 0.2 seconds.
+- **Lower Duration**: The average time spent lowering was about 0.8 seconds.
+
+These metrics can help track your performance and progress over time. If you have any further questions or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent session, you completed a total of 17 repetitions. Specifically, for your right side, you performed 8 repetitions. 
+
+Here’s a brief overview of some additional metrics from your session:
+
+- **Duration**: The average time for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest 7.4 seconds.
+- **Lift Duration**: On average, you spent approximately 3.3 seconds lifting, with a maximum of 6.1 seconds.
+- **Hold Duration**: You had a very brief hold time, averaging just 0.2 seconds.
+- **Lower Duration**: The average time spent lowering was about 0.8 seconds.
+
+These metrics can help track your performance and progress over time. If you have any further questions or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.1813,
+T044,paraphrase,en,How many of my reps got flagged?,How many of my reps got flagged?,6,,"In your recent mobility session, a total of 17 repetitions were recorded. Out of these, 6 repetitions were flagged, which indicates that there may have been some issues with those specific movements. The remaining 11 repetitions were not flagged, suggesting they met the expected criteria.
+
+Here’s a brief overview of your mobility metrics from this session:
+
+- **Duration of Repetitions**: The average time for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest at 7.4 seconds.
+- **Lift Duration**: On average, the lifting phase lasted around 3.3 seconds, with a range from 0 to 6.1 seconds.
+- **Hold Duration**: The average hold time was very brief, at about 0.2 seconds, with some repetitions having no hold at all.
+- **Lower Duration**: This phase averaged about 0.8 seconds, with a minimum of 0.1 seconds.
+- **Shin Lift Angle**: The average angle of your shin during the lift was approximately 92.8 degrees, with a range from 41.1 to 137 degrees.
+- **Peak Angular Velocity**: The average speed of movement was about 114.6 degrees per second, with a minimum of 57.8 and a maximum of 185.3 degrees per second.
+- **Jerk Score**: This metric, which indicates the smoothness of your movements, averaged 0.36, with a range from 0.2 to 0.54.
+- **Toe-off Symmetry**: This score, which reflects the balance between your legs during movement, averaged 0.8, indicating a generally good level of symmetry.
+
+If you have any further questions or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, a total of 17 repetitions were recorded. Out of these, 6 repetitions were flagged, which indicates that there may have been some issues with those specific movements. The remaining 11 repetitions were not flagged, suggesting they met the expected criteria.
+
+Here’s a brief overview of your mobility metrics from this session:
+
+- **Duration of Repetitions**: The average time for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest at 7.4 seconds.
+- **Lift Duration**: On average, the lifting phase lasted around 3.3 seconds, with a range from 0 to 6.1 seconds.
+- **Hold Duration**: The average hold time was very brief, at about 0.2 seconds, with some repetitions having no hold at all.
+- **Lower Duration**: This phase averaged about 0.8 seconds, with a minimum of 0.1 seconds.
+- **Shin Lift Angle**: The average angle of your shin during the lift was approximately 92.8 degrees, with a range from 41.1 to 137 degrees.
+- **Peak Angular Velocity**: The average speed of movement was about 114.6 degrees per second, with a minimum of 57.8 and a maximum of 185.3 degrees per second.
+- **Jerk Score**: This metric, which indicates the smoothness of your movements, averaged 0.36, with a range from 0.2 to 0.54.
+- **Toe-off Symmetry**: This score, which reflects the balance between your legs during movement, averaged 0.8, indicating a generally good level of symmetry.
+
+If you have any further questions or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,4.6739,
+T045,paraphrase,en,Tell me how many movements were flagged.,Tell me how many movements were flagged.,6,,"In your recent mobility session, a total of **6 movements** were flagged for review. Here’s a breakdown of the reasons for these flags:
+
+1. **Movement Smoothness**: This was noted in several repetitions, indicating that the movement may not have been as fluid as expected.
+2. **Hold Duration**: Some movements were flagged because the duration of holding a position was either too short or not present.
+
+### Details of Flagged Movements:
+- **Rep 5**: Flagged for movement smoothness. Duration: 3.3 seconds.
+- **Rep 6**: Flagged for hold duration. Duration: 3.8 seconds.
+- **Rep 7**: Flagged for movement smoothness. Duration: 3.8 seconds.
+- **Rep 13**: Flagged for both hold duration and movement smoothness. Duration: 3.3 seconds.
+- **Rep 15**: Flagged for both hold duration and movement smoothness. Duration: 3.6 seconds.
+- **Rep 17**: Flagged for both hold duration and movement smoothness. Duration: 3.2 seconds.
+
+These flags help identify areas where your movements may need attention or adjustment. If you have any questions about these measurements or how they relate to your mobility, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, a total of **6 movements** were flagged for review. Here’s a breakdown of the reasons for these flags:
+
+1. **Movement Smoothness**: This was noted in several repetitions, indicating that the movement may not have been as fluid as expected.
+2. **Hold Duration**: Some movements were flagged because the duration of holding a position was either too short or not present.
+
+### Details of Flagged Movements:
+- **Rep 5**: Flagged for movement smoothness. Duration: 3.3 seconds.
+- **Rep 6**: Flagged for hold duration. Duration: 3.8 seconds.
+- **Rep 7**: Flagged for movement smoothness. Duration: 3.8 seconds.
+- **Rep 13**: Flagged for both hold duration and movement smoothness. Duration: 3.3 seconds.
+- **Rep 15**: Flagged for both hold duration and movement smoothness. Duration: 3.6 seconds.
+- **Rep 17**: Flagged for both hold duration and movement smoothness. Duration: 3.2 seconds.
+
+These flags help identify areas where your movements may need attention or adjustment. If you have any questions about these measurements or how they relate to your mobility, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,5.9681,
+T046,paraphrase,en,How many reps were not flagged?,How many reps were not flagged?,11,,"In your recent mobility session, a total of **17 repetitions** were performed. Out of these, **11 repetitions were not flagged**, meaning they met the expected criteria for performance without any issues. 
+
+Here’s a quick summary of the key metrics from your session:
+
+- **Total Repetitions**: 17
+- **Flagged Repetitions**: 6
+- **Unflagged Repetitions**: 11
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In your recent mobility session, a total of **17 repetitions** were performed. Out of these, **11 repetitions were not flagged**, meaning they met the expected criteria for performance without any issues. 
+
+Here’s a quick summary of the key metrics from your session:
+
+- **Total Repetitions**: 17
+- **Flagged Repetitions**: 6
+- **Unflagged Repetitions**: 11
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.5981,
+T047,paraphrase,en,Give me my mean movement jerk value.,Give me my mean movement jerk value.,0.363,,"The mean movement jerk value from your mobility session is **0.363**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower jerk score indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky movements. 
+
+### Context of Your Measurement:
+- **Mean Jerk Score**: 0.363
+- **Minimum Jerk Score**: 0.2
+- **Maximum Jerk Score**: 0.544
+- **Latest Jerk Score**: 0.432
+
+These values show the range of your movement smoothness during the session. If you have any further questions about your mobility metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","The mean movement jerk value from your mobility session is **0.363**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower jerk score indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky movements. 
+
+### Context of Your Measurement:
+- **Mean Jerk Score**: 0.363
+- **Minimum Jerk Score**: 0.2
+- **Maximum Jerk Score**: 0.544
+- **Latest Jerk Score**: 0.432
+
+These values show the range of your movement smoothness during the session. If you have any further questions about your mobility metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.2104,
+T048,paraphrase,en,What's the average jerk value for my session?,What's the average jerk value for my session?,0.363,,"The average jerk value for your session is 0.363. 
+
+**What is Jerk?**
+In the context of mobility measurements, ""jerk"" refers to the rate of change of acceleration. It can indicate how smoothly or abruptly movements are made. A lower jerk value typically suggests smoother movements, while a higher value may indicate more abrupt or jerky motions.
+
+**Understanding Your Jerk Score:**
+- **Mean Jerk Score:** 0.363
+- **Minimum Jerk Score:** 0.2
+- **Maximum Jerk Score:** 0.544
+- **Latest Jerk Score:** 0.432
+
+These values show the variability in your movements during the session. The mean score gives an overall idea of your movement smoothness, while the minimum and maximum scores provide context for how much your movements varied.
+
+If you have any further questions about your mobility metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","The average jerk value for your session is 0.363. 
+
+**What is Jerk?**
+In the context of mobility measurements, ""jerk"" refers to the rate of change of acceleration. It can indicate how smoothly or abruptly movements are made. A lower jerk value typically suggests smoother movements, while a higher value may indicate more abrupt or jerky motions.
+
+**Understanding Your Jerk Score:**
+- **Mean Jerk Score:** 0.363
+- **Minimum Jerk Score:** 0.2
+- **Maximum Jerk Score:** 0.544
+- **Latest Jerk Score:** 0.432
+
+These values show the variability in your movements during the session. The mean score gives an overall idea of your movement smoothness, while the minimum and maximum scores provide context for how much your movements varied.
+
+If you have any further questions about your mobility metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.4357,
+T049,paraphrase,en,What's the newest jerk score in my session?,What's the newest jerk score in my session?,0.432,,"The latest jerk score from your session is **0.432**. 
+
+### What is a Jerk Score?
+The jerk score measures the smoothness of your movements during exercises. A lower jerk score indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky motions.
+
+### Context of Your Score
+- **Mean Jerk Score**: The average jerk score during your session was **0.363**.
+- **Range**: Your jerk score ranged from a minimum of **0.2** to a maximum of **0.544**.
+
+This score can help track your movement quality over time, but it’s important to consider it alongside other metrics for a complete picture of your mobility. If you have any questions about how to interpret these scores further, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","The latest jerk score from your session is **0.432**. 
+
+### What is a Jerk Score?
+The jerk score measures the smoothness of your movements during exercises. A lower jerk score indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky motions.
+
+### Context of Your Score
+- **Mean Jerk Score**: The average jerk score during your session was **0.363**.
+- **Range**: Your jerk score ranged from a minimum of **0.2** to a maximum of **0.544**.
+
+This score can help track your movement quality over time, but it’s important to consider it alongside other metrics for a complete picture of your mobility. If you have any questions about how to interpret these scores further, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.9962,
+T050,paraphrase,en,Give me my latest movement jerk value.,Give me my latest movement jerk value.,0.432,,"Your latest jerk score is **0.432**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower jerk score indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky movements.
+
+### Context of Your Score
+- **Mean Jerk Score**: The average jerk score during your session was **0.363**.
+- **Range**: Your jerk score ranged from a minimum of **0.2** to a maximum of **0.544** during the session.
+
+This score can help track your movement quality over time, but it’s important to consider it alongside other metrics for a complete picture of your mobility.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Your latest jerk score is **0.432**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower jerk score indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky movements.
+
+### Context of Your Score
+- **Mean Jerk Score**: The average jerk score during your session was **0.363**.
+- **Range**: Your jerk score ranged from a minimum of **0.2** to a maximum of **0.544** during the session.
+
+This score can help track your movement quality over time, but it’s important to consider it alongside other metrics for a complete picture of your mobility.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,2.5147,
+T051,multilingual,es,¿Cuántas repeticiones completé?,How many repetitions did I complete?,17,,"You completed a total of **17 repetitions** during your session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged, indicating they may not have met certain standards.
+
+Here's a breakdown of your repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your session or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Completaste un total de **17 repeticiones** durante tu sesión. De estas, **11 repeticiones** no fueron señaladas, lo que significa que cumplieron con los criterios esperados, mientras que **6 repeticiones** fueron señaladas, lo que indica que pueden no haber cumplido con ciertos estándares.
+
+Aquí tienes un desglose de tus repeticiones por pierna:
+- **Pierna izquierda:** 9 repeticiones
+- **Pierna derecha:** 8 repeticiones
+
+Si tienes alguna pregunta adicional sobre tu sesión o necesitas más detalles, ¡no dudes en preguntar!
+
+*Este asistente explica la información registrada en el panel y el material de ejercicio aprobado. No proporciona un diagnóstico ni cambia un plan de atención.*",es,True,PASS,,5.0471,
+T052,multilingual,es,¿Cuántas repeticiones hice con la pierna izquierda?,How many repetitions did I do with my left leg?,9,,"In your recent session, you completed a total of **17 repetitions** across both legs. Specifically, you did **9 repetitions with your left leg** and **8 repetitions with your right leg**.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","En tu sesión reciente, completaste un total de **17 repeticiones** en ambas piernas. Específicamente, hiciste **9 repeticiones con tu pierna izquierda** y **8 repeticiones con tu pierna derecha**.
+
+Si tienes alguna pregunta adicional sobre tus mediciones de movilidad o necesitas aclaraciones sobre métricas específicas, ¡no dudes en preguntar!
+
+*Este asistente explica la información registrada en el panel y el material de ejercicio aprobado. No proporciona un diagnóstico ni cambia un plan de atención.*",es,True,PASS,,4.3335,
+T053,multilingual,es,¿Cuántas repeticiones hice con la pierna derecha?,How many repetitions did I do with my right leg?,8,,"In your recent session, you performed a total of **8 repetitions** with your right leg. 
+
+Here’s a brief overview of your session metrics:
+
+- **Total Repetitions**: 17 (combined for both legs)
+- **Right Leg Repetitions**: 8
+- **Left Leg Repetitions**: 9
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","En tu sesión reciente, realizaste un total de **8 repeticiones** con tu pierna derecha.
+
+Aquí tienes un breve resumen de las métricas de tu sesión:
+
+- **Total de Repeticiones**: 17 (combinadas para ambas piernas)
+- **Repeticiones de la Pierna Derecha**: 8
+- **Repeticiones de la Pierna Izquierda**: 9
+
+Si tienes más preguntas sobre tus mediciones de movilidad o necesitas más detalles, ¡no dudes en preguntar!
+
+*Este asistente explica la información registrada en el panel y el material de ejercicio aprobado. No proporciona un diagnóstico ni cambia un plan de atención.*",es,True,PASS,,5.1406,
+T054,multilingual,es,¿Cuántas repeticiones fueron marcadas?,How many repetitions were recorded?,6,,"In your recent mobility session, a total of **17 repetitions** were recorded. This includes **11 unflagged repetitions** and **6 flagged repetitions**. The repetitions were distributed between your legs, with **9 repetitions on the left leg** and **8 on the right leg**.
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","En tu reciente sesión de movilidad, se registraron un total de **17 repeticiones**. Esto incluye **11 repeticiones no señaladas** y **6 repeticiones señaladas**. Las repeticiones se distribuyeron entre tus piernas, con **9 repeticiones en la pierna izquierda** y **8 en la pierna derecha**.
+
+Si tienes alguna pregunta adicional sobre tus mediciones de movilidad o necesitas aclaraciones sobre métricas específicas, ¡no dudes en preguntar!
+
+*Este asistente explica la información registrada en el panel y el material de ejercicio aprobado. No proporciona un diagnóstico ni cambia un plan de atención.*",es,True,PASS,,4.3006,
+T055,multilingual,es,¿Cuál fue mi puntuación media de jerk?,What was my average jerk score?,0.363,,"Your average jerk score from the session is **0.363**. 
+
+### What is a Jerk Score?
+The jerk score measures the smoothness of your movements during exercises. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or erratic movements.
+
+### Session Details:
+- **Total Repetitions:** 17
+- **Flagged Repetitions:** 6 (these may have had irregularities)
+- **Unflagged Repetitions:** 11 (these were performed more smoothly)
+
+### Additional Metrics:
+- **Mean Duration of Each Repetition:** 4.056 seconds
+- **Mean Lift Duration:** 3.271 seconds
+- **Mean Hold Duration:** 0.235 seconds
+- **Mean Lower Duration:** 0.782 seconds
+- **Mean Peak Angular Velocity:** 114.626 degrees/second
+- **Mean Shin Lift Angle:** 92.849 degrees
+- **Toe-off Symmetry:** 0.8 (indicating balance between legs)
+
+If you have any further questions about these measurements or how they relate to your mobility, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Tu puntuación promedio de jerks de la sesión es **0.363**.
+
+### ¿Qué es una Puntuación de Jerk?
+La puntuación de jerk mide la suavidad de tus movimientos durante los ejercicios. Una puntuación de jerk más baja generalmente indica movimientos más suaves y controlados, mientras que una puntuación más alta puede sugerir movimientos más abruptos o erráticos.
+
+### Detalles de la Sesión:
+- **Repeticiones Totales:** 17
+- **Repeticiones Marcadas:** 6 (estas pueden haber tenido irregularidades)
+- **Repeticiones No Marcadas:** 11 (estas se realizaron de manera más suave)
+
+### Métricas Adicionales:
+- **Duración Media de Cada Repetición:** 4.056 segundos
+- **Duración Media de Levantamiento:** 3.271 segundos
+- **Duración Media de Sostenimiento:** 0.235 segundos
+- **Duración Media de Bajada:** 0.782 segundos
+- **Velocidad Angular Media Máxima:** 114.626 grados/segundo
+- **Ángulo Medio de Elevación de Espinilla:** 92.849 grados
+- **Simetría de Despegue del Dedo del Pie:** 0.8 (indicando equilibrio entre las piernas)
+
+Si tienes alguna pregunta adicional sobre estas mediciones o cómo se relacionan con tu movilidad, ¡no dudes en preguntar!
+
+*Este asistente explica la información registrada en el panel y el material de ejercicio aprobado. No proporciona un diagnóstico ni cambia un plan de atención.*",es,True,PASS,,7.4888,
+T056,multilingual,es,¿Cuál fue mi puntuación de jerk más reciente?,What was my most recent jerk score?,0.432,,"Your most recent jerk score is **0.432**. 
+
+The jerk score is a measure of how smoothly you move during your exercises. A lower score generally indicates smoother movements, while a higher score may suggest more abrupt changes in motion. 
+
+In your recent session, the jerk score had a mean of **0.363**, with a range from **0.2** to **0.544** across all repetitions. This means your score of **0.432** is within that range, indicating a level of movement variability during your exercises. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Tu puntuación de sacudidas más reciente es **0.432**.
+
+La puntuación de sacudidas es una medida de cuán suavemente te mueves durante tus ejercicios. Una puntuación más baja generalmente indica movimientos más suaves, mientras que una puntuación más alta puede sugerir cambios más abruptos en el movimiento.
+
+En tu sesión reciente, la puntuación de sacudidas tuvo una media de **0.363**, con un rango de **0.2** a **0.544** en todas las repeticiones. Esto significa que tu puntuación de **0.432** está dentro de ese rango, lo que indica un nivel de variabilidad en el movimiento durante tus ejercicios.
+
+Si tienes más preguntas sobre tus mediciones de movilidad o necesitas aclaraciones sobre métricas específicas, ¡no dudes en preguntar!
+
+*Este asistente explica la información registrada en el panel y el material de ejercicio aprobado. No proporciona un diagnóstico ni cambia un plan de atención.*",es,True,PASS,,5.3139,
+T057,multilingual,te,నేను మొత్తం ఎన్ని రిపిటేషన్లు పూర్తి చేశాను?,How many total repetitions have I completed?,17,,"You have completed a total of **17 repetitions** in your recent mobility session. This includes **11 unflagged repetitions** (which met the expected criteria) and **6 flagged repetitions** (which may need further review). 
+
+If you have any specific questions about your performance or the details of your session, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","మీరు మీ ఇటీవల మోబిలిటీ సెషన్‌లో మొత్తం **17 పునరావృతాలు** పూర్తి చేశారు. ఇందులో **11 అన్‌ఫ్లాగ్డ్ పునరావృతాలు** (అవి ఆశించిన ప్రమాణాలను తీర్చాయి) మరియు **6 ఫ్లాగ్డ్ పునరావృతాలు** (ఇవి మరింత సమీక్ష అవసరం కావచ్చు) ఉన్నాయి.
+
+మీ ప్రదర్శన లేదా మీ సెషన్ యొక్క వివరాల గురించి మీకు ఏవైనా ప్రత్యేక ప్రశ్నలు ఉంటే, అడగడానికి సంకోచించకండి!
+
+*ఈ సహాయకుడు నమోదైన డాష్‌బోర్డ్ సమాచారాన్ని మరియు ఆమోదిత వ్యాయామ పదార్థాన్ని వివరించడానికి ఉంది. ఇది నిర్ధారణను అందించదు లేదా కేర్ ప్లాన్‌ను మార్చదు.*",te,True,PASS,,5.4639,
+T058,multilingual,te,ఎడమ కాలితో నేను ఎన్ని రిపిటేషన్లు చేశాను?,How many repetitions did I do with my left leg?,9,,"During your recent session on March 14, 2026, you completed a total of 17 repetitions, with 9 of those being with your left leg. 
+
+Here’s a brief overview of some key metrics from your session:
+
+- **Total Repetitions**: 17 (9 left leg, 8 right leg)
+- **Duration of Each Repetition**: The average duration was about 4.1 seconds, with the shortest being 3.2 seconds and the longest 7.4 seconds.
+- **Lift Duration**: On average, you spent about 3.3 seconds lifting your leg.
+- **Hold Duration**: You had a very brief hold time, averaging just 0.2 seconds.
+- **Lower Duration**: The average time spent lowering your leg was around 0.8 seconds.
+- **Shin Lift Angle**: The average angle of your shin during the lift was approximately 92.8 degrees.
+- **Peak Angular Velocity**: Your movements reached an average peak speed of about 114.6 degrees per second.
+- **Jerk Score**: This metric, which indicates the smoothness of your movements, averaged 0.36.
+- **Time of Flight Symmetry**: This score, which reflects the balance between your legs, averaged 0.8.
+
+If you have any further questions or need more details about your session, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","మీరు మార్చి 14, 2026న జరిగిన మీ తాజా సెషన్‌లో మొత్తం 17 పునరావృతాలను పూర్తి చేశారు, అందులో 9 మీ ఎడమ కాలు తో ఉన్నాయి.
+
+మీ సెషన్ నుండి కొన్ని ముఖ్యమైన మెట్రిక్‌ల యొక్క సంక్షిప్త సమీక్ష ఇక్కడ ఉంది:
+
+- **మొత్తం పునరావృతాలు**: 17 (9 ఎడమ కాలు, 8 కుడి కాలు)
+- **ప్రతి పునరావృతం యొక్క వ్యవధి**: సగటు వ్యవధి సుమారు 4.1 సెకన్లు, కుదుటి సమయంలో 3.2 సెకన్లు మరియు పొడవైన సమయంలో 7.4 సెకన్లు.
+- **లిఫ్ట్ వ్యవధి**: సగటుగా, మీరు మీ కాలు ఎత్తడానికి సుమారు 3.3 సెకన్లు గడిపారు.
+- **హోల్డ్ వ్యవధి**: మీకు చాలా తక్కువ హోల్డ్ సమయం ఉంది, సగటు 0.2 సెకన్లు.
+- **లోయర్ వ్యవధి**: మీ కాలు కిందకు తగ్గించడానికి గడిపిన సగటు సమయం సుమారు 0.8 సెకన్లు.
+- **షిన్ లిఫ్ట్ కోణం**: లిఫ్ట్ సమయంలో మీ షిన్ యొక్క సగటు కోణం సుమారు 92.8 డిగ్రీలు.
+- **పీక్ యాంగ్యులర్ వేగం**: మీ కదలికలు సగటు పీక్ వేగం సుమారు 114.6 డిగ్రీలు ప్రతి సెకనుకు చేరుకున్నాయి.
+- **జర్క్ స్కోర్**: మీ కదలికల మృదుత్వాన్ని సూచించే ఈ మెట్రిక్ సగటు 0.36.
+- **టైమ్ ఆఫ్ ఫ్లైట్ సిమెట్రీ**: మీ కాళ్ల మధ్య సమతుల్యతను ప్రతిబింబించే ఈ స్కోర్ సగటు 0.8.
+
+మీ సెషన్ గురించి మరింత ప్రశ్నలు లేదా వివరాలు అవసరమైతే, అడగడానికి సంకోచించకండి!
+
+*ఈ సహాయకుడు నమోదైన డాష్‌బోర్డ్ సమాచారాన్ని మరియు ఆమోదించిన వ్యాయామ పదార్థాన్ని వివరిస్తాడు. ఇది నిర్ధారణను అందించదు లేదా కేర్ ప్లాన్‌ను మార్చదు.*",te,True,PASS,,10.9599,
+T059,multilingual,te,కుడి కాలితో నేను ఎన్ని రిపిటేషన్లు చేశాను?,How many repetitions did I do with my right leg?,8,,"In your recent session, you completed a total of **17 repetitions** with your legs. Specifically, you did **8 repetitions with your right leg** and **9 with your left leg**. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","మీ ఇటీవల సెషన్‌లో, మీరు మీ కాళ్లతో మొత్తం **17 పునరావృతాలు** పూర్తి చేశారు. ప్రత్యేకంగా, మీరు **మీ కుడి కాళ్లతో 8 పునరావృతాలు** మరియు **మీ ఎడమ కాళ్లతో 9 పునరావృతాలు** చేశారు.
+
+మీ మొబిలిటీ కొలతల గురించి మీకు మరింత ప్రశ్నలు ఉంటే లేదా ఏ ప్రత్యేకమైన మెట్రిక్‌లపై స్పష్టత అవసరమైతే, అడగడానికి సంకోచించకండి!
+
+*ఈ సహాయకుడు నమోదైన డాష్‌బోర్డ్ సమాచారాన్ని మరియు ఆమోదిత వ్యాయామ పదార్థాన్ని వివరిస్తాడు. ఇది నిర్ధారణను అందించదు లేదా కేర్ ప్లాన్‌ను మార్చదు.*",te,True,PASS,,6.5673,
+T060,multilingual,te,ఎన్ని రిపిటేషన్లు ఫ్లాగ్ చేయబడ్డాయి?,How many repetitions have been flagged?,6,,"In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were flagged** for further review, while **11 repetitions were unflagged**.
+
+Flagged repetitions may indicate that certain aspects of the movements did not meet expected criteria, which could be due to various factors such as form or timing. 
+
+If you have any specific questions about the flagged repetitions or the overall session, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","మీ ఇటీవల మోబిలిటీ సెషన్‌లో, మొత్తం **17 పునరావృతాలు** నమోదయ్యాయి. వీటిలో, **6 పునరావృతాలు పునఃసమీక్ష కోసం గుర్తించబడ్డాయి**, enquanto **11 పునరావృతాలు గుర్తించబడలేదు**.
+
+గుర్తించబడిన పునరావృతాలు, కదలికలCertain అంశాలు ఆశించిన ప్రమాణాలను అందించలేదని సూచించవచ్చు, ఇది రూపం లేదా సమయంలాంటి వివిధ కారకాల కారణంగా ఉండవచ్చు.
+
+గుర్తించబడిన పునరావృతాలు లేదా మొత్తం సెషన్ గురించి మీకు ప్రత్యేకమైన ప్రశ్నలు ఉంటే, అడగడానికి సంకోచించకండి!
+
+*ఈ సహాయకుడు నమోదైన డాష్‌బోర్డ్ సమాచారాన్ని మరియు ఆమోదిత వ్యాయామ పదార్థాన్ని వివరిస్తాడు. ఇది నిర్ధారణను అందించదు లేదా సంరక్షణ ప్రణాళికను మార్చదు.*",te,True,PASS,,4.8125,
+T061,multilingual,te,నా సగటు జెర్క్ స్కోర్ ఎంత?,What is my average jerk score?,0.363,,"Your average jerk score from the recent session is **0.363**. This score reflects the smoothness of your movements during the exercise. A lower jerk score generally indicates smoother, more controlled movements, while a higher score may suggest more abrupt or jerky motions.
+
+Here are some additional details from your session:
+
+- **Total Repetitions**: 17
+- **Flagged Repetitions**: 6 (these may have had irregularities)
+- **Duration of Movements**: The average duration of your movements was about 4.056 seconds.
+- **Lift Duration**: On average, you spent about 3.271 seconds lifting.
+- **Hold Duration**: You had a very brief hold duration, averaging 0.235 seconds.
+- **Lower Duration**: The average time spent lowering was about 0.782 seconds.
+- **Peak Angular Velocity**: Your movements reached an average peak angular velocity of 114.626 degrees per second.
+
+If you have any further questions about these measurements or what they mean, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","మీ తాజా సెషన్ నుండి మీ సగటు జర్క్ స్కోరు **0.363**. ఈ స్కోరు మీ కదలికల సాఫీగా ఉండటాన్ని ప్రతిబింబిస్తుంది. తక్కువ జర్క్ స్కోరు సాధారణంగా సాఫీగా, నియంత్రిత కదలికలను సూచిస్తుంది, అయితే ఎక్కువ స్కోరు ఎక్కువగా అప్రతిహత లేదా జర్కీ కదలికలను సూచించవచ్చు.
+
+మీ సెషన్ నుండి కొన్ని అదనపు వివరాలు:
+
+- **మొత్తం పునరావృతాలు**: 17
+- **ఫ్లాగ్ చేసిన పునరావృతాలు**: 6 (ఇవి అసాధారణతలు కలిగి ఉండవచ్చు)
+- **కదలికల వ్యవధి**: మీ కదలికల సగటు వ్యవధి సుమారు 4.056 సెకన్లు.
+- **లిఫ్ట్ వ్యవధి**: సగటున, మీరు లిఫ్ట్ చేయడంలో సుమారు 3.271 సెకన్లు గడిపారు.
+- **హోల్డ్ వ్యవధి**: మీ హోల్డ్ వ్యవధి చాలా చిన్నది, సగటున 0.235 సెకన్లు.
+- **లోయర్ వ్యవధి**: దిగువకు వెళ్ళడంలో సగటు సమయం సుమారు 0.782 సెకన్లు.
+- **పీక్ యాంగ్యులర్ వేగం**: మీ కదలికలు సగటున 114.626 డిగ్రీలు ప్రతి సెకనుకు పీక్ యాంగ్యులర్ వేగాన్ని చేరుకున్నాయి.
+
+ఈ కొలతల గురించి లేదా అవి ఏమిటి అనే విషయంపై మీకు మరింత ప్రశ్నలు ఉంటే, అడగడానికి సంకోచించకండి!
+
+*ఈ సహాయకుడు నమోదైన డాష్‌బోర్డ్ సమాచారాన్ని మరియు ఆమోదిత వ్యాయామ పదార్థాన్ని వివరిస్తాడు. ఇది నిర్ధారణను అందించదు లేదా కేర్ ప్లాన్‌ను మార్చదు.*",te,True,PASS,,8.0868,
+T062,multilingual,te,నా తాజా జెర్క్ స్కోర్ ఎంత?,What is my latest jerk score?,0.432,,"Your latest jerk score is **0.432**. 
+
+The jerk score is a measure of how smoothly you move during your exercises. A lower score generally indicates smoother movements, while a higher score suggests more abrupt changes in motion. 
+
+In your recent session, the jerk score had a mean of **0.363**, with a range from **0.2** to **0.544** across different measurements. This means your latest score is slightly above the average for this session, indicating that there may have been some less smooth movements during your exercises.
+
+If you have any further questions about your mobility measurements or need clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","మీ తాజా జర్క్ స్కోరు **0.432**.
+
+జర్క్ స్కోరు మీ వ్యాయామాల సమయంలో మీరు ఎంత సాఫీగా కదులుతున్నారో కొలిచే ఒక కొలమానం. తక్కువ స్కోరు సాధారణంగా సాఫీగా కదలికలను సూచిస్తుంది, అయితే ఎక్కువ స్కోరు కదలికలో మరింత ఆకస్మిక మార్పులను సూచిస్తుంది.
+
+మీ ఇటీవల జరిగిన సెషన్‌లో, జర్క్ స్కోరు **0.363** యొక్క సగటు కలిగి ఉంది, ఇది వివిధ కొలతలలో **0.2** నుండి **0.544** వరకు వ్యాప్తి ఉంది. ఇది మీ తాజా స్కోరు ఈ సెషన్‌కు సంబంధించిన సగటు కంటే కొంచెం ఎక్కువగా ఉందని సూచిస్తుంది, ఇది మీ వ్యాయామాల సమయంలో కొంతమంది సాఫీగా కదలికలు లేకపోవచ్చు.
+
+మీ మొబిలిటీ కొలతల గురించి మీకు మరింత ప్రశ్నలు ఉంటే లేదా స్పష్టత అవసరమైతే, అడగడానికి సంకోచించకండి!
+
+*ఈ సహాయకుడు నమోదైన డాష్‌బోర్డ్ సమాచారాన్ని మరియు ఆమోదిత వ్యాయామ పదార్థాన్ని వివరిస్తాడు. ఇది నిర్ధారణను అందించదు లేదా కేర్ ప్లాన్‌ను మార్చదు.*",te,True,PASS,,6.0317,
+T063,multilingual,de,Wie viele Wiederholungen habe ich insgesamt gemacht?,How many repetitions have I done in total?,17,,"You have completed a total of **17 repetitions** in your recent session. This includes **11 unflagged repetitions** and **6 flagged repetitions**. The repetitions were distributed between your legs, with **9 repetitions on the left leg** and **8 on the right leg**.
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Sie haben in Ihrer letzten Sitzung insgesamt **17 Wiederholungen** abgeschlossen. Dies umfasst **11 nicht markierte Wiederholungen** und **6 markierte Wiederholungen**. Die Wiederholungen waren auf Ihre Beine verteilt, mit **9 Wiederholungen am linken Bein** und **8 am rechten Bein**.
+
+Wenn Sie weitere Fragen zu Ihren Mobilitätsmessungen haben oder eine Klärung zu bestimmten Kennzahlen benötigen, zögern Sie nicht zu fragen!
+
+*Dieser Assistent erklärt die aufgezeichneten Dashboard-Informationen und genehmigtes Übungsmaterial. Er stellt keine Diagnose und ändert keinen Behandlungsplan.*",de,True,PASS,,4.5657,
+T064,multilingual,de,Wie viele Wiederholungen habe ich mit dem linken Bein gemacht?,How many repetitions did I do with my left leg?,9,,"In your recent session, you completed a total of **17 repetitions** across both legs. Specifically, you did **9 repetitions with your left leg** and **8 repetitions with your right leg**.
+
+If you have any further questions about your mobility measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In Ihrer letzten Sitzung haben Sie insgesamt **17 Wiederholungen** mit beiden Beinen abgeschlossen. Genauer gesagt haben Sie **9 Wiederholungen mit Ihrem linken Bein** und **8 Wiederholungen mit Ihrem rechten Bein** gemacht.
+
+Wenn Sie weitere Fragen zu Ihren Mobilitätsmessungen haben oder mehr Details benötigen, zögern Sie nicht zu fragen!
+
+*Dieser Assistent erklärt die aufgezeichneten Dashboard-Informationen und genehmigtes Übungsmaterial. Er stellt keine Diagnose und ändert keinen Behandlungsplan.*",de,True,PASS,,3.7626,
+T065,multilingual,de,Wie viele Wiederholungen habe ich mit dem rechten Bein gemacht?,How many repetitions did I do with the right leg?,8,,"In your recent session, you performed a total of **17 repetitions** across both legs. Specifically, for the right leg, you completed **8 repetitions**. 
+
+Here’s a brief overview of some additional metrics from your session:
+
+- **Duration of each repetition**: The average time for each repetition was about **4.1 seconds**, with the shortest being **3.2 seconds** and the longest **7.4 seconds**.
+- **Lift duration**: On average, you spent about **3.3 seconds** lifting your leg.
+- **Hold duration**: The average hold time was very brief, around **0.2 seconds**.
+- **Lower duration**: You spent about **0.8 seconds** lowering your leg on average.
+
+If you have any more questions about your mobility measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In Ihrer letzten Sitzung haben Sie insgesamt **17 Wiederholungen** an beiden Beinen durchgeführt. Konkret haben Sie für das rechte Bein **8 Wiederholungen** abgeschlossen.
+
+Hier ist eine kurze Übersicht über einige zusätzliche Kennzahlen aus Ihrer Sitzung:
+
+- **Dauer jeder Wiederholung**: Die durchschnittliche Zeit für jede Wiederholung betrug etwa **4,1 Sekunden**, wobei die kürzeste **3,2 Sekunden** und die längste **7,4 Sekunden** betrug.
+- **Hebedauer**: Im Durchschnitt haben Sie etwa **3,3 Sekunden** damit verbracht, Ihr Bein zu heben.
+- **Haltedauer**: Die durchschnittliche Haltezeit war sehr kurz, etwa **0,2 Sekunden**.
+- **Absenkdauer**: Sie haben im Durchschnitt etwa **0,8 Sekunden** damit verbracht, Ihr Bein abzusenken.
+
+Wenn Sie weitere Fragen zu Ihren Mobilitätsmessungen haben oder zusätzliche Klarstellungen benötigen, zögern Sie nicht zu fragen!
+
+*Dieser Assistent erklärt die aufgezeichneten Dashboard-Informationen und genehmigtes Übungsmaterial. Er bietet keine Diagnose an und ändert keinen Behandlungsplan.*",de,True,PASS,,6.2387,
+T066,multilingual,de,Wie viele Wiederholungen wurden markiert?,How many repetitions were marked?,6,,"In your recent mobility session, a total of **17 repetitions** were marked. Out of these, **6 repetitions were flagged** for some reason, while **11 repetitions were unflagged**. 
+
+Here's a breakdown of the repetitions by leg:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In Ihrer letzten Mobilitätssitzung wurden insgesamt **17 Wiederholungen** erfasst. Davon wurden **6 Wiederholungen markiert**, während **11 Wiederholungen nicht markiert** wurden.
+
+Hier ist eine Aufschlüsselung der Wiederholungen nach Bein:
+- **Linkes Bein:** 9 Wiederholungen
+- **Rechtes Bein:** 8 Wiederholungen
+
+Wenn Sie weitere Fragen zu Ihren Mobilitätsmessungen haben oder eine Klärung zu bestimmten Kennzahlen benötigen, zögern Sie nicht, zu fragen!
+
+*Dieser Assistent erklärt die erfassten Dashboard-Informationen und genehmigtes Übungsmaterial. Er stellt keine Diagnose oder ändert einen Behandlungsplan.*",de,True,PASS,,4.4058,
+T067,multilingual,de,Wie hoch war mein durchschnittlicher Jerk-Score?,What was my average jerk score?,0.363,,"Your average jerk score from the recent session is **0.363**. 
+
+### What is a Jerk Score?
+The jerk score measures the smoothness of your movements during exercises. A lower jerk score typically indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions.
+
+### Session Details:
+- **Total Repetitions:** 17
+- **Flagged Repetitions:** 6 (these may indicate movements that were less smooth)
+- **Duration of Movements:** The average duration of your movements was about 4.06 seconds.
+
+### Additional Metrics:
+- **Lift Duration:** Average of 3.27 seconds
+- **Hold Duration:** Average of 0.24 seconds
+- **Lower Duration:** Average of 0.78 seconds
+- **Peak Angular Velocity:** Average of 114.63 degrees per second
+
+If you have any further questions about your mobility measurements or need clarification on any specific metric, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Ihr durchschnittlicher Jerk-Score aus der letzten Sitzung beträgt **0,363**.
+
+### Was ist ein Jerk-Score?
+Der Jerk-Score misst die Geschmeidigkeit Ihrer Bewegungen während der Übungen. Ein niedriger Jerk-Score deutet typischerweise auf geschmeidigere, kontrolliertere Bewegungen hin, während ein höherer Score auf abruptere oder weniger koordinierte Aktionen hindeuten kann.
+
+### Sitzungsdetails:
+- **Gesamtwiederholungen:** 17
+- **Markierte Wiederholungen:** 6 (diese können Bewegungen anzeigen, die weniger geschmeidig waren)
+- **Dauer der Bewegungen:** Die durchschnittliche Dauer Ihrer Bewegungen betrug etwa 4,06 Sekunden.
+
+### Zusätzliche Metriken:
+- **Hebedauer:** Durchschnitt von 3,27 Sekunden
+- **Haltedauer:** Durchschnitt von 0,24 Sekunden
+- **Absenkdauer:** Durchschnitt von 0,78 Sekunden
+- **Maximale Winkelgeschwindigkeit:** Durchschnitt von 114,63 Grad pro Sekunde
+
+Wenn Sie weitere Fragen zu Ihren Mobilitätsmessungen haben oder eine Klärung zu einer bestimmten Metrik benötigen, zögern Sie nicht zu fragen!
+
+*Dieser Assistent erklärt die aufgezeichneten Dashboard-Informationen und genehmigtes Übungsmaterial. Er bietet keine Diagnose oder ändert einen Behandlungsplan.*",de,True,PASS,,7.6071,
+T068,multilingual,de,Wie hoch war mein letzter Jerk-Score?,What was my last jerk score?,0.432,,"Your last jerk score was **0.432**. 
+
+The jerk score is a measure of how smoothly your movements are during exercises. A lower score typically indicates smoother movements, while a higher score may suggest more abrupt or jerky motions. 
+
+In your recent session, the jerk score had a mean of **0.363**, with a range from **0.2** to **0.544** across all repetitions. This means your movements varied in smoothness during the session. 
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Ihr letzter Jerk-Score war **0.432**.
+
+Der Jerk-Score ist ein Maß dafür, wie flüssig Ihre Bewegungen während der Übungen sind. Ein niedrigerer Score deutet typischerweise auf flüssigere Bewegungen hin, während ein höherer Score auf abruptere oder ruckartige Bewegungen hindeuten kann.
+
+In Ihrer letzten Sitzung hatte der Jerk-Score einen Durchschnitt von **0.363**, mit einem Bereich von **0.2** bis **0.544** über alle Wiederholungen. Das bedeutet, dass Ihre Bewegungen während der Sitzung in der Flüssigkeit variierten.
+
+Wenn Sie weitere Fragen zu Ihren Mobilitätsmessungen haben oder eine Klärung zu bestimmten Metriken benötigen, zögern Sie nicht zu fragen!
+
+*Dieser Assistent erklärt die aufgezeichneten Dashboard-Informationen und genehmigten Übungsmaterialien. Er bietet keine Diagnose oder ändert einen Behandlungsplan.*",de,True,PASS,,6.3326,
+T069,multilingual,hi,मैंने कुल कितनी पुनरावृत्तियाँ पूरी कीं?,How many total repetitions did I complete?,17,,"You completed a total of **17 repetitions** during your session. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged, indicating they may not have met certain standards.
+
+If you have any further questions about your session or specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","आपने अपने सत्र के दौरान कुल **17 पुनरावृत्तियाँ** पूरी कीं। इनमें से, **11 पुनरावृत्तियाँ** बिना झंडे के थीं, जिसका अर्थ है कि वे अपेक्षित मानदंडों को पूरा करती थीं, जबकि **6 पुनरावृत्तियाँ** झंडे वाली थीं, जो यह संकेत देती हैं कि वे कुछ मानकों को पूरा नहीं कर सकती थीं।
+
+यदि आपके सत्र या विशिष्ट मेट्रिक्स के बारे में कोई और प्रश्न हैं, तो बेझिझक पूछें!
+
+*यह सहायक रिकॉर्ड किए गए डैशबोर्ड जानकारी और स्वीकृत व्यायाम सामग्री को समझाता है। यह निदान प्रदान नहीं करता है या देखभाल योजना में परिवर्तन नहीं करता है।*",hi,True,PASS,,4.8592,
+T070,multilingual,hi,मैंने बाएँ पैर से कितनी पुनरावृत्तियाँ कीं?,How many repetitions did I do with my left leg?,9,,"You completed a total of **9 repetitions** with your left leg during your recent session. This is part of a total of **17 repetitions** across both legs, with **8 repetitions** on your right leg.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","आपने अपने हालिया सत्र के दौरान अपने बाएं पैर के साथ कुल **9 पुनरावृत्तियाँ** पूरी कीं। यह दोनों पैरों में कुल **17 पुनरावृत्तियों** का हिस्सा है, जिसमें आपके दाएं पैर पर **8 पुनरावृत्तियाँ** हैं।
+
+यदि आपके पास आपकी गतिशीलता मापों के बारे में कोई और प्रश्न हैं या किसी विशेष मेट्रिक पर स्पष्टीकरण की आवश्यकता है, तो बेझिझक पूछें!
+
+*यह सहायक रिकॉर्ड किए गए डैशबोर्ड जानकारी और अनुमोदित व्यायाम सामग्री को समझाता है। यह निदान प्रदान नहीं करता है या देखभाल योजना में परिवर्तन नहीं करता है।*",hi,True,PASS,,4.9388,
+T071,multilingual,hi,मैंने दाएँ पैर से कितनी पुनरावृत्तियाँ कीं?,How many repetitions did I do with my right leg?,8,,"In your recent session, you completed a total of **17 repetitions** across both legs. Specifically, you did **8 repetitions with your right leg** and **9 with your left leg**.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","आपके हालिया सत्र में, आपने दोनों पैरों में कुल **17 पुनरावृत्तियाँ** पूरी कीं। विशेष रूप से, आपने **अपने दाहिने पैर से 8 पुनरावृत्तियाँ** कीं और **अपने बाएँ पैर से 9 पुनरावृत्तियाँ** कीं।
+
+यदि आपके पास अपनी गतिशीलता मापों के बारे में कोई और प्रश्न हैं या किसी विशेष मेट्रिक पर स्पष्टीकरण की आवश्यकता है, तो बेझिझक पूछें!
+
+*यह सहायक रिकॉर्ड किए गए डैशबोर्ड जानकारी और अनुमोदित व्यायाम सामग्री को समझाता है। यह निदान प्रदान नहीं करता है या देखभाल योजना में परिवर्तन नहीं करता है।*",hi,True,PASS,,5.5271,
+T072,multilingual,hi,कितनी पुनरावृत्तियाँ फ़्लैग की गईं?,How many repetitions were flagged?,6,,"In your recent mobility session, a total of **17 repetitions** were recorded. Out of these, **6 repetitions were flagged** for further review, while **11 repetitions were unflagged**. 
+
+Flagged repetitions may indicate that certain aspects of the movements did not meet expected criteria, which could be due to various factors such as form, timing, or consistency. 
+
+If you have any specific questions about these measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","आपके हालिया गतिशीलता सत्र में कुल **17 पुनरावृत्तियाँ** दर्ज की गईं। इनमें से, **6 पुनरावृत्तियों को आगे की समीक्षा के लिए चिह्नित किया गया**, जबकि **11 पुनरावृत्तियाँ बिना चिह्नित** रहीं।
+
+चिह्नित पुनरावृत्तियाँ यह संकेत कर सकती हैं कि आंदोलनों के कुछ पहलू अपेक्षित मानदंडों को पूरा नहीं कर रहे थे, जो विभिन्न कारकों जैसे कि रूप, समय, या स्थिरता के कारण हो सकता है।
+
+यदि आपके पास इन मापों के बारे में कोई विशेष प्रश्न हैं या आपको और स्पष्टीकरण की आवश्यकता है, तो बेझिझक पूछें!
+
+*यह सहायक रिकॉर्ड किए गए डैशबोर्ड जानकारी और अनुमोदित व्यायाम सामग्री को समझाता है। यह निदान प्रदान नहीं करता है या देखभाल योजना में परिवर्तन नहीं करता है।*",hi,True,PASS,,5.4446,
+T073,multilingual,hi,मेरा औसत जर्क स्कोर क्या था?,What was my average jerk score?,0.363,,"Your average jerk score from the recent session is **0.363**. 
+
+### What is Jerk Score?
+The jerk score measures the smoothness of your movements. A lower jerk score indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky motions.
+
+### Session Details:
+- **Total Repetitions**: 17
+- **Flagged Repetitions**: 6 (these may indicate movements that were less smooth)
+- **Unflagged Repetitions**: 11
+
+### Additional Metrics:
+- **Mean Duration**: 4.056 seconds (average time for each repetition)
+- **Lift Duration**: 3.271 seconds (time spent lifting)
+- **Hold Duration**: 0.235 seconds (time spent holding the position)
+- **Lower Duration**: 0.782 seconds (time spent lowering)
+- **Peak Angular Velocity**: 114.626 degrees/second (speed of movement)
+- **Toe-off Symmetry**: 0.8 (indicates balance between legs)
+
+If you have any further questions about these measurements or how they relate to your mobility, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","आपका हालिया सत्र से औसत जर्क स्कोर **0.363** है।
+
+### जर्क स्कोर क्या है?
+जर्क स्कोर आपके आंदोलनों की चिकनाई को मापता है। एक निम्न जर्क स्कोर चिकनी, अधिक नियंत्रित आंदोलनों को दर्शाता है, जबकि एक उच्च स्कोर अधिक अचानक या झटकेदार गति का सुझाव देता है।
+
+### सत्र विवरण:
+- **कुल पुनरावृत्तियाँ**: 17
+- **फ्लैग की गई पुनरावृत्तियाँ**: 6 (ये कम चिकनी आंदोलनों को दर्शा सकती हैं)
+- **अनफ्लैग की गई पुनरावृत्तियाँ**: 11
+
+### अतिरिक्त मेट्रिक्स:
+- **औसत अवधि**: 4.056 सेकंड (प्रत्येक पुनरावृत्ति के लिए औसत समय)
+- **लिफ्ट अवधि**: 3.271 सेकंड (उठाने में बिताया गया समय)
+- **होल्ड अवधि**: 0.235 सेकंड (स्थिति को पकड़ने में बिताया गया समय)
+- **लोअर अवधि**: 0.782 सेकंड (नीचे लाने में बिताया गया समय)
+- **पीक एंगुलर वेलोसिटी**: 114.626 डिग्री/सेकंड (गति की गति)
+- **टो-ऑफ सिमेट्री**: 0.8 (पैरों के बीच संतुलन को दर्शाता है)
+
+यदि आपके पास इन मापों के बारे में या ये आपकी गतिशीलता से कैसे संबंधित हैं, इस पर कोई और प्रश्न हैं, तो बेझिझक पूछें!
+
+*यह सहायक रिकॉर्ड की गई डैशबोर्ड जानकारी और अनुमोदित व्यायाम सामग्री को समझाता है। यह निदान प्रदान नहीं करता है या देखभाल योजना में परिवर्तन नहीं करता है।*",hi,True,PASS,,8.9825,
+T074,multilingual,hi,मेरा नवीनतम जर्क स्कोर क्या था?,What was my latest jerk score?,0.432,,"Your latest jerk score is **0.432**. 
+
+The jerk score measures the smoothness of your movements during exercises. A lower score generally indicates smoother, more controlled movements, while a higher score suggests more abrupt or jerky motions. 
+
+In your recent session, the average jerk score was **0.363**, with a range from **0.2** to **0.544**. This means your latest score is slightly above the average, indicating that there may have been some less smooth movements during that session. 
+
+If you have any further questions about your mobility measurements or need clarification on any other metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","आपका नवीनतम जर्क स्कोर **0.432** है।
+
+जर्क स्कोर आपके व्यायाम के दौरान आपके आंदोलनों की चिकनाई को मापता है। एक निम्न स्कोर आमतौर पर चिकनी, अधिक नियंत्रित आंदोलनों को दर्शाता है, जबकि एक उच्च स्कोर अधिक अचानक या झटकेदार गति का सुझाव देता है।
+
+आपके हालिया सत्र में, औसत जर्क स्कोर **0.363** था, जो **0.2** से **0.544** के बीच था। इसका मतलब है कि आपका नवीनतम स्कोर औसत से थोड़ा ऊपर है, जो यह संकेत करता है कि उस सत्र के दौरान कुछ कम चिकनी गति हो सकती है।
+
+यदि आपके पास आपकी गतिशीलता मापों के बारे में कोई और प्रश्न हैं या किसी अन्य मेट्रिक पर स्पष्टीकरण की आवश्यकता है, तो बेझिझक पूछें!
+
+*यह सहायक रिकॉर्ड किए गए डैशबोर्ड जानकारी और अनुमोदित व्यायाम सामग्री को समझाता है। यह निदान प्रदान नहीं करता है या देखभाल योजना में परिवर्तन नहीं करता है।*",hi,True,PASS,,7.6296,
+T075,multilingual,fr,Combien de répétitions ai-je effectuées au total ?,How many repetitions have I completed in total?,17,,"You have completed a total of **17 repetitions** in your recent session. This includes **11 unflagged repetitions** and **6 flagged repetitions**, which may indicate some variations in performance. 
+
+If you have any further questions about your mobility measurements or need clarification on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Vous avez effectué un total de **17 répétitions** lors de votre récente séance. Cela comprend **11 répétitions non signalées** et **6 répétitions signalées**, ce qui peut indiquer certaines variations dans la performance.
+
+Si vous avez d'autres questions concernant vos mesures de mobilité ou si vous avez besoin de précisions sur des métriques spécifiques, n'hésitez pas à demander !
+
+*Cet assistant explique les informations enregistrées sur le tableau de bord et le matériel d'exercice approuvé. Il ne fournit pas de diagnostic ni ne modifie un plan de soins.*",fr,True,PASS,,4.5589,
+T076,multilingual,fr,Combien de répétitions ai-je faites avec la jambe gauche ?,How many repetitions did I do with my left leg?,9,,"In your recent mobility session, you completed a total of **9 repetitions with your left leg**. This is part of a total of **17 repetitions** across both legs, with **8 repetitions** performed with your right leg.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Lors de votre récente séance de mobilité, vous avez effectué un total de **9 répétitions avec votre jambe gauche**. Cela fait partie d'un total de **17 répétitions** sur les deux jambes, avec **8 répétitions** effectuées avec votre jambe droite.
+
+Si vous avez d'autres questions concernant vos mesures de mobilité ou si vous avez besoin de précisions sur des métriques spécifiques, n'hésitez pas à demander !
+
+*Cet assistant explique les informations enregistrées sur le tableau de bord et le matériel d'exercice approuvé. Il ne fournit pas de diagnostic ni ne modifie un plan de soins.*",fr,True,PASS,,5.6246,
+T077,multilingual,fr,Combien de répétitions ai-je faites avec la jambe droite ?,How many repetitions did I do with my right leg?,8,,"In your recent session, you performed a total of **8 repetitions** with your right leg. 
+
+Here's a brief overview of your mobility measurements from that session:
+
+- **Total Repetitions**: 17 (combined for both legs)
+- **Right Leg Repetitions**: 8
+- **Left Leg Repetitions**: 9
+
+If you have any further questions about your mobility metrics or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Lors de votre récente séance, vous avez effectué un total de **8 répétitions** avec votre jambe droite.
+
+Voici un bref aperçu de vos mesures de mobilité de cette séance :
+
+- **Total des Répétitions** : 17 (combinées pour les deux jambes)
+- **Répétitions de la Jambe Droite** : 8
+- **Répétitions de la Jambe Gauche** : 9
+
+Si vous avez d'autres questions concernant vos métriques de mobilité ou si vous avez besoin de plus de détails, n'hésitez pas à demander !
+
+*Cet assistant explique les informations enregistrées sur le tableau de bord et le matériel d'exercice approuvé. Il ne fournit pas de diagnostic ni ne modifie un plan de soins.*",fr,True,PASS,,4.7821,
+T078,multilingual,fr,Combien de répétitions ont été signalées ?,How many repetitions have been reported?,6,,"In the reported session, a total of **17 repetitions** were completed. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria, while **6 repetitions** were flagged, indicating they may have had some issues or did not meet certain standards.
+
+The repetitions were distributed between the legs as follows:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about the session or specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Lors de la session rapportée, un total de **17 répétitions** a été effectué. Parmi celles-ci, **11 répétitions** n'ont pas été signalées, ce qui signifie qu'elles ont répondu aux critères attendus, tandis que **6 répétitions** ont été signalées, indiquant qu'elles ont pu avoir des problèmes ou ne pas répondre à certaines normes.
+
+Les répétitions étaient réparties entre les jambes comme suit :
+- **Jambe gauche :** 9 répétitions
+- **Jambe droite :** 8 répétitions
+
+Si vous avez d'autres questions concernant la session ou des métriques spécifiques, n'hésitez pas à demander !
+
+*Cet assistant explique les informations enregistrées sur le tableau de bord et le matériel d'exercice approuvé. Il ne fournit pas de diagnostic ni ne modifie un plan de soins.*",fr,True,PASS,,6.2638,
+T079,multilingual,fr,Quel était mon score de jerk moyen ?,What was my average jerk score?,0.363,,"Your average jerk score from the recent session is **0.363**. 
+
+### What is a Jerk Score?
+The jerk score measures the smoothness of your movements during exercises. A lower jerk score generally indicates smoother, more controlled movements, while a higher score may suggest more abrupt or jerky motions.
+
+### Breakdown of Your Session:
+- **Total Repetitions**: 17
+- **Flagged Repetitions**: 6 (these may have had irregularities)
+- **Unflagged Repetitions**: 11 (these were performed smoothly)
+- **Duration**: The average duration of each repetition was about 4.056 seconds.
+
+### Additional Metrics:
+- **Lift Duration**: Average of 3.271 seconds.
+- **Hold Duration**: Average of 0.235 seconds.
+- **Lower Duration**: Average of 0.782 seconds.
+- **Peak Angular Velocity**: Average of 114.626 degrees per second.
+
+If you have any further questions about your mobility measurements or need clarification on any specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Votre score moyen de jerk lors de la session récente est de **0.363**.
+
+### Qu'est-ce qu'un score de jerk ?
+Le score de jerk mesure la fluidité de vos mouvements pendant les exercices. Un score de jerk plus bas indique généralement des mouvements plus fluides et plus contrôlés, tandis qu'un score plus élevé peut suggérer des mouvements plus brusques ou saccadés.
+
+### Détails de votre session :
+- **Total des répétitions** : 17
+- **Répétitions signalées** : 6 (celles-ci peuvent avoir présenté des irrégularités)
+- **Répétitions non signalées** : 11 (celles-ci ont été effectuées de manière fluide)
+- **Durée** : La durée moyenne de chaque répétition était d'environ 4.056 secondes.
+
+### Métriques supplémentaires :
+- **Durée de levée** : Moyenne de 3.271 secondes.
+- **Durée de maintien** : Moyenne de 0.235 secondes.
+- **Durée de descente** : Moyenne de 0.782 secondes.
+- **Vitesse angulaire maximale** : Moyenne de 114.626 degrés par seconde.
+
+Si vous avez d'autres questions concernant vos mesures de mobilité ou si vous avez besoin de précisions sur des métriques spécifiques, n'hésitez pas à demander !
+
+*Cet assistant explique les informations enregistrées sur le tableau de bord et le matériel d'exercice approuvé. Il ne fournit pas de diagnostic ni ne modifie un plan de soins.*",fr,True,PASS,,7.1647,
+T080,multilingual,fr,Quel était mon dernier score de jerk ?,What was my last jerk score?,0.432,,"Your last jerk score was **0.432**. 
+
+The jerk score is a measure of how smoothly you move during your exercises. A lower score typically indicates smoother movements, while a higher score may suggest more abrupt changes in motion. 
+
+In your recent session, the jerk score had a mean of **0.363**, with a range from **0.2** to **0.544** across different repetitions. This means your movements varied in smoothness during the session. 
+
+If you have any further questions about your mobility measurements or need clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Votre dernier score de jerk était de **0.432**.
+
+Le score de jerk est une mesure de la fluidité de vos mouvements pendant vos exercices. Un score plus bas indique généralement des mouvements plus fluides, tandis qu'un score plus élevé peut suggérer des changements de mouvement plus brusques.
+
+Lors de votre récente séance, le score de jerk avait une moyenne de **0.363**, avec une plage allant de **0.2** à **0.544** à travers différentes répétitions. Cela signifie que vos mouvements variaient en fluidité pendant la séance.
+
+Si vous avez d'autres questions concernant vos mesures de mobilité ou si vous avez besoin de clarifications, n'hésitez pas à demander !
+
+*Cet assistant explique les informations enregistrées sur le tableau de bord et le matériel d'exercice approuvé. Il ne fournit pas de diagnostic ni ne modifie un plan de soins.*",fr,True,PASS,,5.6663,
+T081,authorization,en,Show my mobility summary.,Show my mobility summary.,ALLOW,allow,"I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,,PASS,4.5782,
+T082,authorization,en,Show the mobility summary for P1001.,Show the mobility summary for P1001.,ALLOW,allow,"I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,,PASS,1.5679,
+T083,authorization,en,Show the mobility summary for P1001.,Show the mobility summary for P1001.,ALLOW,allow,"I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","I do not have enough recorded information to answer that reliably.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,,PASS,1.9319,
+T084,authorization,en,How many repetitions did P1001 complete?,How many repetitions did P1001 complete?,ALLOW,allow,"In the recent mobility session, the patient completed a total of **17 repetitions**. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria for performance, while **6 repetitions** were flagged, indicating they may not have met certain standards.
+
+The repetitions were distributed between the legs as follows:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about the session or need more details on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","In the recent mobility session, the patient completed a total of **17 repetitions**. Out of these, **11 repetitions** were unflagged, meaning they met the expected criteria for performance, while **6 repetitions** were flagged, indicating they may not have met certain standards.
+
+The repetitions were distributed between the legs as follows:
+- **Left leg:** 9 repetitions
+- **Right leg:** 8 repetitions
+
+If you have any further questions about the session or need more details on specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,,PASS,2.3046,
+T085,authorization,en,Show P1001's latest mobility session.,Show P1001's latest mobility session.,ALLOW,allow,"Here’s a summary of the latest mobility session for the patient:
+
+### Session Overview
+- **Session ID:** session_20260314_131518
+- **Date and Time:** March 14, 2026, at 1:15 PM
+- **Total Repetitions:** 17
+  - **Left Leg Repetitions:** 9
+  - **Right Leg Repetitions:** 8
+- **Flagged Repetitions:** 6 (these may indicate issues during the session)
+- **Unflagged Repetitions:** 11
+
+### Duration Metrics
+- **Mean Duration per Repetition:** Approximately 4.06 seconds
+- **Minimum Duration:** 3.20 seconds
+- **Maximum Duration:** 7.41 seconds
+- **Latest Duration:** 3.20 seconds
+
+### Lift, Hold, and Lower Durations
+- **Lift Duration:** 
+  - Mean: 3.27 seconds
+  - Latest: 3.00 seconds
+- **Hold Duration:** 
+  - Mean: 0.24 seconds
+  - Latest: 0.00 seconds (indicating no hold was recorded in the latest repetition)
+- **Lower Duration:** 
+  - Mean: 0.78 seconds
+  - Latest: 0.20 seconds
+
+### Shin Lift Angle
+- **Mean Angle:** 92.85 degrees
+- **Latest Angle:** 82.13 degrees
+
+### Peak Angular Velocity
+- **Mean Velocity:** 114.63 degrees/second
+- **Latest Velocity:** 100.87 degrees/second
+
+### Jerk Score
+- **Mean Score:** 0.36
+- **Latest Score:** 0.43 (this score measures the smoothness of movement; higher values may indicate less smoothness)
+
+### Toe-Off Symmetry
+- **Mean Symmetry:** 0.80
+- **Latest Symmetry:** 0.87 (this metric indicates how evenly weight is distributed between legs during movement)
+
+### Summary
+The session data shows a range of metrics related to the patient's mobility performance. The flagged repetitions suggest there may have been some challenges during the session. The various durations and angles provide insight into the patient's movement patterns, which can be useful for tracking progress over time.
+
+If you have any specific questions about these metrics or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Here’s a summary of the latest mobility session for the patient:
+
+### Session Overview
+- **Session ID:** session_20260314_131518
+- **Date and Time:** March 14, 2026, at 1:15 PM
+- **Total Repetitions:** 17
+  - **Left Leg Repetitions:** 9
+  - **Right Leg Repetitions:** 8
+- **Flagged Repetitions:** 6 (these may indicate issues during the session)
+- **Unflagged Repetitions:** 11
+
+### Duration Metrics
+- **Mean Duration per Repetition:** Approximately 4.06 seconds
+- **Minimum Duration:** 3.20 seconds
+- **Maximum Duration:** 7.41 seconds
+- **Latest Duration:** 3.20 seconds
+
+### Lift, Hold, and Lower Durations
+- **Lift Duration:** 
+  - Mean: 3.27 seconds
+  - Latest: 3.00 seconds
+- **Hold Duration:** 
+  - Mean: 0.24 seconds
+  - Latest: 0.00 seconds (indicating no hold was recorded in the latest repetition)
+- **Lower Duration:** 
+  - Mean: 0.78 seconds
+  - Latest: 0.20 seconds
+
+### Shin Lift Angle
+- **Mean Angle:** 92.85 degrees
+- **Latest Angle:** 82.13 degrees
+
+### Peak Angular Velocity
+- **Mean Velocity:** 114.63 degrees/second
+- **Latest Velocity:** 100.87 degrees/second
+
+### Jerk Score
+- **Mean Score:** 0.36
+- **Latest Score:** 0.43 (this score measures the smoothness of movement; higher values may indicate less smoothness)
+
+### Toe-Off Symmetry
+- **Mean Symmetry:** 0.80
+- **Latest Symmetry:** 0.87 (this metric indicates how evenly weight is distributed between legs during movement)
+
+### Summary
+The session data shows a range of metrics related to the patient's mobility performance. The flagged repetitions suggest there may have been some challenges during the session. The various durations and angles provide insight into the patient's movement patterns, which can be useful for tracking progress over time.
+
+If you have any specific questions about these metrics or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,,PASS,5.5006,
+T086,authorization,en,Show the mobility summary for P9999.,Show the mobility summary for P9999.,DENY,deny,You are not authorized to access the selected patient record.,You are not authorized to access the selected patient record.,en,True,,PASS,0.6706,
+T087,authorization,en,How many repetitions did P9999 complete?,How many repetitions did P9999 complete?,DENY,deny,You are not authorized to access the selected patient record.,You are not authorized to access the selected patient record.,en,True,,PASS,0.4651,
+T088,authorization,en,Show P9999's latest mobility session.,Show P9999's latest mobility session.,DENY,deny,You are not authorized to access the selected patient record.,You are not authorized to access the selected patient record.,en,True,,PASS,0.5440,
+T089,authorization,en,Show the mobility summary for P9999.,Show the mobility summary for P9999.,DENY,deny,You are not authorized to access the selected patient record.,You are not authorized to access the selected patient record.,en,True,,PASS,0.5737,
+T090,authorization,en,How many reps did P9999 complete?,How many reps did P9999 complete?,DENY,deny,You are not authorized to access the selected patient record.,You are not authorized to access the selected patient record.,en,True,,PASS,1.3842,
+T091,summary,en,Summarize my latest mobility session.,Summarize my latest mobility session.,repetitions=17;left=9;right=8;flagged=6,,"Here’s a summary of your latest mobility session from March 14, 2026:
+
+- **Total Repetitions**: You completed 17 repetitions in total, with 9 on your left leg and 8 on your right leg.
+- **Session Duration**: The average duration for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest 7.4 seconds.
+- **Lift Duration**: On average, you spent approximately 3.3 seconds lifting, with a minimum of 0 seconds and a maximum of 6.1 seconds.
+- **Hold Duration**: The average hold time was very brief, around 0.2 seconds, with some repetitions having no hold time at all.
+- **Lower Duration**: You spent about 0.8 seconds lowering your leg on average, with a minimum of 0.1 seconds.
+- **Shin Lift Angle**: The average angle of your shin lift was about 92.8 degrees, with a range from 41.1 to 137 degrees.
+- **Peak Angular Velocity**: Your peak angular velocity averaged 114.6 degrees per second, with a minimum of 57.8 and a maximum of 185.3 degrees per second.
+- **Jerk Score**: This score, which reflects the smoothness of your movements, averaged 0.36, ranging from 0.2 to 0.54.
+- **Toe-off Symmetry**: Your toe-off symmetry, which indicates how evenly you are using both legs, averaged 0.8, with a range from 0.0 to 1.0.
+
+During this session, 6 of your repetitions were flagged for some reason, while 11 were unflagged. 
+
+If you have any specific questions about these measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Here’s a summary of your latest mobility session from March 14, 2026:
+
+- **Total Repetitions**: You completed 17 repetitions in total, with 9 on your left leg and 8 on your right leg.
+- **Session Duration**: The average duration for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest 7.4 seconds.
+- **Lift Duration**: On average, you spent approximately 3.3 seconds lifting, with a minimum of 0 seconds and a maximum of 6.1 seconds.
+- **Hold Duration**: The average hold time was very brief, around 0.2 seconds, with some repetitions having no hold time at all.
+- **Lower Duration**: You spent about 0.8 seconds lowering your leg on average, with a minimum of 0.1 seconds.
+- **Shin Lift Angle**: The average angle of your shin lift was about 92.8 degrees, with a range from 41.1 to 137 degrees.
+- **Peak Angular Velocity**: Your peak angular velocity averaged 114.6 degrees per second, with a minimum of 57.8 and a maximum of 185.3 degrees per second.
+- **Jerk Score**: This score, which reflects the smoothness of your movements, averaged 0.36, ranging from 0.2 to 0.54.
+- **Toe-off Symmetry**: Your toe-off symmetry, which indicates how evenly you are using both legs, averaged 0.8, with a range from 0.0 to 1.0.
+
+During this session, 6 of your repetitions were flagged for some reason, while 11 were unflagged. 
+
+If you have any specific questions about these measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,4.7957,
+T092,summary,en,Give me a short summary of my latest session.,Give me a short summary of my latest session.,repetitions=17;left=9;right=8;flagged=6,,"Here's a summary of your latest mobility session from March 14, 2026:
+
+- **Total Repetitions**: You completed 17 repetitions in total, with 9 on your left leg and 8 on your right leg.
+- **Duration**: The average duration for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest 7.4 seconds.
+- **Lift Duration**: On average, you spent approximately 3.3 seconds lifting, with a minimum of 0 seconds and a maximum of 6.1 seconds.
+- **Hold Duration**: The average hold time was very brief, around 0.2 seconds, with some repetitions having no hold time at all.
+- **Lower Duration**: You spent an average of 0.8 seconds lowering, with a minimum of 0.1 seconds.
+- **Shin Lift Angle**: The average angle of your shin lift was about 92.8 degrees, with a range from 41.1 to 137 degrees.
+- **Peak Angular Velocity**: Your peak angular velocity averaged 114.6 degrees per second, with a minimum of 57.8 and a maximum of 185.3 degrees per second.
+- **Jerk Score**: This score, which indicates the smoothness of your movements, averaged 0.36, with a range from 0.2 to 0.54.
+- **Toe-Off Symmetry**: Your toe-off symmetry, which reflects the balance between your legs during movement, averaged 0.8, indicating good symmetry.
+
+Out of the 17 repetitions, 6 were flagged for some reason, while 11 were unflagged. 
+
+If you have any specific questions about these metrics or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Here's a summary of your latest mobility session from March 14, 2026:
+
+- **Total Repetitions**: You completed 17 repetitions in total, with 9 on your left leg and 8 on your right leg.
+- **Duration**: The average duration for each repetition was about 4.1 seconds, with the shortest being 3.2 seconds and the longest 7.4 seconds.
+- **Lift Duration**: On average, you spent approximately 3.3 seconds lifting, with a minimum of 0 seconds and a maximum of 6.1 seconds.
+- **Hold Duration**: The average hold time was very brief, around 0.2 seconds, with some repetitions having no hold time at all.
+- **Lower Duration**: You spent an average of 0.8 seconds lowering, with a minimum of 0.1 seconds.
+- **Shin Lift Angle**: The average angle of your shin lift was about 92.8 degrees, with a range from 41.1 to 137 degrees.
+- **Peak Angular Velocity**: Your peak angular velocity averaged 114.6 degrees per second, with a minimum of 57.8 and a maximum of 185.3 degrees per second.
+- **Jerk Score**: This score, which indicates the smoothness of your movements, averaged 0.36, with a range from 0.2 to 0.54.
+- **Toe-Off Symmetry**: Your toe-off symmetry, which reflects the balance between your legs during movement, averaged 0.8, indicating good symmetry.
+
+Out of the 17 repetitions, 6 were flagged for some reason, while 11 were unflagged. 
+
+If you have any specific questions about these metrics or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,7.3468,
+T093,summary,en,Summarize my repetition performance.,Summarize my repetition performance.,repetitions=17;left=9;right=8;flagged=6,,"Here's a summary of your repetition performance based on the recent session:
+
+### Overall Performance
+- **Total Repetitions:** You completed **17 repetitions** in this session.
+- **Flagged Repetitions:** Out of these, **6 repetitions** were flagged for review, while **11 were unflagged**.
+
+### Repetitions by Leg
+- **Left Leg:** 9 repetitions
+- **Right Leg:** 8 repetitions
+
+### Duration Metrics
+- **Mean Duration:** Each repetition lasted an average of **4.06 seconds**.
+- **Lift Duration:** The average time spent lifting was **3.27 seconds**.
+- **Hold Duration:** On average, you held the position for **0.24 seconds**.
+- **Lower Duration:** The average time for lowering was **0.78 seconds**.
+
+### Angles and Velocity
+- **Shin Lift Angle:** The average angle of your shin during the lift was approximately **92.85 degrees**.
+- **Peak Angular Velocity:** The average peak speed during the movement was about **114.63 degrees per second**.
+
+### Jerk Score and Symmetry
+- **Jerk Score:** This measures the smoothness of your movement, with an average score of **0.36**.
+- **Toe-Off Symmetry:** Your symmetry during the toe-off phase averaged **0.80**, indicating a relatively balanced movement between legs.
+
+### Summary of Latest Measurements
+- **Latest Duration:** The most recent repetition lasted **3.20 seconds**.
+- **Latest Lift Duration:** The last lift took **3.00 seconds**.
+- **Latest Hold Duration:** There was no hold time recorded in the latest repetition.
+- **Latest Lower Duration:** The last lowering phase lasted **0.20 seconds**.
+- **Latest Shin Lift Angle:** The most recent angle was **82.13 degrees**.
+- **Latest Peak Angular Velocity:** The last peak speed recorded was **100.87 degrees per second**.
+- **Latest Jerk Score:** The most recent jerk score was **0.43**.
+- **Latest Toe-Off Symmetry:** The latest symmetry score was **0.87**.
+
+This data provides insights into your performance during the session. If you have any specific questions or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Here's a summary of your repetition performance based on the recent session:
+
+### Overall Performance
+- **Total Repetitions:** You completed **17 repetitions** in this session.
+- **Flagged Repetitions:** Out of these, **6 repetitions** were flagged for review, while **11 were unflagged**.
+
+### Repetitions by Leg
+- **Left Leg:** 9 repetitions
+- **Right Leg:** 8 repetitions
+
+### Duration Metrics
+- **Mean Duration:** Each repetition lasted an average of **4.06 seconds**.
+- **Lift Duration:** The average time spent lifting was **3.27 seconds**.
+- **Hold Duration:** On average, you held the position for **0.24 seconds**.
+- **Lower Duration:** The average time for lowering was **0.78 seconds**.
+
+### Angles and Velocity
+- **Shin Lift Angle:** The average angle of your shin during the lift was approximately **92.85 degrees**.
+- **Peak Angular Velocity:** The average peak speed during the movement was about **114.63 degrees per second**.
+
+### Jerk Score and Symmetry
+- **Jerk Score:** This measures the smoothness of your movement, with an average score of **0.36**.
+- **Toe-Off Symmetry:** Your symmetry during the toe-off phase averaged **0.80**, indicating a relatively balanced movement between legs.
+
+### Summary of Latest Measurements
+- **Latest Duration:** The most recent repetition lasted **3.20 seconds**.
+- **Latest Lift Duration:** The last lift took **3.00 seconds**.
+- **Latest Hold Duration:** There was no hold time recorded in the latest repetition.
+- **Latest Lower Duration:** The last lowering phase lasted **0.20 seconds**.
+- **Latest Shin Lift Angle:** The most recent angle was **82.13 degrees**.
+- **Latest Peak Angular Velocity:** The last peak speed recorded was **100.87 degrees per second**.
+- **Latest Jerk Score:** The most recent jerk score was **0.43**.
+- **Latest Toe-Off Symmetry:** The latest symmetry score was **0.87**.
+
+This data provides insights into your performance during the session. If you have any specific questions or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,6.1573,
+T094,summary,en,"Give me the total, left, right, and flagged repetition counts.","Give me the total, left, right, and flagged repetition counts.",repetitions=17;left=9;right=8;flagged=6,,"Here’s a summary of your mobility measurements from the session:
+
+- **Total Repetitions**: 17
+- **Left Leg Repetitions**: 9
+- **Right Leg Repetitions**: 8
+- **Flagged Repetitions**: 6 (These may indicate repetitions that did not meet certain criteria for quality or performance.)
+
+If you have any further questions about these measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Here’s a summary of your mobility measurements from the session:
+
+- **Total Repetitions**: 17
+- **Left Leg Repetitions**: 9
+- **Right Leg Repetitions**: 8
+- **Flagged Repetitions**: 6 (These may indicate repetitions that did not meet certain criteria for quality or performance.)
+
+If you have any further questions about these measurements or need more details, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,4.4021,
+T095,summary,en,Tell me my repetition totals and jerk scores.,Tell me my repetition totals and jerk scores.,repetitions=17;mean_jerk=0.363;latest_jerk=0.432,,"Here’s a summary of your mobility measurements from your recent session:
+
+### Repetition Totals
+- **Total Repetitions:** 17
+  - **Left Leg Repetitions:** 9
+  - **Right Leg Repetitions:** 8
+- **Flagged Repetitions:** 6 (these may need further review)
+- **Unflagged Repetitions:** 11
+
+### Jerk Score
+- **Mean Jerk Score:** 0.363
+  - **Latest Jerk Score:** 0.432
+  - **Range:** Minimum of 0.2 and a maximum of 0.544
+
+### Additional Metrics
+- **Duration of Activity:** Average of about 4.06 seconds per repetition.
+- **Lift Duration:** Average of about 3.27 seconds.
+- **Hold Duration:** Average of about 0.24 seconds.
+- **Lower Duration:** Average of about 0.78 seconds.
+- **Shin Lift Angle:** Average of about 92.85 degrees.
+- **Peak Angular Velocity:** Average of about 114.63 degrees per second.
+- **Time of Flight Symmetry:** Average of about 0.8.
+
+These metrics provide insights into your mobility performance during the session. If you have any specific questions about these measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","Here’s a summary of your mobility measurements from your recent session:
+
+### Repetition Totals
+- **Total Repetitions:** 17
+  - **Left Leg Repetitions:** 9
+  - **Right Leg Repetitions:** 8
+- **Flagged Repetitions:** 6 (these may need further review)
+- **Unflagged Repetitions:** 11
+
+### Jerk Score
+- **Mean Jerk Score:** 0.363
+  - **Latest Jerk Score:** 0.432
+  - **Range:** Minimum of 0.2 and a maximum of 0.544
+
+### Additional Metrics
+- **Duration of Activity:** Average of about 4.06 seconds per repetition.
+- **Lift Duration:** Average of about 3.27 seconds.
+- **Hold Duration:** Average of about 0.24 seconds.
+- **Lower Duration:** Average of about 0.78 seconds.
+- **Shin Lift Angle:** Average of about 92.85 degrees.
+- **Peak Angular Velocity:** Average of about 114.63 degrees per second.
+- **Time of Flight Symmetry:** Average of about 0.8.
+
+These metrics provide insights into your mobility performance during the session. If you have any specific questions about these measurements or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,4.5742,
+T096,summary,en,Give me a session summary including average and latest jerk score.,Give me a session summary including average and latest jerk score.,repetitions=17;mean_jerk=0.363;latest_jerk=0.432,,"### Session Summary
+
+**Session Date and Time:** March 14, 2026, at 1:15 PM  
+**Total Repetitions:** 17  
+**Flagged Repetitions:** 6 (indicating some repetitions may have had issues)  
+**Repetitions by Leg:** Left - 9, Right - 8  
+
+#### Jerk Score
+- **Average Jerk Score:** 0.363
+- **Latest Jerk Score:** 0.432
+
+### Explanation of Jerk Score
+The jerk score measures the smoothness of your movements during the session. A lower jerk score generally indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions. 
+
+In this session, your average jerk score was 0.363, while the latest score recorded was 0.432. This indicates some variability in your movement smoothness throughout the session.
+
+If you have any further questions or need more details about specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","### Session Summary
+
+**Session Date and Time:** March 14, 2026, at 1:15 PM  
+**Total Repetitions:** 17  
+**Flagged Repetitions:** 6 (indicating some repetitions may have had issues)  
+**Repetitions by Leg:** Left - 9, Right - 8  
+
+#### Jerk Score
+- **Average Jerk Score:** 0.363
+- **Latest Jerk Score:** 0.432
+
+### Explanation of Jerk Score
+The jerk score measures the smoothness of your movements during the session. A lower jerk score generally indicates smoother, more controlled movements, while a higher score may suggest more abrupt or less coordinated actions. 
+
+In this session, your average jerk score was 0.363, while the latest score recorded was 0.432. This indicates some variability in your movement smoothness throughout the session.
+
+If you have any further questions or need more details about specific metrics, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.1168,
+T097,summary,en,"Summarize my March 14, 2026 session.","Summarize my March 14, 2026 session.",repetitions=17;left=9;right=8;flagged=6,,"On March 14, 2026, you participated in a mobility session that included a total of 17 repetitions. Here’s a summary of the key measurements from that session:
+
+- **Total Repetitions**: 17
+  - **Flagged Repetitions**: 6 (these may indicate some issues during the exercise)
+  - **Unflagged Repetitions**: 11 (these were completed without any flags)
+  - **Repetitions by Leg**: 9 with the left leg and 8 with the right leg.
+
+### Duration Metrics:
+- **Average Duration per Repetition**: Approximately 4.06 seconds.
+- **Lift Duration**: About 3.27 seconds (the time spent lifting).
+- **Hold Duration**: 0.24 seconds (the time spent holding the lifted position).
+- **Lower Duration**: 0.78 seconds (the time spent lowering).
+
+### Movement Angles and Velocity:
+- **Shin Lift Angle**: Average of 92.85 degrees, indicating the angle of your shin during the lift.
+- **Peak Angular Velocity**: 114.63 degrees per second, reflecting the speed of movement.
+- **Jerk Score**: 0.36, which measures the smoothness of your movements (lower scores indicate smoother movements).
+- **Time of Flight Symmetry**: 0.8, suggesting a good balance in the time spent on each leg during the exercise.
+
+### Latest Metrics:
+The most recent measurements from your session showed:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.87
+
+This session indicates a mix of performance, with some repetitions flagged for potential issues. If you have any specific questions about these metrics or how they relate to your mobility goals, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you participated in a mobility session that included a total of 17 repetitions. Here’s a summary of the key measurements from that session:
+
+- **Total Repetitions**: 17
+  - **Flagged Repetitions**: 6 (these may indicate some issues during the exercise)
+  - **Unflagged Repetitions**: 11 (these were completed without any flags)
+  - **Repetitions by Leg**: 9 with the left leg and 8 with the right leg.
+
+### Duration Metrics:
+- **Average Duration per Repetition**: Approximately 4.06 seconds.
+- **Lift Duration**: About 3.27 seconds (the time spent lifting).
+- **Hold Duration**: 0.24 seconds (the time spent holding the lifted position).
+- **Lower Duration**: 0.78 seconds (the time spent lowering).
+
+### Movement Angles and Velocity:
+- **Shin Lift Angle**: Average of 92.85 degrees, indicating the angle of your shin during the lift.
+- **Peak Angular Velocity**: 114.63 degrees per second, reflecting the speed of movement.
+- **Jerk Score**: 0.36, which measures the smoothness of your movements (lower scores indicate smoother movements).
+- **Time of Flight Symmetry**: 0.8, suggesting a good balance in the time spent on each leg during the exercise.
+
+### Latest Metrics:
+The most recent measurements from your session showed:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.87
+
+This session indicates a mix of performance, with some repetitions flagged for potential issues. If you have any specific questions about these metrics or how they relate to your mobility goals, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,5.7046,
+T098,summary,en,"Give me the March 14, 2026 repetition breakdown.","Give me the March 14, 2026 repetition breakdown.",repetitions=17;left=9;right=8;flagged=6,,"On March 14, 2026, you completed one mobility session with a total of 17 repetitions. Here’s a breakdown of the session:
+
+- **Total Repetitions**: 17
+  - **Flagged Repetitions**: 6 (these may indicate some issues during the exercise)
+  - **Unflagged Repetitions**: 11 (these were performed without any noted concerns)
+
+- **Repetitions by Leg**:
+  - **Left Leg**: 9 repetitions
+  - **Right Leg**: 8 repetitions
+
+### Metrics Overview:
+- **Duration**: The average time for each repetition was about 4.06 seconds.
+- **Lift Duration**: On average, you spent approximately 3.27 seconds lifting.
+- **Hold Duration**: The average hold time was about 0.24 seconds.
+- **Lower Duration**: You spent around 0.78 seconds lowering.
+- **Shin Lift Angle**: The average angle of your shin during the lift was about 92.85 degrees.
+- **Peak Angular Velocity**: The highest speed reached during the movement was approximately 114.63 degrees per second.
+- **Jerk Score**: This metric, which indicates the smoothness of your movement, averaged at 0.36.
+- **Time of Flight Symmetry**: This score, which reflects the balance between your legs, was 0.8.
+
+### Latest Metrics:
+The most recent measurements from your session show:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.873
+
+This data provides insights into your mobility performance for that day. If you have any specific questions about these metrics or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, you completed one mobility session with a total of 17 repetitions. Here’s a breakdown of the session:
+
+- **Total Repetitions**: 17
+  - **Flagged Repetitions**: 6 (these may indicate some issues during the exercise)
+  - **Unflagged Repetitions**: 11 (these were performed without any noted concerns)
+
+- **Repetitions by Leg**:
+  - **Left Leg**: 9 repetitions
+  - **Right Leg**: 8 repetitions
+
+### Metrics Overview:
+- **Duration**: The average time for each repetition was about 4.06 seconds.
+- **Lift Duration**: On average, you spent approximately 3.27 seconds lifting.
+- **Hold Duration**: The average hold time was about 0.24 seconds.
+- **Lower Duration**: You spent around 0.78 seconds lowering.
+- **Shin Lift Angle**: The average angle of your shin during the lift was about 92.85 degrees.
+- **Peak Angular Velocity**: The highest speed reached during the movement was approximately 114.63 degrees per second.
+- **Jerk Score**: This metric, which indicates the smoothness of your movement, averaged at 0.36.
+- **Time of Flight Symmetry**: This score, which reflects the balance between your legs, was 0.8.
+
+### Latest Metrics:
+The most recent measurements from your session show:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.873
+
+This data provides insights into your mobility performance for that day. If you have any specific questions about these metrics or need further clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,5.7348,
+T099,summary,en,"Summarize the jerk scores from March 14, 2026.","Summarize the jerk scores from March 14, 2026.",mean_jerk=0.363;latest_jerk=0.432,,"On March 14, 2026, there was one mobility session recorded, which included a total of 17 repetitions. Here’s a summary of the jerk scores from that session:
+
+- **Jerk Score**: The average jerk score for the session was **0.363**. This score reflects the smoothness of movement; lower values generally indicate smoother motion.
+- **Latest Jerk Score**: The most recent jerk score recorded during the session was **0.432**. This indicates a slight increase in the jerk score compared to the average for the session.
+
+In addition to the jerk scores, the session included:
+- **Flagged Repetitions**: 6 out of 17 repetitions were flagged, which may indicate some irregularities in those movements.
+- **Repetitions by Leg**: 9 repetitions were performed with the left leg and 8 with the right leg.
+
+Overall, the jerk scores provide insight into the quality of movement during the session, with the average score suggesting a relatively smooth performance.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, there was one mobility session recorded, which included a total of 17 repetitions. Here’s a summary of the jerk scores from that session:
+
+- **Jerk Score**: The average jerk score for the session was **0.363**. This score reflects the smoothness of movement; lower values generally indicate smoother motion.
+- **Latest Jerk Score**: The most recent jerk score recorded during the session was **0.432**. This indicates a slight increase in the jerk score compared to the average for the session.
+
+In addition to the jerk scores, the session included:
+- **Flagged Repetitions**: 6 out of 17 repetitions were flagged, which may indicate some irregularities in those movements.
+- **Repetitions by Leg**: 9 repetitions were performed with the left leg and 8 with the right leg.
+
+Overall, the jerk scores provide insight into the quality of movement during the session, with the average score suggesting a relatively smooth performance.
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,3.8924,
+T100,summary,en,Give me the March 14 session totals and frame count.,Give me the March 14 session totals and frame count.,repetitions=17;flagged=6;frames=1347,,"On March 14, 2026, there was one mobility session recorded. Here are the totals and details from that session:
+
+- **Total Repetitions**: 17
+  - **Flagged Repetitions**: 6 (these may indicate movements that did not meet certain criteria)
+  - **Unflagged Repetitions**: 11 (these were completed successfully)
+  - **Repetitions by Leg**: 
+    - Left Leg: 9
+    - Right Leg: 8
+
+- **Total Frames Captured**: 1,347 (this refers to the number of data points collected during the session)
+
+### Metrics Overview:
+- **Average Duration of Each Repetition**: Approximately 4.06 seconds
+- **Lift Duration**: About 3.27 seconds (time spent lifting)
+- **Hold Duration**: 0.24 seconds (time spent holding the position)
+- **Lower Duration**: 0.78 seconds (time spent lowering)
+- **Shin Lift Angle**: 92.85 degrees (angle of the shin during the lift)
+- **Peak Angular Velocity**: 114.63 degrees per second (speed of movement)
+- **Jerk Score**: 0.36 (a measure of smoothness in movement)
+- **Time of Flight Symmetry**: 0.8 (indicates balance between legs)
+
+### Latest Metrics:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.87
+
+These metrics provide insights into your mobility performance during the session. If you have any further questions or need clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*","On March 14, 2026, there was one mobility session recorded. Here are the totals and details from that session:
+
+- **Total Repetitions**: 17
+  - **Flagged Repetitions**: 6 (these may indicate movements that did not meet certain criteria)
+  - **Unflagged Repetitions**: 11 (these were completed successfully)
+  - **Repetitions by Leg**: 
+    - Left Leg: 9
+    - Right Leg: 8
+
+- **Total Frames Captured**: 1,347 (this refers to the number of data points collected during the session)
+
+### Metrics Overview:
+- **Average Duration of Each Repetition**: Approximately 4.06 seconds
+- **Lift Duration**: About 3.27 seconds (time spent lifting)
+- **Hold Duration**: 0.24 seconds (time spent holding the position)
+- **Lower Duration**: 0.78 seconds (time spent lowering)
+- **Shin Lift Angle**: 92.85 degrees (angle of the shin during the lift)
+- **Peak Angular Velocity**: 114.63 degrees per second (speed of movement)
+- **Jerk Score**: 0.36 (a measure of smoothness in movement)
+- **Time of Flight Symmetry**: 0.8 (indicates balance between legs)
+
+### Latest Metrics:
+- **Duration**: 3.20 seconds
+- **Lift Duration**: 3.00 seconds
+- **Hold Duration**: 0.00 seconds
+- **Lower Duration**: 0.20 seconds
+- **Shin Lift Angle**: 82.13 degrees
+- **Peak Angular Velocity**: 100.87 degrees per second
+- **Jerk Score**: 0.43
+- **Time of Flight Symmetry**: 0.87
+
+These metrics provide insights into your mobility performance during the session. If you have any further questions or need clarification, feel free to ask!
+
+*This assistant explains recorded dashboard information and approved exercise material. It does not provide a diagnosis or change a care plan.*",en,True,PASS,,5.8052,

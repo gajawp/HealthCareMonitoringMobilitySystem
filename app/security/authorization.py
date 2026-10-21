@@ -34,10 +34,21 @@ class AccessDecision:
     reason: str
 
 
+# Mirrors the demo care-team assignments in app/main.py USERS: patients see
+# themselves, caregivers see their patients, and clinicians see the patients
+# of the caregivers they supervise. The dashboard and the chatbot both
+# authorize through this mapping.
 DEFAULT_DEMO_ACCESS_MAPPING: dict[str, tuple[str, ...]] = {
     "P1001": ("P1001",),
+    "P1002": ("P1002",),
+    "P1003": ("P1003",),
+    "P1004": ("P1004",),
+    "P1005": ("P1005",),
     "C2001": ("P1001", "P1002"),
-    "D3001": ("P1001", "P1002", "P1003"),
+    "C2002": ("P1003", "P1004"),
+    "C2003": ("P1005",),
+    "D3001": ("P1001", "P1002", "P1003", "P1004"),
+    "D3002": ("P1005",),
 }
 
 

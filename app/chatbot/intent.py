@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from datetime import date, datetime
 
 
 @dataclass(frozen=True)
@@ -106,6 +107,10 @@ INTENT_PATTERNS: dict[str, tuple[str, ...]] = {
         "today session",
         "session result",
         "session performance",
+        "repetition performance",
+        "rep performance",
+        "repetition summary",
+        "rep summary",
     ),
     "flag_explanation": (
         "why was",
@@ -157,6 +162,9 @@ INTENT_PATTERNS: dict[str, tuple[str, ...]] = {
         "meaning of",
         "explain",
         "jerk score",
+        "jerk",
+        "jerk value",
+        "movement jerk",
         "hold duration",
         "lift duration",
         "shin angle",
@@ -258,6 +266,138 @@ def _detect_session_summary_by_keywords(
     return None
 
 
+
+def _detect_recorded_mobility_metric_request(
+    normalized: str,
+) -> IntentResult | None:
+    """
+    Detect requests for values from the patient's recorded mobility session.
+
+    This is intentionally separate from ``metric_explanation``:
+
+    - "What is jerk score?" -> metric_explanation
+    - "What was my average jerk score?" -> session_summary
+    - "How many reps did I do?" -> session_summary
+    - "How many frames were recorded?" -> session_summary
+
+    The orchestrator can then retrieve the latest/session-specific mobility
+    record before generation.
+    """
+
+    recorded_metric_terms = (
+        "repetition",
+        "repetitions",
+        "rep",
+        "reps",
+        "rep count",
+        "frames",
+        "frame count",
+        "jerk score",
+        "hold duration",
+        "lift duration",
+        "lower duration",
+        "duration",
+        "shin angle",
+        "shin lift angle",
+        "knee angle",
+        "symmetry",
+        "toe-off symmetry",
+        "toe off symmetry",
+        "angular velocity",
+        "peak angular velocity",
+        "trunk lean",
+        "tremor severity",
+        "grip force",
+        "tap rate",
+    )
+
+    value_request_terms = (
+        "how many",
+        "how much",
+        "what was",
+        "what were",
+        "what is my",
+        "what are my",
+        "tell me",
+        "show me",
+        "give me",
+        "my average",
+        "my mean",
+        "my latest",
+        "my total",
+        "total",
+        "average",
+        "mean",
+        "latest",
+        "recorded",
+        "completed",
+        "did i",
+    )
+
+    side_terms = (
+        "left",
+        "right",
+        "flagged",
+        "unflagged",
+    )
+
+    matched_metrics = tuple(
+        term
+        for term in recorded_metric_terms
+        if term in normalized
+    )
+
+    if not matched_metrics:
+        return None
+
+    matched_value_terms = tuple(
+        term
+        for term in value_request_terms
+        if term in normalized
+    )
+
+    # Side-specific repetition questions such as
+    # "How many left leg repetitions did I complete?"
+    matched_side_terms = tuple(
+        term
+        for term in side_terms
+        if term in normalized
+    )
+
+    side_only_repetition_request = (
+        matched_side_terms
+        and any(
+            phrase in normalized
+            for phrase in (
+                "how many",
+                "did i complete",
+                "did i do",
+                "i complete",
+                "i do",
+                "completed with",
+                "with the left leg",
+                "with the right leg",
+                "left leg",
+                "right leg",
+                "left side",
+                "right side",
+            )
+        )
+    )
+
+    if matched_value_terms or side_only_repetition_request:
+        return IntentResult(
+            name="session_summary",
+            confidence=0.96,
+            matched_phrases=(
+                matched_metrics
+                + matched_value_terms
+                + matched_side_terms
+            ),
+        )
+
+    return None
+
 def detect_intent(question: str) -> IntentResult:
     """
     Detect the most likely chatbot intent.
@@ -303,6 +443,15 @@ def detect_intent(question: str) -> IntentResult:
             confidence=0.98,
             matched_phrases=exercise_matches,
         )
+
+    recorded_metric_result = (
+        _detect_recorded_mobility_metric_request(
+            normalized
+        )
+    )
+
+    if recorded_metric_result is not None:
+        return recorded_metric_result
 
     session_keyword_result = (
         _detect_session_summary_by_keywords(
@@ -355,3 +504,126 @@ def detect_intent(question: str) -> IntentResult:
         confidence=round(best_score, 2),
         matched_phrases=best_matches,
     )
+
+
+def _as_date(value: str | date | None) -> date | None:
+    """Parse an ISO date or datetime string into a date."""
+
+    if value is None:
+        return None
+
+    if isinstance(value, datetime):
+        return value.date()
+
+    if isinstance(value, date):
+        return value
+
+    try:
+        return datetime.fromisoformat(str(value).strip()).date()
+    except ValueError:
+        return None
+
+
+def _format_date(value: str | date | None) -> str | None:
+    parsed = _as_date(value)
+    if parsed is None:
+        return None
+    return f"{parsed:%b} {parsed.day}, {parsed.year}"
+
+
+def describe_interpretation(
+    *,
+    intent: str,
+    session_date: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    selected_session_id: str | None = None,
+    resolved_dates: list[str] | None = None,
+) -> str | None:
+    """
+    Describe, in plain words, which sessions a question was resolved to.
+
+    ``resolved_dates`` are the session dates the retriever actually used.
+    The text is shown above the answer so users can spot a misread date or
+    a misunderstood "latest" before relying on the answer.
+    """
+
+    dates = sorted(
+        parsed
+        for parsed in (_as_date(value) for value in resolved_dates or [])
+        if parsed is not None
+    )
+
+    if session_date:
+        return f"Sessions on {_format_date(session_date)}"
+
+    if start_date and end_date:
+        return (
+            f"Sessions from {_format_date(start_date)} "
+            f"to {_format_date(end_date)}"
+        )
+
+    if start_date:
+        return f"Sessions from {_format_date(start_date)} onward"
+
+    if end_date:
+        return f"Sessions up to {_format_date(end_date)}"
+
+    if intent == "trend_analysis":
+        if len(dates) >= 2:
+            return (
+                f"Trend across {len(dates)} sessions "
+                f"({_format_date(dates[0])} to {_format_date(dates[-1])})"
+            )
+        return None
+
+    if intent in {
+        "session_summary",
+        "flag_explanation",
+        "metric_explanation",
+    } and dates:
+        label = (
+            "Selected session"
+            if selected_session_id
+            else "Latest session"
+        )
+        return f"{label} ({_format_date(dates[-1])})"
+
+    return None
+
+
+def closest_sessions(
+    target: str | date | None,
+    available_dates: list[str],
+    *,
+    limit: int = 3,
+) -> list[str]:
+    """
+    Return the recorded session dates nearest to ``target``.
+
+    Without a target, the most recent sessions are returned. Results are
+    ISO ``YYYY-MM-DD`` strings in chronological order.
+    """
+
+    unique_dates = sorted(
+        {
+            parsed
+            for parsed in (_as_date(value) for value in available_dates)
+            if parsed is not None
+        }
+    )
+
+    if not unique_dates or limit <= 0:
+        return []
+
+    target_date = _as_date(target)
+
+    if target_date is None:
+        nearest = unique_dates[-limit:]
+    else:
+        nearest = sorted(
+            unique_dates,
+            key=lambda value: (abs((value - target_date).days), value),
+        )[:limit]
+
+    return [value.isoformat() for value in sorted(nearest)]

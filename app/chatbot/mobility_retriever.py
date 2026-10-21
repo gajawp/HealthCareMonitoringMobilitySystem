@@ -186,6 +186,133 @@ def _numeric_stats(df: pd.DataFrame, column: str) -> dict[str, float] | None:
     }
 
 
+LATERALITY_METRIC_COLUMNS: tuple[str, ...] = (
+    "duration_s",
+    "hold_duration_s",
+    "shin_lift_angle_deg",
+    "peak_angular_velocity",
+    "jerk_score",
+    "tof_symmetry",
+)
+
+
+def _metric_means_by_leg(rows: pd.DataFrame) -> dict[str, dict[str, float]]:
+    """Return mean metric values per leg, e.g. {"Left": {...}, "Right": {...}}."""
+
+    if rows.empty or "leg" not in rows.columns:
+        return {}
+
+    by_leg: dict[str, dict[str, float]] = {}
+    legs = (
+        rows["leg"]
+        .fillna("")
+        .astype(str)
+        .str.strip()
+        .str.casefold()
+        .map({"left": "Left", "l": "Left", "right": "Right", "r": "Right"})
+    )
+
+    for leg in ("Left", "Right"):
+        leg_rows = rows[legs == leg]
+        if leg_rows.empty:
+            continue
+
+        means: dict[str, float] = {}
+        for column in LATERALITY_METRIC_COLUMNS:
+            if column not in leg_rows.columns:
+                continue
+            values = pd.to_numeric(leg_rows[column], errors="coerce").dropna()
+            if not values.empty:
+                means[column] = round(float(values.mean()), 3)
+
+        if means:
+            by_leg[leg] = means
+
+    return by_leg
+
+
+def _provenance_entry(
+    record: dict[str, Any],
+    metrics: list[str],
+) -> dict[str, Any] | None:
+    session_id = record.get("session_id")
+    if session_id is None:
+        return None
+
+    session_datetime = record.get("session_datetime")
+    return {
+        "session_id": str(session_id),
+        "session_date": (
+            str(session_datetime)[:10] if session_datetime else None
+        ),
+        "metrics": metrics,
+    }
+
+
+def _build_provenance(result: dict[str, Any]) -> list[dict[str, Any]]:
+    """
+    Describe which sessions and metrics a retrieval result was built from.
+
+    Each entry holds only the internal session token, the session date and
+    metric names. Patient identifiers and file names are never included.
+    """
+
+    if not isinstance(result, dict) or not result.get("available"):
+        return []
+
+    nested_session = result.get("session")
+    if isinstance(nested_session, dict):
+        return _build_provenance(nested_session)
+
+    entries: list[dict[str, Any]] = []
+
+    sessions = result.get("sessions")
+    if isinstance(sessions, list):
+        for record in sessions:
+            if not isinstance(record, dict):
+                continue
+            entry = _provenance_entry(
+                record,
+                sorted(record.get("metric_means", {})),
+            )
+            if entry:
+                entries.append(entry)
+        return entries
+
+    if isinstance(result.get("repetition"), dict):
+        repetition = result["repetition"]
+        entry = _provenance_entry(
+            result,
+            sorted(
+                column
+                for column in LATERALITY_METRIC_COLUMNS
+                if repetition.get(column) is not None
+            ),
+        )
+        return [entry] if entry else []
+
+    if isinstance(result.get("flagged_repetitions"), list):
+        entry = _provenance_entry(
+            result,
+            ["flagged repetitions"],
+        )
+        return [entry] if entry else []
+
+    entry = _provenance_entry(
+        result,
+        sorted(result.get("metrics", {})),
+    )
+    return [entry] if entry else []
+
+
+def _first_session_datetime(rows: pd.DataFrame) -> str | None:
+    if rows.empty or "session_datetime" not in rows.columns:
+        return None
+
+    datetimes = pd.to_datetime(rows["session_datetime"], errors="coerce").dropna()
+    return datetimes.iloc[0].isoformat() if not datetimes.empty else None
+
+
 def _normalise_identifier(value: Any) -> str:
     return str(value).strip().casefold()
 
@@ -576,6 +703,53 @@ class MobilityRetriever:
 
         return selected.copy()
 
+    def _get_total_frames_for_session(
+        self,
+        session_rows: pd.DataFrame,
+    ) -> int | None:
+        """
+        Return total frame count when frame-level data is available.
+
+        The currently configured frame/raw-session files describe the real
+        mobility session. Synthetic repetition files do not necessarily have
+        matching frame files, so frame count is returned only when it can be
+        grounded in an actual configured source.
+        """
+
+        if session_rows.empty:
+            return None
+
+        data_source = (
+            str(session_rows["data_source"].iloc[0]).strip().casefold()
+            if "data_source" in session_rows.columns
+            else ""
+        )
+
+        if data_source != "real":
+            return None
+
+        # Prefer the raw session metadata because it is the authoritative
+        # session-level source when total_frames is present.
+        raw_session = _read_json(self.session_json)
+
+        raw_total_frames = raw_session.get("total_frames")
+        if raw_total_frames is not None:
+            try:
+                return int(raw_total_frames)
+            except (TypeError, ValueError):
+                pass
+
+        raw_frames = raw_session.get("frames")
+        if isinstance(raw_frames, list):
+            return len(raw_frames)
+
+        # Fall back to the configured processed frame CSV.
+        frames = _read_csv(self.frames_csv)
+        if not frames.empty:
+            return int(len(frames))
+
+        return None
+
     def get_sessions_by_date_range(
         self,
         *,
@@ -656,11 +830,34 @@ class MobilityRetriever:
                         flags = flags | _to_bool(session_rows[flag_column])
 
             record["flagged_repetitions"] = int(flags.sum())
+            record["unflagged_repetitions"] = int(
+                len(session_rows) - flags.sum()
+            )
+
+            if "leg" in session_rows.columns:
+                record["repetitions_by_leg"] = {
+                    str(key): int(value)
+                    for key, value in session_rows["leg"]
+                    .fillna("Unknown")
+                    .astype(str)
+                    .value_counts()
+                    .items()
+                }
+
+            total_frames = self._get_total_frames_for_session(
+                session_rows
+            )
+            if total_frames is not None:
+                record["total_frames"] = total_frames
 
             metric_means: dict[str, float] = {}
+            metric_latest: dict[str, float] = {}
+
             for column in (
                 "duration_s",
+                "lift_duration_s",
                 "hold_duration_s",
+                "lower_duration_s",
                 "shin_lift_angle_deg",
                 "peak_angular_velocity",
                 "jerk_score",
@@ -668,14 +865,27 @@ class MobilityRetriever:
             ):
                 if column not in session_rows.columns:
                     continue
+
                 values = pd.to_numeric(
                     session_rows[column],
                     errors="coerce",
                 ).dropna()
+
                 if not values.empty:
-                    metric_means[column] = round(float(values.mean()), 3)
+                    metric_means[column] = round(
+                        float(values.mean()),
+                        3,
+                    )
+                    metric_latest[column] = round(
+                        float(values.iloc[-1]),
+                        3,
+                    )
 
             record["metric_means"] = metric_means
+            record["metric_latest"] = metric_latest
+            record["metric_means_by_leg"] = _metric_means_by_leg(
+                session_rows
+            )
             sessions.append(record)
 
         sessions.sort(
@@ -766,16 +976,18 @@ class MobilityRetriever:
             if not session_datetimes.empty:
                 result["session_datetime"] = session_datetimes.iloc[0].isoformat()
 
-        # The raw JSON describes the current real session only. Do not attach it
-        # to a synthetic session.
+        # The configured raw/frame files describe the real session only.
+        # Never infer a frame count for synthetic sessions unless a matching
+        # frame-level source is actually available.
         if data_source == "real":
             raw_session = _read_json(self.session_json)
             if raw_session:
                 result["start_time"] = raw_session.get("start_time")
                 result["sample_rate_hz"] = raw_session.get("sample_rate_hz")
-                result["total_frames"] = raw_session.get("total_frames") or len(
-                    raw_session.get("frames", [])
-                )
+
+            total_frames = self._get_total_frames_for_session(reps)
+            if total_frames is not None:
+                result["total_frames"] = total_frames
 
         if "flagged" in reps.columns:
             flags = _to_bool(reps["flagged"])
@@ -815,6 +1027,7 @@ class MobilityRetriever:
                 metrics[column] = stats
 
         result["metrics"] = metrics
+        result["metrics_by_leg"] = _metric_means_by_leg(reps)
         return result
 
     def get_flagged_repetitions(
@@ -908,6 +1121,7 @@ class MobilityRetriever:
                 if "data_source" in reps.columns
                 else None
             ),
+            "session_datetime": _first_session_datetime(reps),
             "total_flagged": int(mask.sum()),
             "returned_flagged": len(records),
             "flagged_repetitions": records,
@@ -961,6 +1175,7 @@ class MobilityRetriever:
             "available": True,
             "patient_id": patient_id,
             "session_id": _to_python(row.get("session_id")),
+            "session_datetime": _first_session_datetime(selected),
             "data_source": _to_python(row.get("data_source")),
             "repetition": {
                 str(column): _to_python(value)
@@ -1057,6 +1272,9 @@ class MobilityRetriever:
                     metric_means[column] = round(float(values.mean()), 3)
 
             record["metric_means"] = metric_means
+            record["metric_means_by_leg"] = _metric_means_by_leg(
+                session_rows
+            )
             session_records.append(record)
 
         session_records.sort(
@@ -1403,7 +1621,76 @@ class MobilityRetriever:
             "metrics": metrics,
         }
 
+    def get_session_repetitions(
+        self,
+        *,
+        patient_id: str,
+        session_id: str | None = None,
+    ) -> pd.DataFrame:
+        """
+        Return one session's repetition rows for dashboard charts.
+
+        Rows are patient-scoped first; the latest session is used when no
+        session is given. Identifier and file-name columns are removed.
+        """
+
+        patient_reps = self._select_patient_rows(
+            self._load_all_repetitions(),
+            patient_id=patient_id,
+        )
+        reps = self._select_session_rows(
+            patient_reps,
+            session_id=session_id,
+            latest_if_missing=True,
+        )
+
+        return reps.drop(
+            columns=["patient_id", "source_file"],
+            errors="ignore",
+        ).reset_index(drop=True)
+
+    def get_session_dates(self, *, patient_id: str) -> list[str]:
+        """Return the patient's recorded session dates as sorted ISO strings."""
+
+        patient_reps = self._select_patient_rows(
+            self._load_all_repetitions(),
+            patient_id=patient_id,
+        )
+
+        if patient_reps.empty or "session_datetime" not in patient_reps.columns:
+            return []
+
+        datetimes = pd.to_datetime(
+            patient_reps["session_datetime"],
+            errors="coerce",
+        ).dropna()
+
+        return sorted({value.date().isoformat() for value in datetimes})
+
     def retrieve_for_intent(
+        self,
+        *,
+        intent: str,
+        patient_id: str,
+        session_id: str | None = None,
+        rep_id: int | None = None,
+        session_date: str | None = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+    ) -> dict[str, Any]:
+        result = self._retrieve_for_intent(
+            intent=intent,
+            patient_id=patient_id,
+            session_id=session_id,
+            rep_id=rep_id,
+            session_date=session_date,
+            start_date=start_date,
+            end_date=end_date,
+        )
+        result["provenance"] = _build_provenance(result)
+        return result
+
+    def _retrieve_for_intent(
         self,
         *,
         intent: str,

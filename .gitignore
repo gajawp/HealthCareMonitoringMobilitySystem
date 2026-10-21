@@ -29,3 +29,8 @@ reports/assets/*
 # Runtime messaging artifacts (in-app messages + simulated emails)
 logs/emails/
 data/messages/
+
+# Node / Cypress
+node_modules/
+cypress/screenshots/
+cypress/videos/

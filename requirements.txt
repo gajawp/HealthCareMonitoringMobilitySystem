@@ -1,4 +1,4 @@
-streamlit
+streamlit>=1.40
 pandas
 numpy
 plotly
@@ -13,4 +13,3 @@ cryptography
 bcrypt
 python-dotenv
 gTTS
-streamlit-mic-recorder

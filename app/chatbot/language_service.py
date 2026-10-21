@@ -4,6 +4,7 @@ import json
 import os
 import re
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
@@ -43,8 +44,9 @@ class LanguageService:
     )
 
     def __init__(self) -> None:
-        # Load variables from the project-root .env file.
-        load_dotenv()
+        # Load variables from the project-root .env file explicitly.
+        project_root = Path(__file__).resolve().parents[2]
+        load_dotenv(project_root / ".env")
 
         api_key = os.getenv("OPENAI_API_KEY")
         self.model = os.getenv(

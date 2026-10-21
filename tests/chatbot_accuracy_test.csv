@@ -1,0 +1,101 @@
+﻿test_id,patient_id,user_id,role,language,category,question,expected_answer,expected_authorization,numeric_tolerance
+T001,P1001,P1001,patient,en,factual,How many repetitions did I complete?,17,,0.0
+T002,P1001,P1001,patient,en,factual,How many total repetitions were in my session?,17,,0.0
+T003,P1001,P1001,patient,en,factual,What was my total repetition count?,17,,0.0
+T004,P1001,P1001,patient,en,factual,How many reps did I perform?,17,,0.0
+T005,P1001,P1001,patient,en,factual,How many left leg repetitions did I complete?,9,,0.0
+T006,P1001,P1001,patient,en,factual,How many repetitions were performed with my left leg?,9,,0.0
+T007,P1001,P1001,patient,en,factual,What was my left-leg rep count?,9,,0.0
+T008,P1001,P1001,patient,en,factual,How many right leg repetitions did I complete?,8,,0.0
+T009,P1001,P1001,patient,en,factual,How many repetitions were performed with my right leg?,8,,0.0
+T010,P1001,P1001,patient,en,factual,What was my right-leg rep count?,8,,0.0
+T011,P1001,P1001,patient,en,factual,How many repetitions were flagged?,6,,0.0
+T012,P1001,P1001,patient,en,factual,What was the flagged repetition count?,6,,0.0
+T013,P1001,P1001,patient,en,factual,How many reps were marked as flagged?,6,,0.0
+T014,P1001,P1001,patient,en,factual,How many repetitions were unflagged?,11,,0.0
+T015,P1001,P1001,patient,en,factual,What was the unflagged repetition count?,11,,0.0
+T016,P1001,P1001,patient,en,factual,What was my average jerk score?,0.363,,0.001
+T017,P1001,P1001,patient,en,factual,What was the mean jerk score?,0.363,,0.001
+T018,P1001,P1001,patient,en,factual,What was my latest jerk score?,0.432,,0.001
+T019,P1001,P1001,patient,en,factual,Tell me the latest recorded jerk score.,0.432,,0.001
+T020,P1001,P1001,patient,en,factual,Summarize the latest repetition totals.,repetitions=17;left=9;right=8;flagged=6,,0.0
+T021,P1001,P1001,patient,en,date_specific,"How many repetitions did I complete on March 14, 2026?",17,,0.0
+T022,P1001,P1001,patient,en,date_specific,"What was my total rep count on March 14, 2026?",17,,0.0
+T023,P1001,P1001,patient,en,date_specific,"How many left leg repetitions did I complete on March 14, 2026?",9,,0.0
+T024,P1001,P1001,patient,en,date_specific,"What was my left-leg rep count on March 14, 2026?",9,,0.0
+T025,P1001,P1001,patient,en,date_specific,"How many right leg repetitions did I complete on March 14, 2026?",8,,0.0
+T026,P1001,P1001,patient,en,date_specific,"What was my right-leg rep count on March 14, 2026?",8,,0.0
+T027,P1001,P1001,patient,en,date_specific,"How many repetitions were flagged on March 14, 2026?",6,,0.0
+T028,P1001,P1001,patient,en,date_specific,"What was the flagged rep count on March 14, 2026?",6,,0.0
+T029,P1001,P1001,patient,en,date_specific,"What was my average jerk score on March 14, 2026?",0.363,,0.001
+T030,P1001,P1001,patient,en,date_specific,"What was the mean jerk score on March 14, 2026?",0.363,,0.001
+T031,P1001,P1001,patient,en,date_specific,"What was my latest jerk score on March 14, 2026?",0.432,,0.001
+T032,P1001,P1001,patient,en,date_specific,"Tell me the latest jerk score from March 14, 2026.",0.432,,0.001
+T033,P1001,P1001,patient,en,date_specific,"How many frames were recorded on March 14, 2026?",1347,,0.0
+T034,P1001,P1001,patient,en,date_specific,"What was the frame count for my March 14, 2026 session?",1347,,0.0
+T035,P1001,P1001,patient,en,date_specific,"Summarize my mobility session on March 14, 2026.",repetitions=17;left=9;right=8;flagged=6,,0.0
+T036,P1001,P1001,patient,en,paraphrase,How many reps did I do?,17,,0.0
+T037,P1001,P1001,patient,en,paraphrase,Tell me my rep total.,17,,0.0
+T038,P1001,P1001,patient,en,paraphrase,What's my total number of reps?,17,,0.0
+T039,P1001,P1001,patient,en,paraphrase,Give me the number of repetitions I completed.,17,,0.0
+T040,P1001,P1001,patient,en,paraphrase,How many did I complete with the left leg?,9,,0.0
+T041,P1001,P1001,patient,en,paraphrase,Give me my left side repetition count.,9,,0.0
+T042,P1001,P1001,patient,en,paraphrase,How many did I do with the right leg?,8,,0.0
+T043,P1001,P1001,patient,en,paraphrase,Give me my right side repetition count.,8,,0.0
+T044,P1001,P1001,patient,en,paraphrase,How many of my reps got flagged?,6,,0.0
+T045,P1001,P1001,patient,en,paraphrase,Tell me how many movements were flagged.,6,,0.0
+T046,P1001,P1001,patient,en,paraphrase,How many reps were not flagged?,11,,0.0
+T047,P1001,P1001,patient,en,paraphrase,Give me my mean movement jerk value.,0.363,,0.001
+T048,P1001,P1001,patient,en,paraphrase,What's the average jerk value for my session?,0.363,,0.001
+T049,P1001,P1001,patient,en,paraphrase,What's the newest jerk score in my session?,0.432,,0.001
+T050,P1001,P1001,patient,en,paraphrase,Give me my latest movement jerk value.,0.432,,0.001
+T051,P1001,P1001,patient,es,multilingual,¿Cuántas repeticiones completé?,17,,0.0
+T052,P1001,P1001,patient,es,multilingual,¿Cuántas repeticiones hice con la pierna izquierda?,9,,0.0
+T053,P1001,P1001,patient,es,multilingual,¿Cuántas repeticiones hice con la pierna derecha?,8,,0.0
+T054,P1001,P1001,patient,es,multilingual,¿Cuántas repeticiones fueron marcadas?,6,,0.0
+T055,P1001,P1001,patient,es,multilingual,¿Cuál fue mi puntuación media de jerk?,0.363,,0.001
+T056,P1001,P1001,patient,es,multilingual,¿Cuál fue mi puntuación de jerk más reciente?,0.432,,0.001
+T057,P1001,P1001,patient,te,multilingual,నేను మొత్తం ఎన్ని రిపిటేషన్లు పూర్తి చేశాను?,17,,0.0
+T058,P1001,P1001,patient,te,multilingual,ఎడమ కాలితో నేను ఎన్ని రిపిటేషన్లు చేశాను?,9,,0.0
+T059,P1001,P1001,patient,te,multilingual,కుడి కాలితో నేను ఎన్ని రిపిటేషన్లు చేశాను?,8,,0.0
+T060,P1001,P1001,patient,te,multilingual,ఎన్ని రిపిటేషన్లు ఫ్లాగ్ చేయబడ్డాయి?,6,,0.0
+T061,P1001,P1001,patient,te,multilingual,నా సగటు జెర్క్ స్కోర్ ఎంత?,0.363,,0.001
+T062,P1001,P1001,patient,te,multilingual,నా తాజా జెర్క్ స్కోర్ ఎంత?,0.432,,0.001
+T063,P1001,P1001,patient,de,multilingual,Wie viele Wiederholungen habe ich insgesamt gemacht?,17,,0.0
+T064,P1001,P1001,patient,de,multilingual,Wie viele Wiederholungen habe ich mit dem linken Bein gemacht?,9,,0.0
+T065,P1001,P1001,patient,de,multilingual,Wie viele Wiederholungen habe ich mit dem rechten Bein gemacht?,8,,0.0
+T066,P1001,P1001,patient,de,multilingual,Wie viele Wiederholungen wurden markiert?,6,,0.0
+T067,P1001,P1001,patient,de,multilingual,Wie hoch war mein durchschnittlicher Jerk-Score?,0.363,,0.001
+T068,P1001,P1001,patient,de,multilingual,Wie hoch war mein letzter Jerk-Score?,0.432,,0.001
+T069,P1001,P1001,patient,hi,multilingual,मैंने कुल कितनी पुनरावृत्तियाँ पूरी कीं?,17,,0.0
+T070,P1001,P1001,patient,hi,multilingual,मैंने बाएँ पैर से कितनी पुनरावृत्तियाँ कीं?,9,,0.0
+T071,P1001,P1001,patient,hi,multilingual,मैंने दाएँ पैर से कितनी पुनरावृत्तियाँ कीं?,8,,0.0
+T072,P1001,P1001,patient,hi,multilingual,कितनी पुनरावृत्तियाँ फ़्लैग की गईं?,6,,0.0
+T073,P1001,P1001,patient,hi,multilingual,मेरा औसत जर्क स्कोर क्या था?,0.363,,0.001
+T074,P1001,P1001,patient,hi,multilingual,मेरा नवीनतम जर्क स्कोर क्या था?,0.432,,0.001
+T075,P1001,P1001,patient,fr,multilingual,Combien de répétitions ai-je effectuées au total ?,17,,0.0
+T076,P1001,P1001,patient,fr,multilingual,Combien de répétitions ai-je faites avec la jambe gauche ?,9,,0.0
+T077,P1001,P1001,patient,fr,multilingual,Combien de répétitions ai-je faites avec la jambe droite ?,8,,0.0
+T078,P1001,P1001,patient,fr,multilingual,Combien de répétitions ont été signalées ?,6,,0.0
+T079,P1001,P1001,patient,fr,multilingual,Quel était mon score de jerk moyen ?,0.363,,0.001
+T080,P1001,P1001,patient,fr,multilingual,Quel était mon dernier score de jerk ?,0.432,,0.001
+T081,P1001,P1001,patient,en,authorization,Show my mobility summary.,ALLOW,allow,0.0
+T082,P1001,P1001,patient,en,authorization,Show the mobility summary for P1001.,ALLOW,allow,0.0
+T083,P1001,C2001,caregiver,en,authorization,Show the mobility summary for P1001.,ALLOW,allow,0.0
+T084,P1001,C2001,caregiver,en,authorization,How many repetitions did P1001 complete?,ALLOW,allow,0.0
+T085,P1001,C2001,caregiver,en,authorization,Show P1001's latest mobility session.,ALLOW,allow,0.0
+T086,P9999,C2001,caregiver,en,authorization,Show the mobility summary for P9999.,DENY,deny,0.0
+T087,P9999,C2001,caregiver,en,authorization,How many repetitions did P9999 complete?,DENY,deny,0.0
+T088,P9999,C2001,caregiver,en,authorization,Show P9999's latest mobility session.,DENY,deny,0.0
+T089,P9999,P1001,patient,en,authorization,Show the mobility summary for P9999.,DENY,deny,0.0
+T090,P9999,P1001,patient,en,authorization,How many reps did P9999 complete?,DENY,deny,0.0
+T091,P1001,P1001,patient,en,summary,Summarize my latest mobility session.,repetitions=17;left=9;right=8;flagged=6,,0.01
+T092,P1001,P1001,patient,en,summary,Give me a short summary of my latest session.,repetitions=17;left=9;right=8;flagged=6,,0.01
+T093,P1001,P1001,patient,en,summary,Summarize my repetition performance.,repetitions=17;left=9;right=8;flagged=6,,0.01
+T094,P1001,P1001,patient,en,summary,"Give me the total, left, right, and flagged repetition counts.",repetitions=17;left=9;right=8;flagged=6,,0.01
+T095,P1001,P1001,patient,en,summary,Tell me my repetition totals and jerk scores.,repetitions=17;mean_jerk=0.363;latest_jerk=0.432,,0.01
+T096,P1001,P1001,patient,en,summary,Give me a session summary including average and latest jerk score.,repetitions=17;mean_jerk=0.363;latest_jerk=0.432,,0.01
+T097,P1001,P1001,patient,en,summary,"Summarize my March 14, 2026 session.",repetitions=17;left=9;right=8;flagged=6,,0.01
+T098,P1001,P1001,patient,en,summary,"Give me the March 14, 2026 repetition breakdown.",repetitions=17;left=9;right=8;flagged=6,,0.01
+T099,P1001,P1001,patient,en,summary,"Summarize the jerk scores from March 14, 2026.",mean_jerk=0.363;latest_jerk=0.432,,0.01
+T100,P1001,P1001,patient,en,summary,Give me the March 14 session totals and frame count.,repetitions=17;flagged=6;frames=1347,,0.01

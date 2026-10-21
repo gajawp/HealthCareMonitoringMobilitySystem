@@ -21,14 +21,26 @@ try:
 except ImportError:
     OpenAI = None
 
-try:
-    from streamlit_mic_recorder import mic_recorder
-except ImportError:
-    mic_recorder = None
-
 from app.chatbot.language_service import LanguageService
 from app.chatbot.orchestrator import (
     HealthcareChatbotOrchestrator,
+)
+from app.ui_enhancements import (
+    accessibility_controls,
+    answer_with_progress,
+    has_native_suggestions,
+    play_audio,
+    render_assistant_message,
+    render_audio_with_replay,
+    render_chart,
+    render_context_header,
+    render_interpretation,
+    render_nearby_dates,
+    render_session_date_picker,
+    render_sources,
+    render_suggestion_chips,
+    render_voice_input,
+    ui_text,
 )
 
 
@@ -715,6 +727,15 @@ def _labels(language_code: str) -> dict[str, str]:
     return UI_TEXT.get(language_code, UI_TEXT["en"])
 
 
+@st.cache_data(show_spinner=False, max_entries=2000)
+def _translate_cached(text: str, language_code: str) -> str:
+    """Translate short UI text once per language instead of on every rerun."""
+
+    if language_code == "en" or not text.strip():
+        return text
+    return get_language_service().translate_from_english(text, language_code)
+
+
 def _localized_text(
     *,
     language_service: LanguageService,
@@ -767,100 +788,39 @@ def _initial_message(
     }
 
 
-def _suggested_questions(
+@st.cache_data(ttl=300, show_spinner=False)
+def _session_dates(
+    user_id: str,
+    user_name: str,
     role: str,
-    selected_exercise: str | None,
-) -> list[tuple[str, str]]:
-    if role == "Clinician":
-        prompts = [
-            (
-                "🏋️ Suggested exercises",
-                "Show the suggested exercises for this patient.",
-            ),
-            (
-                "📋 Session summary",
-                "Summarize the latest recorded mobility session.",
-            ),
-            (
-                "⚠️ Flagged repetitions",
-                "Explain the flagged repetitions.",
-            ),
-            (
-                "📐 Metric explanation",
-                "What does jerk score mean?",
-            ),
-        ]
+    patient_id: str,
+) -> list[str]:
+    """Authorized session dates for the date picker, cached briefly."""
 
-        if selected_exercise:
-            prompts.append(
-                (
-                    f"🦵 Guidance: {selected_exercise}",
-                    f"How should I perform {selected_exercise}?",
-                )
-            )
-
-        return prompts
-
-    if role == "Caregiver":
-        prompts = [
-            (
-                "🏋️ Suggested exercises",
-                "Show the suggested exercises for this patient.",
-            ),
-            (
-                "📋 Latest session",
-                "Summarize the latest mobility session.",
-            ),
-            (
-                "⚠️ Explain alerts",
-                "Why were repetitions flagged?",
-            ),
-            (
-                "📈 Progress",
-                "Is the patient improving over time?",
-            ),
-        ]
-
-        if selected_exercise:
-            prompts.append(
-                (
-                    f"🦵 Guidance: {selected_exercise}",
-                    f"How should I perform {selected_exercise}?",
-                )
-            )
-
-        return prompts
-
-    return [
-        (
-            "🏋️ My suggested exercises",
-            "Show my suggested exercises.",
-        ),
-        (
-            "📋 My latest session",
-            "Summarize my latest mobility session.",
-        ),
-        (
-            "⚠️ Explain my alerts",
-            "Why were my repetitions flagged?",
-        ),
-        (
-            "📈 Am I improving?",
-            "Am I improving over time?",
-        ),
-    ]
+    return get_chatbot().list_session_dates(
+        user_id=user_id,
+        user_name=user_name,
+        role=role,
+        patient_id=patient_id,
+    )
 
 
-def _render_sources(
-    sources: list[str],
-    labels: dict[str, str],
-) -> None:
-    if not sources:
-        return
+def _last_audio_key(user_id: str, patient_id: str) -> str:
+    # Scoped per user and patient so audio never replays across patients.
+    return f"last_audio::{user_id}::{patient_id}"
 
-    with st.expander(labels["sources"]):
-        for source in sources:
-            st.markdown(f"- `{source}`")
+
+def _render_accessibility(user_id: str, patient_id: str) -> dict[str, Any]:
+    language = st.session_state.get(
+        f"resolved_chat_language::{user_id}::{patient_id}",
+        "en",
+    )
+    return accessibility_controls(
+        key=f"accessibility::{user_id}",
+        language=language,
+        # Matches the dashboard's base font size in app/main.py.
+        page_base_px=18,
+    )
 
 
 def _render_exercise_recommendations(
@@ -1061,14 +1021,22 @@ def _render_chatbot_content(
     selected_date_range: str | None = None,
     visible_metrics: dict[str, Any] | None = None,
     active_alert: dict[str, Any] | None = None,
+    patient_label: str | None = None,
     compact: bool = False,
 ) -> None:
     language_service = get_language_service()
 
     language_key = f"chat_language::{user_id}::{patient_id}"
+    previous_language = st.session_state.get(
+        f"resolved_chat_language::{user_id}::{patient_id}",
+        "en",
+    )
+    settings_label = "🌐 Language and settings"
+    if previous_language != "en":
+        settings_label += f" · {ui_text(previous_language, 'language_settings')}"
 
     if compact:
-        with st.expander("🌐 Language and settings", expanded=False):
+        with st.expander(settings_label, expanded=False):
             language_name = st.selectbox(
                 "Chat language / चैट भाषा / చాట్ భాష",
                 options=list(LANGUAGE_OPTIONS.keys()),
@@ -1101,17 +1069,22 @@ def _render_chatbot_content(
     ui_language = resolved_language
     labels = _labels(ui_language)
 
+    if not compact:
+        st.title(labels["title"])
+
+    render_context_header(
+        role,
+        patient_label,
+        language=ui_language,
+    )
+
+    def translate(text: str) -> str:
+        return _translate_cached(text, ui_language)
+
     if compact:
         st.caption(labels["notice"])
     else:
-        st.title(labels["title"])
         st.info(labels["notice"])
-
-        st.caption(
-            f"{labels['signed_in']} **{user_name}** · "
-            f"{labels['role']}: **{role}** · "
-            f"{labels['selected_patient']}: **{patient_id}**"
-        )
 
     history_language_key = (
         selected_language
@@ -1206,56 +1179,83 @@ def _render_chatbot_content(
             default_exercise,
         )
 
-    suggestions = _suggested_questions(
+    # Chips in a language listed in SUGGESTIONS are sent like typed text.
+    # Other languages show English chips with translated labels, and the
+    # English question is sent directly.
+    chip_question = render_suggestion_chips(
         role,
-        selected_exercise,
+        key=f"suggest::{user_id}::{patient_id}::{ui_language}",
+        language=ui_language,
+        exercise=(
+            EXERCISE_DISPLAY_NAMES.get(ui_language, {}).get(
+                selected_exercise,
+                selected_exercise,
+            )
+            if selected_exercise and has_native_suggestions(ui_language)
+            else selected_exercise
+        ),
+        limit=2 if compact else None,
+        columns=1 if compact else 2,
+        translate_label=translate,
     )
-    if compact:
-        suggestions = suggestions[:2]
 
-    columns = st.columns(1 if compact else 2)
+    chip_prompt: str | None = None
     selected_prompt: str | None = None
 
-    for index, (english_label, english_prompt) in enumerate(
-        suggestions
-    ):
-        localized_label = _localized_text(
-            language_service=language_service,
-            text=english_label,
-            language_code=ui_language,
-        )
+    if chip_question:
+        if has_native_suggestions(ui_language):
+            chip_prompt = chip_question
+        else:
+            selected_prompt = chip_question
 
-        with columns[index % len(columns)]:
-            if st.button(
-                localized_label,
-                key=(
-                    f"suggest::{user_id}::{patient_id}::"
-                    f"{ui_language}::{index}"
-                ),
-                width="stretch",
-            ):
-                selected_prompt = english_prompt
+    picked_date_question = render_session_date_picker(
+        _session_dates(user_id, user_name, role, patient_id),
+        key=f"date_picker::{user_id}::{patient_id}",
+        language=ui_language,
+    )
+    if picked_date_question:
+        selected_prompt = picked_date_question
 
     st.divider()
 
-    for message in st.session_state[key]:
+    for message_index, message in enumerate(st.session_state[key]):
         with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-            if (
-                message["role"] == "assistant"
-                and message.get("audio")
-            ):
-                st.audio(
-                    message["audio"],
-                    format="audio/mp3",
+            if message["role"] == "assistant":
+                render_interpretation(
+                    message.get("interpretation"),
+                    language=ui_language,
                 )
-
-            if message.get("sources"):
-                _render_sources(
-                    message["sources"],
-                    labels,
+                render_assistant_message(
+                    message["content"],
+                    message.get("kind"),
                 )
+                play_audio(message.get("audio"))
+                render_chart(
+                    message.get("chart_data"),
+                    compact=compact,
+                    language=ui_language,
+                    translate=translate,
+                )
+            else:
+                st.markdown(message["content"])
+
+            render_sources(
+                message.get("session_sources"),
+                message.get("sources"),
+                language=ui_language,
+                translate=translate,
+            )
+
+            nearby_question = render_nearby_dates(
+                message.get("nearby_dates"),
+                key=(
+                    f"nearby::{user_id}::{patient_id}::"
+                    f"{ui_language}::{message_index}"
+                ),
+                language=ui_language,
+            )
+            if nearby_question:
+                selected_prompt = nearby_question
 
             if (
                 message.get("response_type")
@@ -1267,14 +1267,22 @@ def _render_chatbot_content(
                     compact=compact,
                 )
 
+    render_audio_with_replay(
+        state_key=_last_audio_key(user_id, patient_id),
+        language=ui_language,
+    )
+
     voice_labels = _voice_labels(ui_language)
     voice_prompt: str | None = None
 
-    recorded_audio = None
+    recorded_audio = render_voice_input(
+        key=f"voice::{user_id}::{patient_id}::{ui_language}",
+        language=ui_language,
+    )
 
     if compact:
-        input_col, voice_col, send_col = st.columns(
-            [7, 1, 1],
+        input_col, send_col = st.columns(
+            [8, 1],
             vertical_alignment="bottom",
             gap="small",
         )
@@ -1290,30 +1298,6 @@ def _render_chatbot_content(
                 placeholder=labels["chat_input"],
             )
 
-        with voice_col:
-            if mic_recorder is None:
-                st.button(
-                    "🎙️",
-                    key=(
-                        f"voice_unavailable::{user_id}::"
-                        f"{patient_id}::{ui_language}"
-                    ),
-                    help=voice_labels["unavailable"],
-                    disabled=True,
-                    use_container_width=True,
-                )
-            else:
-                recorded_audio = mic_recorder(
-                    start_prompt="🎙️",
-                    stop_prompt="⏹️",
-                    just_once=True,
-                    use_container_width=True,
-                    key=(
-                        f"voice_recorder::{user_id}::"
-                        f"{patient_id}::{ui_language}"
-                    ),
-                )
-
         with send_col:
             send_clicked = st.button(
                 "➤",
@@ -1321,7 +1305,7 @@ def _render_chatbot_content(
                     f"floating_chat_send::{user_id}::"
                     f"{patient_id}::{ui_language}"
                 ),
-                help="Send message",
+                help=ui_text(ui_language, "send_message"),
                 use_container_width=True,
             )
 
@@ -1329,78 +1313,23 @@ def _render_chatbot_content(
             typed_prompt = None
 
     else:
-        st.markdown(f"### 🎙️ {voice_labels['heading']}")
-
-        if mic_recorder is None:
-            st.info(voice_labels["unavailable"])
-        else:
-            recorded_audio = mic_recorder(
-                start_prompt=voice_labels["start"],
-                stop_prompt=voice_labels["stop"],
-                just_once=True,
-                use_container_width=True,
-                key=(
-                    f"voice_recorder::{user_id}::"
-                    f"{patient_id}::{ui_language}"
-                ),
-            )
-
         typed_prompt = st.chat_input(
             labels["chat_input"]
         )
 
-    if (
-        recorded_audio
-        and recorded_audio.get("bytes")
-    ):
-        audio_signature = hash(
-            recorded_audio["bytes"]
-        )
-        processed_audio_key = (
-            f"processed_voice::{user_id}::"
-            f"{patient_id}::{ui_language}"
-        )
-
-        if (
-            st.session_state.get(
-                processed_audio_key
-            )
-            != audio_signature
-        ):
-            try:
-                with st.spinner(
-                    voice_labels["processing"]
-                ):
-                    voice_prompt = _transcribe_audio(
-                        recorded_audio["bytes"],
-                        ui_language,
-                    )
-
-                st.session_state[
-                    processed_audio_key
-                ] = audio_signature
-                st.session_state[
-                    f"voice_text::{user_id}::"
-                    f"{patient_id}::{ui_language}"
-                ] = voice_prompt
-
-            except Exception as exc:
-                st.error(
-                    f"{voice_labels['error']} {exc}"
+    if recorded_audio:
+        try:
+            with st.spinner(voice_labels["processing"]):
+                voice_prompt = _transcribe_audio(
+                    recorded_audio,
+                    ui_language,
                 )
-        else:
-            voice_prompt = st.session_state.get(
-                f"voice_text::{user_id}::"
-                f"{patient_id}::{ui_language}"
+        except Exception as exc:
+            st.error(
+                f"{voice_labels['error']} {exc}"
             )
 
-        if voice_prompt:
-            st.success(
-                f"{voice_labels['heard']}: "
-                f"{voice_prompt}"
-            )
-
-    displayed_prompt = typed_prompt or voice_prompt
+    displayed_prompt = typed_prompt or voice_prompt or chip_prompt
     english_prompt = selected_prompt
 
     if displayed_prompt:
@@ -1449,8 +1378,8 @@ def _render_chatbot_content(
             try:
                 bot = get_chatbot()
 
-                with st.spinner(labels["reviewing"]):
-                    response = bot.answer(
+                response = answer_with_progress(
+                    lambda report: bot.answer(
                         question=english_prompt,
                         user_id=user_id,
                         user_name=user_name,
@@ -1464,7 +1393,10 @@ def _render_chatbot_content(
                         selected_date_range=selected_date_range,
                         visible_metrics=visible_metrics,
                         active_alert=active_alert,
-                    )
+                        report=report,
+                    ),
+                    language=ui_language,
+                )
 
                 localized_answer = (
                     language_service.translate_from_english(
@@ -1489,16 +1421,42 @@ def _render_chatbot_content(
                 except Exception:
                     response_audio = None
 
-                st.markdown(localized_answer)
-                if response_audio:
-                    st.audio(
-                        response_audio,
-                        format="audio/mp3",
+                localized_interpretation = (
+                    _localized_text(
+                        language_service=language_service,
+                        text=response.interpretation,
+                        language_code=resolved_language,
                     )
-                _render_sources(
-                    response.sources,
-                    labels,
+                    if response.interpretation
+                    else None
                 )
+
+                render_interpretation(
+                    localized_interpretation,
+                    language=ui_language,
+                )
+                render_assistant_message(
+                    localized_answer,
+                    response.kind,
+                )
+                play_audio(response_audio)
+                render_chart(
+                    response.chart_data,
+                    compact=compact,
+                    language=ui_language,
+                    translate=translate,
+                )
+                render_sources(
+                    response.session_sources,
+                    response.sources,
+                    language=ui_language,
+                    translate=translate,
+                )
+
+                if response_audio:
+                    st.session_state[
+                        _last_audio_key(user_id, patient_id)
+                    ] = response_audio
 
                 if (
                     response.response_type
@@ -1527,6 +1485,7 @@ def _render_chatbot_content(
                                 "provider": response.provider,
                                 "model": response.model,
                                 "used_llm": response.used_llm,
+                                "kind": response.kind,
                                 "safety_action": (
                                     response.safety_action
                                 ),
@@ -1538,7 +1497,12 @@ def _render_chatbot_content(
                 assistant_message = {
                     "role": "assistant",
                     "content": localized_answer,
+                    "kind": response.kind,
+                    "interpretation": localized_interpretation,
                     "sources": response.sources,
+                    "session_sources": response.session_sources,
+                    "chart_data": response.chart_data,
+                    "nearby_dates": response.nearby_dates,
                     "response_type": response.response_type,
                     "exercise_data": localized_exercise_data,
                     "audio": response_audio,
@@ -1551,6 +1515,7 @@ def _render_chatbot_content(
                 assistant_message = {
                     "role": "assistant",
                     "content": labels["error"],
+                    "kind": "blocked",
                     "sources": [],
                 }
 
@@ -1560,7 +1525,7 @@ def _render_chatbot_content(
         st.rerun()
 
     if compact:
-        with st.expander("Chat options", expanded=False):
+        with st.expander(ui_text(ui_language, "chat_options"), expanded=False):
             if st.button(
                 labels["clear"],
                 key=(
@@ -1604,6 +1569,31 @@ def _render_chatbot_content(
         with status_col:
             st.caption(labels["session_storage"])
 
+
+
+def _chat_theme_fallback_css() -> str:
+    """
+    Initial chat colors from the server-side theme guess.
+
+    st.context.theme can be wrong on first load or right after a theme
+    switch, so the panel script overwrites these with the dashboard's live
+    colors in the browser.
+    """
+
+    theme = getattr(getattr(st, "context", None), "theme", None)
+    theme_type = getattr(theme, "type", None) or st.get_option("theme.base")
+
+    if theme_type == "dark":
+        background, foreground, shadow = "#0e1117", "#fafafa", "rgba(0, 0, 0, 0.42)"
+    else:
+        background, foreground, shadow = "#ffffff", "#31333f", "rgba(0, 0, 0, 0.18)"
+
+    return (
+        "<style>:root {"
+        f" --hb-chat-bg: {background};"
+        f" --hb-chat-fg: {foreground};"
+        f" --hb-chat-shadow: {shadow}; }}</style>"
+    )
 
 
 def _enable_all_side_chat_resize() -> None:
@@ -1755,10 +1745,52 @@ def _enable_all_side_chat_resize() -> None:
                 });
             }
 
-            initializeResize();
+            // Copy the dashboard's live theme colors onto the chat panel so it
+            // follows Light/Dark/System changes without a rerun.
+            function syncTheme() {
+                const app = parentDocument.querySelector('[data-testid="stApp"]');
+                if (!app) {
+                    return;
+                }
 
-            const observer = new MutationObserver(() => initializeResize());
-            observer.observe(parentDocument.body, {childList: true, subtree: true});
+                const style = parentWindow.getComputedStyle(app);
+                const background = style.backgroundColor;
+                if (!background || background === "rgba(0, 0, 0, 0)") {
+                    return;
+                }
+
+                const channels = (background.match(/\\d+(\\.\\d+)?/g) || [])
+                    .slice(0, 3)
+                    .map(Number);
+                const luminance = channels.length === 3
+                    ? (0.299 * channels[0] + 0.587 * channels[1] + 0.114 * channels[2])
+                    : 255;
+                const root = parentDocument.documentElement.style;
+
+                root.setProperty("--hb-chat-bg", background);
+                root.setProperty("--hb-chat-fg", style.color);
+                root.setProperty(
+                    "--hb-chat-shadow",
+                    luminance < 128 ? "rgba(0, 0, 0, 0.42)" : "rgba(0, 0, 0, 0.18)"
+                );
+            }
+
+            initializeResize();
+            syncTheme();
+
+            const observer = new MutationObserver(() => {
+                initializeResize();
+                syncTheme();
+            });
+            observer.observe(parentDocument.body, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ["class", "style"],
+            });
+            parentWindow
+                .matchMedia("(prefers-color-scheme: dark)")
+                .addEventListener("change", syncTheme);
         })();
         </script>
         """,
@@ -1780,12 +1812,17 @@ def render_floating_chatbot(
     selected_date_range: str | None = None,
     visible_metrics: dict[str, Any] | None = None,
     active_alert: dict[str, Any] | None = None,
+    patient_label: str | None = None,
 ) -> None:
     """Render a persistent bottom-right chatbot launcher and panel."""
+
+    _render_accessibility(user_id, patient_id)
 
     open_key = f"floating_chat_open::{user_id}::{patient_id}"
     if open_key not in st.session_state:
         st.session_state[open_key] = False
+
+    st.markdown(_chat_theme_fallback_css(), unsafe_allow_html=True)
 
     st.markdown(
         """
@@ -1828,8 +1865,9 @@ def render_floating_chatbot(
             padding: 14px 14px 18px 14px;
             border: 1px solid rgba(128, 128, 128, 0.38);
             border-radius: 16px;
-            background: var(--background-color, #0e1117);
-            box-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+            background: var(--hb-chat-bg);
+            color: var(--hb-chat-fg);
+            box-shadow: 0 16px 44px var(--hb-chat-shadow);
         }
         .st-key-healthbridge_chat_panel p,
         .st-key-healthbridge_chat_panel span,
@@ -1875,7 +1913,7 @@ def render_floating_chatbot(
             margin-top: auto !important;
             padding-top: 10px !important;
             padding-bottom: 6px !important;
-            background: var(--background-color, #0e1117) !important;
+            background: var(--hb-chat-bg) !important;
             border-top: 1px solid rgba(128, 128, 128, 0.25);
         }
         @media (max-width: 600px) {
@@ -1900,6 +1938,11 @@ def render_floating_chatbot(
         unsafe_allow_html=True,
     )
 
+    panel_language = st.session_state.get(
+        f"resolved_chat_language::{user_id}::{patient_id}",
+        "en",
+    )
+
     if st.session_state[open_key]:
         with st.container(key="healthbridge_chat_panel"):
             title_col, close_col = st.columns(
@@ -1907,10 +1950,13 @@ def render_floating_chatbot(
                 vertical_alignment="center",
             )
             with title_col:
+                subtitle = html.escape(
+                    ui_text(panel_language, "assistant_subtitle")
+                )
                 st.markdown(
-                    """
+                    f"""
                     <div class="healthbridge-chat-title">HEALTHBRIDGE AI</div>
-                    <div class="healthbridge-chat-subtitle">Mobility Assistant</div>
+                    <div class="healthbridge-chat-subtitle">{subtitle}</div>
                     """,
                     unsafe_allow_html=True,
                 )
@@ -1918,7 +1964,7 @@ def render_floating_chatbot(
                 if st.button(
                     "✕",
                     key=f"floating_chat_close::{user_id}::{patient_id}",
-                    help="Close chat",
+                    help=ui_text(panel_language, "close_chat"),
                 ):
                     st.session_state[open_key] = False
                     st.rerun()
@@ -1937,6 +1983,7 @@ def render_floating_chatbot(
                 selected_date_range=selected_date_range,
                 visible_metrics=visible_metrics,
                 active_alert=active_alert,
+                patient_label=patient_label,
                 compact=True,
             )
 
@@ -1960,4 +2007,5 @@ def render_floating_chatbot(
 
 # Backward-compatible alias for any older imports.
 def render_chatbot(**kwargs: Any) -> None:
+    _render_accessibility(kwargs["user_id"], kwargs["patient_id"])
     _render_chatbot_content(**kwargs)
